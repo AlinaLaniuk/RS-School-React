@@ -1,0 +1,35 @@
+.search-bar-container {
+  padding-top: 20vh;
+  width: 40%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+}
+
+.input-wrapper {
+  width: 60%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white;
+  border-radius: 50px;
+}
+
+.input-wrapper>img {
+  width: 10%;
+  margin-right: 10px;
+}
+
+.input-wrapper>input {
+  background-color: transparent;
+  border: none;
+  height: 40px;
+  font-size: 15px;
+}
+
+.input-wrapper>input:focus {
+  outline: none;
+}
