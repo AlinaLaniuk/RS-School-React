@@ -1,6 +1,6 @@
 .input-wrapper {
   width: 60%;
-  height: 40px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,7 +9,7 @@
 }
 
 .input-wrapper>img {
-  width: 10%;
+  width: 8%;
   margin-right: 10px;
 }
 

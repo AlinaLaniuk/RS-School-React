@@ -1,7 +1,8 @@
 .card-container {
-  width: 40%;
+  width: 90%;
   height: 300px;
-  margin: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: 10px;
   position: relative;
   display: flex;
@@ -60,6 +61,11 @@
   border: none;
   border-radius: 20px;
   background-color: rgb(201, 154, 244);
+}
+
+.buy-button:hover {
+  background-color: rgb(209, 98, 163);
+  transform: scale(1.1);
 }
 
 .card-price-container {
