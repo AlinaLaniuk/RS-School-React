@@ -14,15 +14,6 @@ function Card({ header, src, description, rating, price, popular, discount }: Ca
         <div className="card-header">{header}</div>
         <div className="description">{description}</div>
         <div className="product-range">Rating: {rating}</div>
-        {/* <div className="buy-block">
-          <div className="card-price">
-            Price: {discount ? price * (discount / 100) : price}$
-            {discount ? <img className="discount" src={saleImageSrc} alt="best-seller" /> : null}
-          </div>
-          <button type="button" className="buy-button">
-            Buy
-          </button>
-        </div> */}
         <BuyBlock price={price} discount={discount} />
       </div>
     </div>
