@@ -1,4 +1,4 @@
-interface CardProps {
+export interface CardProps {
   id?: string;
   header?: string;
   src?: string;
@@ -9,4 +9,7 @@ interface CardProps {
   discount: number;
 }
 
-export default CardProps;
+export interface IState {
+  data: CardProps[];
+  searchValue: string;
+}
