@@ -6,25 +6,3 @@
   flex-direction: column;
   align-items: center;
 }
-
-.search-bar-container {
-  padding-top: 20vh;
-  width: 40%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 200px;
-}
-
-.cards-container {
-  width: 90%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  background-color: antiquewhite;
-  border-radius: 20px;
-
-}

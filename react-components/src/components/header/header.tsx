@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import MainPage from '../../pages/main';
-import AboutUs from '../../pages/aboutUs';
-import PageNotFound from '../../pages/notFound';
+import AboutUs from '../../pages/aboutUs/aboutUs';
+import PageNotFound from '../../pages/pageNotFound/pageNotFound';
 
 function Header() {
   return (

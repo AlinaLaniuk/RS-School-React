@@ -7,6 +7,8 @@ import './index.css';
 import './components/searchBar/searchBar.css';
 import './components/card/card.css';
 import './components/header/header.css';
+import './pages/aboutUs/aboutUs.css';
+import './pages/pageNotFound/pageNotFound.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
