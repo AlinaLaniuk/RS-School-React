@@ -8,6 +8,6 @@ test('renders react app', () => {
       <App />
     </BrowserRouter>
   );
-  const appElement = screen.getByText(/Home/i);
+  const appElement = screen.getByText(/About us/i);
   expect(appElement).toBeInTheDocument();
 });
