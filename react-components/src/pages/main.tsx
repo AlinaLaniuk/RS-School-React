@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
 import Card from '../components/card/card';
 import { debounce, setMatchedInputValueCardsData } from '../utils';
-import { IState } from '../types';
+import { IState, HeaderBoundProps } from '../types';
 
-class MainPage extends Component<unknown, IState> {
+class MainPage extends Component<HeaderBoundProps, IState> {
   debouncedUpdateCards: (...args: React.ChangeEvent<Element>[]) => void;
 
-  constructor(props: unknown) {
+  constructor(props: HeaderBoundProps) {
     super(props);
     this.state = { data: [], searchValue: '' };
     this.updateCards = this.updateCards.bind(this);
@@ -15,6 +15,8 @@ class MainPage extends Component<unknown, IState> {
   }
 
   componentDidMount() {
+    const { setPageName } = this.props;
+    setPageName('Main');
     let searchValueFromLocalStorage = localStorage.getItem('lastSearchValue');
     if (!searchValueFromLocalStorage) {
       searchValueFromLocalStorage = '';
