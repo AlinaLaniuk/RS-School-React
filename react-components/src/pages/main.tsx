@@ -45,7 +45,7 @@ class MainPage extends Component<unknown, IState> {
         <div className="search-bar-container">
           <SearchBar callback={this.debouncedUpdateCards} inputValue={searchValue} />
         </div>
-        <div className="cards-container">
+        <div data-testid="cards-container" className="cards-container">
           {data.map((cardData) => {
             return (
               <Card

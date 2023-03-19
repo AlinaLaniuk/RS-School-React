@@ -1,7 +1,7 @@
-import CardProps from '../../types';
+import { CardProps } from '../../types';
 import BuyBlock from './buyBlock';
 
-const bestSellerImageSrc = '../../public/best-seller.png';
+const bestSellerImageSrc = '/public/best-seller.png';
 
 function Card({ header, src, description, rating, price, popular, discount }: CardProps) {
   return (
@@ -11,7 +11,9 @@ function Card({ header, src, description, rating, price, popular, discount }: Ca
         <img src={src} alt={header} />
       </div>
       <div className="card-info-container">
-        <div className="card-header">{header}</div>
+        <div data-testid="card-header" className="card-header">
+          {header}
+        </div>
         <div className="description">{description}</div>
         <div className="product-range">Rating: {rating}</div>
         <BuyBlock price={price} discount={discount} />
