@@ -1,6 +1,6 @@
 import { CardProps } from '../../types';
 
-const saleImageSrc = '/public/sale.png';
+const saleImageSrc = '/sale.png';
 
 function BuyBlock({ price, discount }: CardProps) {
   let priceClassNames;

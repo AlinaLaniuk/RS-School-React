@@ -1,7 +1,7 @@
 import { CardProps } from '../../types';
 import BuyBlock from './buyBlock';
 
-const bestSellerImageSrc = '/public/best-seller.png';
+const bestSellerImageSrc = '/best-seller.png';
 
 function Card({ header, src, description, rating, price, popular, discount }: CardProps) {
   return (
