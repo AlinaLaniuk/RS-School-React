@@ -32,6 +32,11 @@ class MainPage extends Component<HeaderBoundProps, IState> {
     }
   }
 
+  componentWillUnmount(): void {
+    const { searchValue } = this.state;
+    localStorage.setItem('lastSearchValue', searchValue);
+  }
+
   updateCards(event: React.ChangeEvent) {
     const eventTarget = event.target as HTMLInputElement;
     const inputValue = eventTarget.value;
