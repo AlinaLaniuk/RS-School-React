@@ -10,9 +10,15 @@ class FileUploader extends Component<unknown, InputState> {
   render() {
     const { value } = this.state;
     return (
-      <label htmlFor="file-uploader-input">
+      <label className="file-uploader-label" htmlFor="file-uploader-input">
         Add picture with cute cat:
-        <input id="file-uploader-input" type="file" value={value} />
+        <input
+          className="file-uploader-input"
+          id="file-uploader-input"
+          type="file"
+          value={value}
+          placeholder="fff"
+        />
       </label>
     );
   }

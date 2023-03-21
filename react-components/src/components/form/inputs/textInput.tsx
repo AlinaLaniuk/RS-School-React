@@ -10,9 +10,11 @@ class TextInput extends Component<unknown, InputState> {
   render() {
     const { value } = this.state;
     return (
-      <label htmlFor="text-input">
+      <label className="text-input" htmlFor="text-input">
         Your name:
-        <input id="text-input" type="text" value={value} />
+        <div className="input-wrapper form-text-input">
+          <input id="text-input" type="text" value={value} />
+        </div>
       </label>
     );
   }

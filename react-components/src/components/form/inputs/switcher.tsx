@@ -10,11 +10,18 @@ class Switcher extends Component<unknown, RadioInputState> {
   render() {
     const { selectedOption } = this.state;
     return (
-      <div>
-        <label htmlFor="yes">
-          <input type="radio" id="yes" value="Yes" checked={selectedOption === 'Yes'} />
-          Male
-        </label>
+      <div className="select-gender-container">
+        Your gender:
+        <div className="select-gender-options-container">
+          <label htmlFor="male">
+            <input type="radio" id="yes" value="Yes" checked={selectedOption === 'Yes'} />
+            Male
+          </label>
+          <label htmlFor="female">
+            <input type="radio" id="yes" value="Yes" checked={selectedOption === 'Yes'} />
+            Female
+          </label>
+        </div>
       </div>
     );
   }

@@ -14,7 +14,7 @@ class Form extends Component<unknown> {
 
   render() {
     return (
-      <form>
+      <form className="form">
         <TextInput />
         <DateInput />
         <Switcher />

@@ -5,12 +5,12 @@ import Form from '../../components/form/form';
 class Forms extends Component<HeaderBoundProps> {
   componentDidMount() {
     const { setPageName } = this.props;
-    setPageName('Froms');
+    setPageName('Forms');
   }
 
   render() {
     return (
-      <div className="about-us-container">
+      <div className="form-container">
         <Form />
       </div>
     );

@@ -19,7 +19,7 @@ class Checkbox extends Component<unknown, CheckboxInputState> {
     const { value } = this.state;
     const { chocolate, caramel, nuts, berries, vanilla } = value;
     return (
-      <fieldset>
+      <fieldset className="checkbox">
         <legend>Your favorite additive: </legend>
         <div>
           <label htmlFor="chocolate">

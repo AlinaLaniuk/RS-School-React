@@ -11,8 +11,10 @@ class DateInput extends Component<unknown, InputState> {
     const { value } = this.state;
     return (
       <label htmlFor="date-input">
-        Birthday:
-        <input id="date-input" type="date" value={value} />
+        Your birthday:
+        <div className="input-wrapper date-input-wrapper">
+          <input id="date-input" type="date" value={value} />
+        </div>
       </label>
     );
   }

@@ -12,13 +12,15 @@ class Select extends Component<unknown, InputState> {
     return (
       <label htmlFor="select">
         Select your favorite dessert:
-        <select id="select" value={value}>
-          <option value="cake">Cake</option>
-          <option value="candies">Candies</option>
-          <option value="donuts">Donuts</option>
-          <option value="cookies">Cookies</option>
-          <option value="iceCream">Ice-cream</option>
-        </select>
+        <div className="input-wrapper">
+          <select className="select" id="select" value={value}>
+            <option value="cake">Cake</option>
+            <option value="candies">Candies</option>
+            <option value="donuts">Donuts</option>
+            <option value="cookies">Cookies</option>
+            <option value="iceCream">Ice-cream</option>
+          </select>
+        </div>
       </label>
     );
   }
