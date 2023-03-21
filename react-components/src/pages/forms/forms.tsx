@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { HeaderBoundProps } from '../../types';
+import Form from '../../components/form/form';
 
 class Forms extends Component<HeaderBoundProps> {
   componentDidMount() {
@@ -10,8 +11,7 @@ class Forms extends Component<HeaderBoundProps> {
   render() {
     return (
       <div className="about-us-container">
-        <h1>Forms</h1>
-        <p>Forms.</p>
+        <Form />
       </div>
     );
   }
