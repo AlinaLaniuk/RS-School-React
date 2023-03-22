@@ -18,7 +18,7 @@ type PassPageName = (pageName: string) => void;
 export type HeaderBoundProps = { setPageName: PassPageName };
 
 export interface InputState {
-  value: string;
+  inputValue: string;
 }
 
 export interface CheckboxInputState {
@@ -32,5 +32,6 @@ export interface CheckboxInputState {
 }
 
 export interface RadioInputState {
-  selectedOption: string;
+  male: boolean;
+  female: boolean;
 }
