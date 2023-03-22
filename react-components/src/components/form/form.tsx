@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import Checkbox from './formComponents/checkbox';
-import DateInput from './formComponents/dateInput';
-import FileUploader from './formComponents/fileUploader';
-import Select from './formComponents/select';
-import Switcher from './formComponents/switcher';
-import TextInput from './formComponents/textInput';
 
 class Form extends Component<unknown> {
   componentsRefs: {
@@ -48,18 +42,6 @@ class Form extends Component<unknown> {
           </div>
         </label>
 
-        {/* <label className="switcher-label" htmlFor="switcher-input">
-          Choose your gender:
-          <div className="switcher-input-container">
-            <input
-              ref={this.componentsRefs.switcher}
-              className="switcher-input"
-              id="react-switch-new"
-              type="checkbox"
-            />
-            <span className="switcher-button" />
-          </div>
-        </label> */}
         <label htmlFor="switcher">
           Choose your gender:
           <input className="switcher-input" id="switcher" type="checkbox" />
