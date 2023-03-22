@@ -62,3 +62,45 @@ label {
   border: none;
   border-radius: 10px;
 }
+
+.switcher-input {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.switcher-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  background: rgb(232, 232, 232);
+  border-radius: 100px;
+  position: relative;
+  transition: background-color .2s;
+}
+
+.switcher-container .switcher-button {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 35px;
+  height: 35px;
+  border-radius: 45px;
+  transition: 0.2s;
+  background: #8389fd;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.switcher-input:checked+.switcher-container .switcher-button {
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
+  background-color: rgb(255, 137, 249);
+  color: black;
+}
+
+.switcher-container:active .switcher-button {
+  width: 60px;
+}
