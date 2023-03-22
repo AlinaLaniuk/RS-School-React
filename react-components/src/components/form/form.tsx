@@ -4,11 +4,15 @@ class Form extends Component<unknown> {
   componentsRefs: {
     textInput: React.RefObject<HTMLInputElement>;
     dateInput: React.RefObject<HTMLInputElement>;
-    checkbox: React.RefObject<HTMLFieldSetElement>;
     select: React.RefObject<HTMLSelectElement>;
     switcher: React.RefObject<HTMLInputElement>;
     fileUploader: React.RefObject<HTMLInputElement>;
     submitButton: React.RefObject<HTMLButtonElement>;
+    chocolateInput: React.RefObject<HTMLInputElement>;
+    caramelInput: React.RefObject<HTMLInputElement>;
+    nutsInput: React.RefObject<HTMLInputElement>;
+    vanillaInput: React.RefObject<HTMLInputElement>;
+    berriesInput: React.RefObject<HTMLInputElement>;
   };
 
   constructor(props: unknown) {
@@ -17,7 +21,11 @@ class Form extends Component<unknown> {
     this.componentsRefs = {
       textInput: React.createRef(),
       dateInput: React.createRef(),
-      checkbox: React.createRef(),
+      chocolateInput: React.createRef(),
+      caramelInput: React.createRef(),
+      nutsInput: React.createRef(),
+      berriesInput: React.createRef(),
+      vanillaInput: React.createRef(),
       select: React.createRef(),
       switcher: React.createRef(),
       fileUploader: React.createRef(),
@@ -63,36 +71,36 @@ class Form extends Component<unknown> {
           </div>
         </label>
 
-        <fieldset ref={this.componentsRefs.checkbox} className="checkbox">
+        <fieldset className="checkbox">
           <legend>Your favorite additive: </legend>
           <div>
             <label htmlFor="chocolate">
               Chocolate
-              <input type="checkbox" id="chocolate" />
+              <input ref={this.componentsRefs.chocolateInput} type="checkbox" id="chocolate" />
             </label>
           </div>
           <div>
             <label htmlFor="caramel">
               Caramel
-              <input type="checkbox" id="caramel" />
+              <input ref={this.componentsRefs.caramelInput} type="checkbox" id="caramel" />
             </label>
           </div>
           <div>
             <label htmlFor="nuts">
               Nuts
-              <input type="checkbox" id="nuts" />
+              <input ref={this.componentsRefs.nutsInput} type="checkbox" id="nuts" />
             </label>
           </div>
           <div>
             <label htmlFor="berries">
               Berries
-              <input type="checkbox" id="berries" />
+              <input ref={this.componentsRefs.berriesInput} type="checkbox" id="berries" />
             </label>
           </div>
           <div>
             <label htmlFor="vanilla">
               Vanilla
-              <input type="checkbox" id="vanilla" />
+              <input ref={this.componentsRefs.vanillaInput} type="checkbox" id="vanilla" />
             </label>
           </div>
         </fieldset>
