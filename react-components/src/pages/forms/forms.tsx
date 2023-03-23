@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { HeaderBoundProps, CardInfo } from '../../types';
 import Form from '../../components/form/form';
+import UserInfoCard from '../../components/form/userInfoCard';
 
 interface FormsState {
   cards: CardInfo[];
@@ -28,9 +29,25 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
   }
 
   render() {
+    const { cards } = this.state;
     return (
       <div className="form-container">
         <Form setCardsInfo={this.setCardsInfo} />
+        <div>
+          {cards.map((cardInfo) => {
+            return (
+              <UserInfoCard
+                key={cardInfo.userName}
+                userName={cardInfo.userName}
+                birthdayDate={cardInfo.birthdayDate}
+                gender={cardInfo.gender}
+                favoriteDessert={cardInfo.favoriteDessert}
+                favoriteAdditives={cardInfo.favoriteAdditives}
+                catImage={cardInfo.catImage}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
