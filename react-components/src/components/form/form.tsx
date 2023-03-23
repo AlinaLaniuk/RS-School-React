@@ -15,6 +15,7 @@ const genderValue: GenderType = {
 
 class Form extends Component<FormProps, FormState> {
   inputsRefs: {
+    form: React.RefObject<HTMLFormElement>;
     nameInput: React.RefObject<HTMLInputElement>;
     birthDateInput: React.RefObject<HTMLInputElement>;
     dessertSelector: React.RefObject<HTMLSelectElement>;
@@ -45,6 +46,7 @@ class Form extends Component<FormProps, FormState> {
       },
     };
     this.inputsRefs = {
+      form: React.createRef(),
       nameInput: React.createRef(),
       birthDateInput: React.createRef(),
       chocolateInput: React.createRef(),
@@ -81,6 +83,7 @@ class Form extends Component<FormProps, FormState> {
       const cardInfo = this.collectStateInfo();
       const { setCardsInfo } = this.props;
       setCardsInfo(cardInfo);
+      (this.inputsRefs.form.current as HTMLFormElement).reset();
     }
   };
 
@@ -110,7 +113,7 @@ class Form extends Component<FormProps, FormState> {
     const { errors } = this.state;
     const { userName, birthdayDate, catImage } = errors;
     return (
-      <form className="form">
+      <form ref={this.inputsRefs.form} className="form">
         <label className="text-input" htmlFor="text-input">
           Your name:
           <div className="input-wrapper form-text-input">
