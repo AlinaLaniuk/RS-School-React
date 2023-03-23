@@ -11,10 +11,12 @@ export function validateDate(date: string) {
   return currentDateInMs >= userDateInMs;
 }
 
-export function validateFile(file: File, type: string) {
+export function validateFile(file: File, availableTypes: string[]) {
   if (!file) {
     return false;
   }
-  const fileType = file.type;
-  return fileType === type;
+  const fileType = availableTypes.filter((type: string) => {
+    return file.type === type;
+  });
+  return fileType.length === 1;
 }

@@ -30,7 +30,7 @@ interface GenderType {
 const errorsTexts = {
   userName: 'Incorrect name value. Must be at least 5 characters',
   birthdayDate: 'Incorrect date',
-  cuteCatPicture: 'Incorrect file. It must be only picture',
+  cuteCatPicture: 'Incorrect file. It must be jpg or png file',
 };
 
 const genderValue: GenderType = {
@@ -116,16 +116,13 @@ class Form extends Component<unknown, FormState> {
     );
     const isFileInputValueCorrect = validateFile(
       (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-      'image/jpeg'
+      ['image/jpeg', 'image/png']
     );
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
       cuteCatPicture: isFileInputValueCorrect ? '' : errorsTexts.cuteCatPicture,
     };
-    // const currentUserName = this.inputsRefs.nameInput.current?.value as string;
-    // const currentBirthdayDate = this.inputsRefs.birthDateInput.current?.value as string;
-    // const currentCatPicture = (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File;
     const { inputsValue } = this.state;
     this.setState({ inputsValue, errors: newErrorsState });
     const newErrorsStateKeys = Object.keys(newErrorsState);
@@ -147,7 +144,7 @@ class Form extends Component<unknown, FormState> {
           <div className="input-wrapper form-text-input">
             <input ref={this.inputsRefs.nameInput} id="text-input" type="text" />
           </div>
-          <div className="error">{userName}</div>
+          <div className="separator error">{userName}</div>
         </label>
 
         <label htmlFor="date-input">
@@ -155,7 +152,7 @@ class Form extends Component<unknown, FormState> {
           <div className="input-wrapper date-input-wrapper">
             <input ref={this.inputsRefs.birthDateInput} id="date-input" type="date" />
           </div>
-          <div className="error">{birthdayDate}</div>
+          <div className="separator error">{birthdayDate}</div>
         </label>
 
         <label htmlFor="switcher">
@@ -169,6 +166,7 @@ class Form extends Component<unknown, FormState> {
           <div className="switcher-container">
             <span className="switcher-button" />
           </div>
+          <div className="separator" />
         </label>
 
         <label htmlFor="select">
@@ -182,6 +180,7 @@ class Form extends Component<unknown, FormState> {
               <option value="iceCream">Ice-cream</option>
             </select>
           </div>
+          <div className="separator" />
         </label>
 
         <fieldset className="checkbox">
@@ -217,6 +216,7 @@ class Form extends Component<unknown, FormState> {
             </label>
           </div>
         </fieldset>
+        <div className="separator" />
 
         <label className="file-uploader-label" htmlFor="file-uploader-input">
           Add picture with cute cat:
@@ -226,7 +226,7 @@ class Form extends Component<unknown, FormState> {
             id="file-uploader-input"
             type="file"
           />
-          <div className="error">{cuteCatPicture}</div>
+          <div className="separator error">{cuteCatPicture}</div>
         </label>
         <button onClick={this.submitForm} type="button">
           Submit
