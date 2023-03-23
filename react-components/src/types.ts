@@ -43,12 +43,12 @@ export interface FormState {
     gender: string;
     favoriteDessert: string;
     favoriteAdditives: string[];
-    cuteCatPicture: File | undefined;
+    catImage: File | undefined;
   };
   errors: {
     userName: string;
     birthdayDate: string;
-    cuteCatPicture: string;
+    catImage: string;
   };
 }
 
@@ -58,7 +58,7 @@ export interface CardInfo {
   gender: string;
   favoriteDessert: string;
   favoriteAdditives: string[];
-  cuteCatPicture: File;
+  catImage: File;
 }
 
 export interface GenderType {
