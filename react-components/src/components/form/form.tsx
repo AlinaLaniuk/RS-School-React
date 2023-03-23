@@ -1,31 +1,6 @@
 import React, { Component } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation';
-
-interface FormState {
-  inputsValue: {
-    userName: string;
-    birthdayDate: string;
-    gender: string;
-    favoriteDessert: string;
-    favoriteAdditives: string[];
-    cuteCatPicture: File | undefined;
-  };
-  errors: {
-    userName: string;
-    birthdayDate: string;
-    cuteCatPicture: string;
-  };
-}
-
-interface FormStateErrors {
-  userName: string;
-  birthdayDate: string;
-  cuteCatPicture: File | undefined;
-}
-
-interface GenderType {
-  [key: string]: string;
-}
+import { FormState, GenderType, FormProps } from '../../types';
 
 const errorsTexts = {
   userName: 'Incorrect name value. Must be at least 5 characters',
@@ -38,7 +13,7 @@ const genderValue: GenderType = {
   false: 'male',
 };
 
-class Form extends Component<unknown, FormState> {
+class Form extends Component<FormProps, FormState> {
   inputsRefs: {
     nameInput: React.RefObject<HTMLInputElement>;
     birthDateInput: React.RefObject<HTMLInputElement>;
@@ -52,7 +27,7 @@ class Form extends Component<unknown, FormState> {
     berriesInput: React.RefObject<HTMLInputElement>;
   };
 
-  constructor(props: unknown) {
+  constructor(props: FormProps) {
     super(props);
     this.state = {
       inputsValue: {
@@ -83,27 +58,30 @@ class Form extends Component<unknown, FormState> {
     };
   }
 
-  // collectStateInfo = () => {
-  //   const newInputsState = {
-  //     userName: this.inputsRefs.nameInput.current?.value as string,
-  //     birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
-  //     gender: genderValue[`${this.inputsRefs.genderSelector.current?.value}`] as string,
-  //     favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
-  //     favoriteAdditives: [
-  //       this.inputsRefs.chocolateInput.current?.value as string,
-  //       this.inputsRefs.caramelInput.current?.value as string,
-  //       this.inputsRefs.nutsInput.current?.value as string,
-  //       this.inputsRefs.berriesInput.current?.value as string,
-  //       this.inputsRefs.vanillaInput.current?.value as string,
-  //     ],
-  //     cuteCatPicture: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-  //   };
-
-  //   this.setState({ inputsValue: newInputsState, errors: this.state.errors });
-  // };
+  collectStateInfo = () => {
+    const cardInfo = {
+      userName: this.inputsRefs.nameInput.current?.value as string,
+      birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
+      gender: genderValue[`${this.inputsRefs.genderSelector.current?.value}`] as string,
+      favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
+      favoriteAdditives: [
+        this.inputsRefs.chocolateInput.current?.value as string,
+        this.inputsRefs.caramelInput.current?.value as string,
+        this.inputsRefs.nutsInput.current?.value as string,
+        this.inputsRefs.berriesInput.current?.value as string,
+        this.inputsRefs.vanillaInput.current?.value as string,
+      ],
+      cuteCatPicture: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
+    };
+    return cardInfo;
+  };
 
   submitForm = () => {
-    this.validateInputsValues();
+    if (this.validateInputsValues()) {
+      const cardInfo = this.collectStateInfo();
+      const { setCardsInfo } = this.props;
+      setCardsInfo(cardInfo);
+    }
   };
 
   validateInputsValues() {
@@ -125,13 +103,7 @@ class Form extends Component<unknown, FormState> {
     };
     const { inputsValue } = this.state;
     this.setState({ inputsValue, errors: newErrorsState });
-    const newErrorsStateKeys = Object.keys(newErrorsState);
-    const isFormFieldsFilledCorrect = newErrorsStateKeys.filter((key: string) => {
-      return newErrorsState[key as keyof FormStateErrors];
-    });
-    if (isFormFieldsFilledCorrect.length === 3) {
-      console.log('oh, yeee');
-    }
+    return isTextInputValueCorrect && isBirthdayDateInputValueCorrect && isFileInputValueCorrect;
   }
 
   render() {
