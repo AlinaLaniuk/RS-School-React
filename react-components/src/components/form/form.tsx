@@ -5,7 +5,7 @@ import { FormState, GenderType, FormProps } from '../../types';
 const errorsTexts = {
   userName: 'Incorrect name value. Must be at least 5 characters',
   birthdayDate: 'Incorrect date',
-  cuteCatPicture: 'Incorrect file. It must be jpg or png file',
+  catImage: 'Incorrect file. It must be jpg or png file',
 };
 
 const genderValue: GenderType = {
@@ -36,12 +36,12 @@ class Form extends Component<FormProps, FormState> {
         gender: '',
         favoriteDessert: '',
         favoriteAdditives: [],
-        cuteCatPicture: undefined,
+        catImage: undefined,
       },
       errors: {
         userName: '',
         birthdayDate: '',
-        cuteCatPicture: '',
+        catImage: '',
       },
     };
     this.inputsRefs = {
@@ -71,7 +71,7 @@ class Form extends Component<FormProps, FormState> {
         this.inputsRefs.berriesInput.current?.value as string,
         this.inputsRefs.vanillaInput.current?.value as string,
       ],
-      cuteCatPicture: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
+      catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
     };
     return cardInfo;
   };
@@ -99,7 +99,7 @@ class Form extends Component<FormProps, FormState> {
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
-      cuteCatPicture: isFileInputValueCorrect ? '' : errorsTexts.cuteCatPicture,
+      catImage: isFileInputValueCorrect ? '' : errorsTexts.catImage,
     };
     const { inputsValue } = this.state;
     this.setState({ inputsValue, errors: newErrorsState });
@@ -108,7 +108,7 @@ class Form extends Component<FormProps, FormState> {
 
   render() {
     const { errors } = this.state;
-    const { userName, birthdayDate, cuteCatPicture } = errors;
+    const { userName, birthdayDate, catImage } = errors;
     return (
       <form className="form">
         <label className="text-input" htmlFor="text-input">
@@ -198,7 +198,7 @@ class Form extends Component<FormProps, FormState> {
             id="file-uploader-input"
             type="file"
           />
-          <div className="separator error">{cuteCatPicture}</div>
+          <div className="separator error">{catImage}</div>
         </label>
         <button onClick={this.submitForm} type="button">
           Submit
