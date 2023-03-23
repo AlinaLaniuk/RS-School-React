@@ -33,7 +33,7 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
     return (
       <div className="form-container">
         <Form setCardsInfo={this.setCardsInfo} />
-        <div>
+        <div className="user-info-cards-container">
           {cards.map((cardInfo) => {
             return (
               <UserInfoCard

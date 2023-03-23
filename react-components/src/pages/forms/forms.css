@@ -1,6 +1,11 @@
 .form-container {
   width: 100%;
-  height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.user-info-header {
+  font-size: 1.2rem;
 }

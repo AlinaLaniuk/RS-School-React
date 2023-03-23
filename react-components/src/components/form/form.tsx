@@ -64,14 +64,14 @@ class Form extends Component<FormProps, FormState> {
     const cardInfo = {
       userName: this.inputsRefs.nameInput.current?.value as string,
       birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
-      gender: genderValue[`${this.inputsRefs.genderSelector.current?.value}`] as string,
+      gender: genderValue[`${this.inputsRefs.genderSelector.current?.checked}`] as string,
       favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
       favoriteAdditives: [
-        this.inputsRefs.chocolateInput.current?.value as string,
-        this.inputsRefs.caramelInput.current?.value as string,
-        this.inputsRefs.nutsInput.current?.value as string,
-        this.inputsRefs.berriesInput.current?.value as string,
-        this.inputsRefs.vanillaInput.current?.value as string,
+        this.inputsRefs.chocolateInput.current?.id as string,
+        this.inputsRefs.caramelInput.current?.id as string,
+        this.inputsRefs.nutsInput.current?.id as string,
+        this.inputsRefs.berriesInput.current?.id as string,
+        this.inputsRefs.vanillaInput.current?.id as string,
       ],
       catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
     };
@@ -136,7 +136,7 @@ class Form extends Component<FormProps, FormState> {
             ref={this.inputsRefs.genderSelector}
             className="switcher-input"
             id="switcher"
-            type="checkbox"
+            type="radio"
           />
           <div className="switcher-container">
             <span className="switcher-button" />
