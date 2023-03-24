@@ -3,7 +3,8 @@ import { validateTextInput, validateDate, validateFile, validateRadioInputs } fr
 import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
-  userName: 'Incorrect name value. Must be at least 5 characters in each word, at least 2 words',
+  userName:
+    'Must be at least 5 characters in each word, at least 2 words, each word starts starts with uppercased letter',
   birthdayDate: 'Incorrect date. Cannot be greater than current date',
   gender: 'You need to choose gender',
   catImage: 'Incorrect file. It must be jpg or png file',
@@ -52,6 +53,30 @@ class Form extends Component<FormProps, FormState> {
   }
 
   collectStateInfo = () => {
+    const favoriteAdditivesArr = [
+      this.inputsRefs.chocolateInput.current?.checked
+        ? (this.inputsRefs.chocolateInput.current?.id as string)
+        : '',
+      this.inputsRefs.caramelInput.current?.checked
+        ? (this.inputsRefs.caramelInput.current?.id as string)
+        : '',
+      this.inputsRefs.nutsInput.current?.checked
+        ? (this.inputsRefs.nutsInput.current?.id as string)
+        : '',
+      this.inputsRefs.berriesInput.current?.checked
+        ? (this.inputsRefs.berriesInput.current?.id as string)
+        : '',
+      this.inputsRefs.vanillaInput.current?.checked
+        ? (this.inputsRefs.vanillaInput.current?.id as string)
+        : '',
+    ];
+    const truthyAdditives = favoriteAdditivesArr.filter((additive) => {
+      return additive;
+    });
+    const favoriteAdditivesValues =
+      truthyAdditives.length > 0
+        ? truthyAdditives
+        : ['It seems you doesn`t like any of our additivies'];
     const cardInfo = {
       userName: this.inputsRefs.nameInput.current?.value as string,
       birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
@@ -59,23 +84,7 @@ class Form extends Component<FormProps, FormState> {
         ? (this.inputsRefs.maleInput.current?.value as string)
         : (this.inputsRefs.femaleInput.current?.value as string),
       favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
-      favoriteAdditives: [
-        this.inputsRefs.chocolateInput.current?.checked
-          ? (this.inputsRefs.chocolateInput.current?.id as string)
-          : '',
-        this.inputsRefs.caramelInput.current?.checked
-          ? (this.inputsRefs.caramelInput.current?.id as string)
-          : '',
-        this.inputsRefs.nutsInput.current?.checked
-          ? (this.inputsRefs.nutsInput.current?.id as string)
-          : '',
-        this.inputsRefs.berriesInput.current?.checked
-          ? (this.inputsRefs.berriesInput.current?.id as string)
-          : '',
-        this.inputsRefs.vanillaInput.current?.checked
-          ? (this.inputsRefs.vanillaInput.current?.id as string)
-          : '',
-      ],
+      favoriteAdditives: favoriteAdditivesValues,
       catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
     };
     return cardInfo;

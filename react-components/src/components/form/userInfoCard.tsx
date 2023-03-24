@@ -29,14 +29,11 @@ function UserInfoCard({
           User favorite additives:
           <div className="user-info-text">
             {favoriteAdditives.map((additive) => {
-              if (additive) {
-                return (
-                  <span key={additive} className="test">
-                    {additive}{' '}
-                  </span>
-                );
-              }
-              return false;
+              return (
+                <span key={additive} className="test">
+                  {additive}{' '}
+                </span>
+              );
             })}
           </div>
         </div>
