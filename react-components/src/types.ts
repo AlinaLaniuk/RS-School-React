@@ -43,6 +43,7 @@ export interface FormState {
     catImage: string;
     gender: string;
   };
+  submitMessage: string;
 }
 
 export interface CardInfo {
