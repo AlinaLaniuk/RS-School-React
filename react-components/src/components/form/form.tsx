@@ -135,7 +135,7 @@ class Form extends Component<FormProps, FormState> {
     const { errors } = this.state;
     const { userName, birthdayDate, catImage, gender } = errors;
     return (
-      <form ref={this.inputsRefs.form} className="form">
+      <form data-testid="form-container" ref={this.inputsRefs.form} className="form">
         <label className="text-input" htmlFor="text-input">
           Your name:
           <div className="input-wrapper form-text-input">
