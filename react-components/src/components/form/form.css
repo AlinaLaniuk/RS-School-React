@@ -63,48 +63,6 @@ label {
   border-radius: 10px;
 }
 
-.switcher-input {
-  height: 0;
-  width: 0;
-  visibility: hidden;
-}
-
-.switcher-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  width: 100px;
-  height: 40px;
-  background: rgb(232, 232, 232);
-  border-radius: 100px;
-  position: relative;
-  transition: background-color .2s;
-}
-
-.switcher-container .switcher-button {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 35px;
-  height: 35px;
-  border-radius: 45px;
-  transition: 0.2s;
-  background: #8389fd;
-  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
-}
-
-.switcher-input:checked+.switcher-container .switcher-button {
-  left: calc(100% - 2px);
-  transform: translateX(-100%);
-  background-color: rgb(255, 137, 249);
-  color: black;
-}
-
-.switcher-container:active .switcher-button {
-  width: 60px;
-}
-
 .separator {
   width: 100%;
   height: 30px;
@@ -113,4 +71,59 @@ label {
 .error {
   text-align: center;
   color: black;
+}
+
+.gender-selector-container input {
+  position: absolute;
+  opacity: 0;
+}
+
+.gender-selector-container label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 17px;
+  user-select: none;
+}
+
+.gender-selector-container span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #c9c9c9;
+  border-radius: 50%;
+}
+
+
+.gender-selector-container label input:checked~span {
+  background-color: #d574ff;
+}
+
+
+.gender-selector-container span:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
+.gender-selector-container label input:checked~span:after {
+  display: block;
+}
+
+
+.gender-selector-container label span:after {
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
 }

@@ -140,19 +140,19 @@ class Form extends Component<FormProps, FormState> {
           <div className="separator error">{birthdayDate}</div>
         </label>
 
-        <label htmlFor="switcher">
-          Choose your gender:
-          <input
-            ref={this.inputsRefs.genderSelector}
-            className="switcher-input"
-            id="switcher"
-            type="radio"
-          />
-          <div className="switcher-container">
-            <span className="switcher-button" />
-          </div>
-          <div className="separator" />
-        </label>
+        <div className="gender-selector-container">
+          Your gender:
+          <label className="gender-label" htmlFor="male">
+            Male
+            <input id="male" type="radio" className="radio-input" value="male" name="gender" />
+            <span />
+          </label>
+          <label className="gender-label" htmlFor="female">
+            Female
+            <input id="female" type="radio" className="radio-input" value="female" name="gender" />
+            <span />
+          </label>
+        </div>
 
         <label htmlFor="select">
           Select your favorite dessert:
