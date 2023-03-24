@@ -67,11 +67,21 @@ class Form extends Component<FormProps, FormState> {
       gender: genderValue[`${this.inputsRefs.genderSelector.current?.checked}`] as string,
       favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
       favoriteAdditives: [
-        this.inputsRefs.chocolateInput.current?.id as string,
-        this.inputsRefs.caramelInput.current?.id as string,
-        this.inputsRefs.nutsInput.current?.id as string,
-        this.inputsRefs.berriesInput.current?.id as string,
-        this.inputsRefs.vanillaInput.current?.id as string,
+        this.inputsRefs.chocolateInput.current?.checked
+          ? (this.inputsRefs.chocolateInput.current?.id as string)
+          : '',
+        this.inputsRefs.caramelInput.current?.checked
+          ? (this.inputsRefs.caramelInput.current?.id as string)
+          : '',
+        this.inputsRefs.nutsInput.current?.checked
+          ? (this.inputsRefs.nutsInput.current?.id as string)
+          : '',
+        this.inputsRefs.berriesInput.current?.checked
+          ? (this.inputsRefs.berriesInput.current?.id as string)
+          : '',
+        this.inputsRefs.vanillaInput.current?.checked
+          ? (this.inputsRefs.vanillaInput.current?.id as string)
+          : '',
       ],
       catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
     };
@@ -152,7 +162,7 @@ class Form extends Component<FormProps, FormState> {
               <option value="candies">Candies</option>
               <option value="donuts">Donuts</option>
               <option value="cookies">Cookies</option>
-              <option value="iceCream">Ice-cream</option>
+              <option value="ice-cream">Ice-cream</option>
             </select>
           </div>
           <div className="separator" />
