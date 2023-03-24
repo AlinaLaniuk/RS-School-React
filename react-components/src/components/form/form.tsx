@@ -106,7 +106,6 @@ class Form extends Component<FormProps, FormState> {
       !!this.inputsRefs.maleInput.current?.checked,
       !!this.inputsRefs.femaleInput.current?.checked
     );
-    console.log(isUserChooseGender);
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
@@ -231,7 +230,7 @@ class Form extends Component<FormProps, FormState> {
           />
           <div className="separator error">{catImage}</div>
         </label>
-        <button onClick={this.submitForm} type="button">
+        <button className="submit-button" onClick={this.submitForm} type="button">
           Submit
         </button>
       </form>
