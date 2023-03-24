@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation';
-import { FormState, GenderType, FormProps } from '../../types';
+import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
   userName: 'Incorrect name value. Must be at least 5 characters',
   birthdayDate: 'Incorrect date',
   catImage: 'Incorrect file. It must be jpg or png file',
-};
-
-const genderValue: GenderType = {
-  true: 'female',
-  false: 'male',
 };
 
 class Form extends Component<FormProps, FormState> {
@@ -19,7 +14,8 @@ class Form extends Component<FormProps, FormState> {
     nameInput: React.RefObject<HTMLInputElement>;
     birthDateInput: React.RefObject<HTMLInputElement>;
     dessertSelector: React.RefObject<HTMLSelectElement>;
-    genderSelector: React.RefObject<HTMLInputElement>;
+    maleInput: React.RefObject<HTMLInputElement>;
+    femaleInput: React.RefObject<HTMLInputElement>;
     fileUploader: React.RefObject<HTMLInputElement>;
     chocolateInput: React.RefObject<HTMLInputElement>;
     caramelInput: React.RefObject<HTMLInputElement>;
@@ -55,7 +51,8 @@ class Form extends Component<FormProps, FormState> {
       berriesInput: React.createRef(),
       vanillaInput: React.createRef(),
       dessertSelector: React.createRef(),
-      genderSelector: React.createRef(),
+      maleInput: React.createRef(),
+      femaleInput: React.createRef(),
       fileUploader: React.createRef(),
     };
   }
@@ -64,7 +61,9 @@ class Form extends Component<FormProps, FormState> {
     const cardInfo = {
       userName: this.inputsRefs.nameInput.current?.value as string,
       birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
-      gender: genderValue[`${this.inputsRefs.genderSelector.current?.checked}`] as string,
+      gender: this.inputsRefs.maleInput.current?.checked
+        ? (this.inputsRefs.maleInput.current?.value as string)
+        : (this.inputsRefs.femaleInput.current?.value as string),
       favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
       favoriteAdditives: [
         this.inputsRefs.chocolateInput.current?.checked
@@ -144,12 +143,26 @@ class Form extends Component<FormProps, FormState> {
           Your gender:
           <label className="gender-label" htmlFor="male">
             Male
-            <input id="male" type="radio" className="radio-input" value="male" name="gender" />
+            <input
+              ref={this.inputsRefs.maleInput}
+              id="male"
+              type="radio"
+              className="radio-input"
+              value="male"
+              name="gender"
+            />
             <span />
           </label>
           <label className="gender-label" htmlFor="female">
             Female
-            <input id="female" type="radio" className="radio-input" value="female" name="gender" />
+            <input
+              ref={this.inputsRefs.femaleInput}
+              id="female"
+              type="radio"
+              className="radio-input"
+              value="female"
+              name="gender"
+            />
             <span />
           </label>
         </div>
