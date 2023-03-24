@@ -4,7 +4,7 @@ import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
   userName:
-    'Must be at least 5 characters in each word, at least 2 words, each word starts starts with uppercased letter',
+    'At least 5 characters in each word, at least 2 words, each word starts with uppercased letter. Only English',
   birthdayDate: 'Incorrect date. Cannot be greater than current date',
   gender: 'You need to choose gender',
   catImage: 'Incorrect file. It must be jpg or png file',
@@ -35,6 +35,7 @@ class Form extends Component<FormProps, FormState> {
         catImage: '',
         gender: '',
       },
+      submitMessage: '',
     };
     this.inputsRefs = {
       form: React.createRef(),
@@ -96,8 +97,16 @@ class Form extends Component<FormProps, FormState> {
       const { setCardsInfo } = this.props;
       setCardsInfo(cardInfo);
       (this.inputsRefs.form.current as HTMLFormElement).reset();
+      this.showSubmitMessage();
     }
   };
+
+  showSubmitMessage() {
+    this.setState({ submitMessage: 'Submit successfully' });
+    setTimeout(() => {
+      this.setState({ submitMessage: '' });
+    }, 2000);
+  }
 
   validateInputsValues() {
     const isTextInputValueCorrect = validateTextInput(
@@ -134,6 +143,7 @@ class Form extends Component<FormProps, FormState> {
   render() {
     const { errors } = this.state;
     const { userName, birthdayDate, catImage, gender } = errors;
+    const { submitMessage } = this.state;
     return (
       <form data-testid="form-container" ref={this.inputsRefs.form} className="form">
         <label className="text-input" htmlFor="text-input">
@@ -243,6 +253,7 @@ class Form extends Component<FormProps, FormState> {
         <button className="submit-button" onClick={this.submitForm} type="button">
           Submit
         </button>
+        <div className="submit-message">{submitMessage}</div>
       </form>
     );
   }

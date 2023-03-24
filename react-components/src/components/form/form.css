@@ -1,6 +1,7 @@
 .form {
   width: 50%;
-  height: 800px;
+  height: 860px;
+  position: relative;
   margin-top: 20px;
   border: 1px solid white;
   border-radius: 20px;
@@ -142,4 +143,11 @@ label {
   border-radius: 20px;
   border: none;
   font-size: 1.2rem;
+}
+
+.submit-message {
+  width: 100%;
+  text-align: center;
+  height: 30px;
+  font-size: 1.5rem;
 }
