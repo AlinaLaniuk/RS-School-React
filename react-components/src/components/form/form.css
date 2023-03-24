@@ -78,8 +78,15 @@ label {
   opacity: 0;
 }
 
+.gender-selector-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .gender-selector-container label {
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;

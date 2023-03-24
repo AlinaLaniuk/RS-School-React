@@ -36,18 +36,11 @@ export interface RadioInputState {
 }
 
 export interface FormState {
-  inputsValue: {
-    userName: string;
-    birthdayDate: string;
-    gender: string;
-    favoriteDessert: string;
-    favoriteAdditives: string[];
-    catImage: File | undefined;
-  };
   errors: {
     userName: string;
     birthdayDate: string;
     catImage: string;
+    gender: string;
   };
 }
 

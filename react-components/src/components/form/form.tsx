@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { validateTextInput, validateDate, validateFile } from './validation';
+import { validateTextInput, validateDate, validateFile, validateRadioInputs } from './validation';
 import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
   userName: 'Incorrect name value. Must be at least 5 characters',
   birthdayDate: 'Incorrect date',
+  gender: 'You need to choose gender',
   catImage: 'Incorrect file. It must be jpg or png file',
 };
 
@@ -27,18 +28,11 @@ class Form extends Component<FormProps, FormState> {
   constructor(props: FormProps) {
     super(props);
     this.state = {
-      inputsValue: {
-        userName: '',
-        birthdayDate: '',
-        gender: '',
-        favoriteDessert: '',
-        favoriteAdditives: [],
-        catImage: undefined,
-      },
       errors: {
         userName: '',
         birthdayDate: '',
         catImage: '',
+        gender: '',
       },
     };
     this.inputsRefs = {
@@ -108,19 +102,29 @@ class Form extends Component<FormProps, FormState> {
       (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
       ['image/jpeg', 'image/png']
     );
+    const isUserChooseGender = validateRadioInputs(
+      !!this.inputsRefs.maleInput.current?.checked,
+      !!this.inputsRefs.femaleInput.current?.checked
+    );
+    console.log(isUserChooseGender);
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
       catImage: isFileInputValueCorrect ? '' : errorsTexts.catImage,
+      gender: isUserChooseGender ? '' : errorsTexts.gender,
     };
-    const { inputsValue } = this.state;
-    this.setState({ inputsValue, errors: newErrorsState });
-    return isTextInputValueCorrect && isBirthdayDateInputValueCorrect && isFileInputValueCorrect;
+    this.setState({ errors: newErrorsState });
+    return (
+      isTextInputValueCorrect &&
+      isBirthdayDateInputValueCorrect &&
+      isFileInputValueCorrect &&
+      isUserChooseGender
+    );
   }
 
   render() {
     const { errors } = this.state;
-    const { userName, birthdayDate, catImage } = errors;
+    const { userName, birthdayDate, catImage, gender } = errors;
     return (
       <form ref={this.inputsRefs.form} className="form">
         <label className="text-input" htmlFor="text-input">
@@ -165,6 +169,7 @@ class Form extends Component<FormProps, FormState> {
             />
             <span />
           </label>
+          <div className="separator error">{gender}</div>
         </div>
 
         <label htmlFor="select">
