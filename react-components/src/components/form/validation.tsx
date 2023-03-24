@@ -1,5 +1,13 @@
-export function validateTextInput(value: string, charQuantity: number) {
-  return value.length >= charQuantity;
+export function validateTextInput(value: string, charQuantity: number, wordsQuantity: number) {
+  const words = value.split(' ');
+  const nameReg = /^([A-Z])/;
+  if (words.length < wordsQuantity) {
+    return false;
+  }
+  const correctWords = words.filter((word) => {
+    return nameReg.test(word) && word.length >= charQuantity;
+  });
+  return correctWords.length >= words.length;
 }
 
 export function validateDate(date: string) {
@@ -25,6 +33,5 @@ export function validateRadioInputs(...inputsValue: boolean[]) {
   const truthyInputsValue = inputsValue.filter((inputValue) => {
     return inputValue;
   });
-  console.log(truthyInputsValue);
   return !!truthyInputsValue.length;
 }

@@ -3,8 +3,8 @@ import { validateTextInput, validateDate, validateFile, validateRadioInputs } fr
 import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
-  userName: 'Incorrect name value. Must be at least 5 characters',
-  birthdayDate: 'Incorrect date',
+  userName: 'Incorrect name value. Must be at least 5 characters in each word, at least 2 words',
+  birthdayDate: 'Incorrect date. Cannot be greater than current date',
   gender: 'You need to choose gender',
   catImage: 'Incorrect file. It must be jpg or png file',
 };
@@ -93,7 +93,8 @@ class Form extends Component<FormProps, FormState> {
   validateInputsValues() {
     const isTextInputValueCorrect = validateTextInput(
       this.inputsRefs.nameInput.current?.value as string,
-      5
+      5,
+      2
     );
     const isBirthdayDateInputValueCorrect = validateDate(
       this.inputsRefs.birthDateInput.current?.value as string
