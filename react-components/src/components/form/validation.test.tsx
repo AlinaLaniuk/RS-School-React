@@ -1,4 +1,9 @@
-import { validateTextInput, validateDate, validateFile, validateRadioInputs } from './validation';
+import {
+  validateTextInput,
+  validateDate,
+  validateFile,
+  validateIsSomeOptionsWasChosen,
+} from './validation';
 
 test('validate text', () => {
   const text = 'test test';
@@ -17,5 +22,5 @@ test('validate file', () => {
 });
 
 test('validate radio inputs', () => {
-  expect(validateRadioInputs(false, false)).toEqual(false);
+  expect(validateIsSomeOptionsWasChosen(false, false)).toEqual(false);
 });
