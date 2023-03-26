@@ -21,10 +21,14 @@ export function validateFile(file: File, availableTypes: string[]) {
   return fileType.length === 1;
 }
 
-export function validateRadioInputs(...inputsValue: boolean[]) {
+export function validateIsSomeOptionsWasChosen(...inputsValue: boolean[]) {
   const truthyInputsValue = inputsValue.filter((inputValue) => {
     return inputValue;
   });
   console.log(truthyInputsValue);
   return !!truthyInputsValue.length;
+}
+
+export function validateSelectInput(value: string, defaultValue: string) {
+  return value !== defaultValue;
 }
