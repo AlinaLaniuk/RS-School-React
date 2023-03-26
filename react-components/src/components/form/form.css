@@ -28,6 +28,10 @@ label {
   align-items: center;
 }
 
+.select-input-container {
+  width: 100%;
+}
+
 .select {
   background-color: rgb(255, 0, 93);
   color: white;

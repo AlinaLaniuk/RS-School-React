@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { validateTextInput, validateDate, validateFile, validateRadioInputs } from './validation';
+import {
+  validateTextInput,
+  validateDate,
+  validateFile,
+  validateIsSomeOptionsWasChosen,
+  validateSelectInput,
+} from './validation';
 import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
@@ -7,8 +13,12 @@ const errorsTexts = {
     'At least 5 characters in each word, at least 2 words, each word starts with uppercased letter. Only English',
   birthdayDate: 'Incorrect date. Cannot be greater than current date',
   gender: 'You need to choose gender',
+  dessert: 'You need to choose dessert',
+  additives: 'You need to choose some additives',
   catImage: 'Incorrect file. It must be jpg or png file',
 };
+
+const selectDefaultValue = 'chooseDessert';
 
 class Form extends Component<FormProps, FormState> {
   inputsRefs: {
@@ -34,6 +44,8 @@ class Form extends Component<FormProps, FormState> {
         birthdayDate: '',
         catImage: '',
         gender: '',
+        dessert: '',
+        additives: '',
       },
       submitMessage: '',
     };
@@ -71,13 +83,9 @@ class Form extends Component<FormProps, FormState> {
         ? (this.inputsRefs.vanillaInput.current?.id as string)
         : '',
     ];
-    const truthyAdditives = favoriteAdditivesArr.filter((additive) => {
+    const favoriteAdditivesValues = favoriteAdditivesArr.filter((additive) => {
       return additive;
     });
-    const favoriteAdditivesValues =
-      truthyAdditives.length > 0
-        ? truthyAdditives
-        : ['It seems you doesn`t like any of our additivies'];
     const cardInfo = {
       userName: this.inputsRefs.nameInput.current?.value as string,
       birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
@@ -121,15 +129,28 @@ class Form extends Component<FormProps, FormState> {
       (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
       ['image/jpeg', 'image/png']
     );
-    const isUserChooseGender = validateRadioInputs(
-      !!this.inputsRefs.maleInput.current?.checked,
-      !!this.inputsRefs.femaleInput.current?.checked
+    const isUserChooseGender = validateIsSomeOptionsWasChosen(
+      this.inputsRefs.maleInput.current?.checked as boolean,
+      this.inputsRefs.femaleInput.current?.checked as boolean
+    );
+    const isUserChooseDessert = validateSelectInput(
+      this.inputsRefs.dessertSelector.current?.value as string,
+      selectDefaultValue
+    );
+    const isUserChooseAdditives = validateIsSomeOptionsWasChosen(
+      this.inputsRefs.chocolateInput.current?.checked as boolean,
+      this.inputsRefs.caramelInput.current?.checked as boolean,
+      this.inputsRefs.nutsInput.current?.checked as boolean,
+      this.inputsRefs.berriesInput.current?.checked as boolean,
+      this.inputsRefs.vanillaInput.current?.checked as boolean
     );
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
       catImage: isFileInputValueCorrect ? '' : errorsTexts.catImage,
       gender: isUserChooseGender ? '' : errorsTexts.gender,
+      dessert: isUserChooseDessert ? '' : errorsTexts.dessert,
+      additives: isUserChooseAdditives ? '' : errorsTexts.additives,
     };
     this.setState({ errors: newErrorsState });
     return (
@@ -142,7 +163,7 @@ class Form extends Component<FormProps, FormState> {
 
   render() {
     const { errors } = this.state;
-    const { userName, birthdayDate, catImage, gender } = errors;
+    const { userName, birthdayDate, catImage, gender, dessert, additives } = errors;
     const { submitMessage } = this.state;
     return (
       <form data-testid="form-container" ref={this.inputsRefs.form} className="form">
@@ -193,8 +214,9 @@ class Form extends Component<FormProps, FormState> {
 
         <label htmlFor="select">
           Select your favorite dessert:
-          <div className="input-wrapper">
+          <div className="input-wrapper select-input-container">
             <select ref={this.inputsRefs.dessertSelector} className="select" id="select">
+              <option value={selectDefaultValue}>Choose dessert</option>
               <option value="cake">Cake</option>
               <option value="candies">Candies</option>
               <option value="donuts">Donuts</option>
@@ -202,7 +224,7 @@ class Form extends Component<FormProps, FormState> {
               <option value="ice-cream">Ice-cream</option>
             </select>
           </div>
-          <div className="separator" />
+          <div className="separator error">{dessert}</div>
         </label>
 
         <fieldset className="checkbox">
@@ -238,7 +260,7 @@ class Form extends Component<FormProps, FormState> {
             </label>
           </div>
         </fieldset>
-        <div className="separator" />
+        <div className="separator error">{additives}</div>
 
         <label className="file-uploader-label" htmlFor="file-uploader-input">
           Add picture with cute cat:

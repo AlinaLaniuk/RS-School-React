@@ -41,6 +41,8 @@ export interface FormState {
     birthdayDate: string;
     catImage: string;
     gender: string;
+    dessert: string;
+    additives: string;
   };
   submitMessage: string;
 }
