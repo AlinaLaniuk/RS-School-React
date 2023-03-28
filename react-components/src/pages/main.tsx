@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
 import Card from '../components/card/card';
-import { debounce, setMatchedInputValueCardsData } from '../utils';
+import debounce from '../utils';
 import { IState, HeaderBoundProps } from '../types';
+import cardsData from '../data';
 
+const setMatchedInputValueCardsData = (inputValue: string) => {
+  return cardsData.filter((cardData) => {
+    return (
+      cardData.header.toLowerCase().includes(inputValue.toLowerCase()) ||
+      cardData.description.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  });
+};
 class MainPage extends Component<HeaderBoundProps, IState> {
   debouncedUpdateCards: (...args: React.ChangeEvent<Element>[]) => void;
 
