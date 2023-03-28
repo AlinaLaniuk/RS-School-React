@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import SearchBar from '../components/searchBar/searchBar';
-import Card from '../components/card/card';
-import debounce from '../utils';
-import { IState, HeaderBoundProps } from '../types';
-import cardsData from '../data';
+import SearchBar from '../../components/searchBar/searchBar';
+import Card from '../../components/card/card';
+import debounce from '../../utils';
+import { IState, HeaderBoundProps } from '../../types';
+import cardsData from '../../data';
 
 const setMatchedInputValueCardsData = (inputValue: string) => {
   return cardsData.filter((cardData) => {
@@ -54,8 +54,7 @@ class MainPage extends Component<HeaderBoundProps, IState> {
   }
 
   render() {
-    const { data } = this.state;
-    const { searchValue } = this.state;
+    const { data, searchValue } = this.state;
     return (
       <>
         <div className="search-bar-container">
