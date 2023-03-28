@@ -1,4 +1,4 @@
-import { CardProps } from '../../types';
+import { CardProps } from './types';
 
 const saleImageSrc = '/sale.png';
 

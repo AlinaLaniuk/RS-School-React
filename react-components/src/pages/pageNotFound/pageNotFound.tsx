@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { HeaderBoundProps } from '../../types';
+import { HeaderBoundProps } from '../types';
 
 class PageNotFound extends Component<HeaderBoundProps> {
   componentDidMount() {

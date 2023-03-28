@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderBoundProps } from '../../types';
+import { HeaderBoundProps } from '../types';
 
 class AboutUs extends Component<HeaderBoundProps> {
   componentDidMount() {
