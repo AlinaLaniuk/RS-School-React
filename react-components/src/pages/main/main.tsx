@@ -56,19 +56,7 @@ class MainPage extends Component<HeaderBoundProps, IState> {
         </div>
         <div data-testid="cards-container" className="cards-container">
           {currentCardsData.map((cardData) => {
-            return (
-              <Card
-                key={cardData.id}
-                header={cardData.header}
-                src={cardData.src}
-                description={cardData.description}
-                rating={cardData.rating}
-                price={cardData.price}
-                popular={cardData.popular}
-                discount={cardData.discount}
-                id=""
-              />
-            );
+            return <Card key={cardData.id} {...cardData} />;
           })}
         </div>
       </>
