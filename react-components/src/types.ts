@@ -10,7 +10,6 @@ export interface CardProps {
 }
 
 export interface IState {
-  data: CardProps[];
   searchValue: string;
 }
 

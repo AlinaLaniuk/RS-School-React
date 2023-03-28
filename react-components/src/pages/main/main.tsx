@@ -18,7 +18,7 @@ class MainPage extends Component<HeaderBoundProps, IState> {
 
   constructor(props: HeaderBoundProps) {
     super(props);
-    this.state = { data: [], searchValue: '' };
+    this.state = { searchValue: localStorage.getItem('lastSearchValue') || '' };
     this.updateCards = this.updateCards.bind(this);
     this.debouncedUpdateCards = debounce(this.updateCards, 1000);
   }
@@ -26,12 +26,6 @@ class MainPage extends Component<HeaderBoundProps, IState> {
   componentDidMount() {
     const { setPageName } = this.props;
     setPageName('Main');
-    let searchValueFromLocalStorage = localStorage.getItem('lastSearchValue');
-    if (!searchValueFromLocalStorage) {
-      searchValueFromLocalStorage = '';
-    }
-    const currentCardsData = setMatchedInputValueCardsData(searchValueFromLocalStorage);
-    this.setState({ data: currentCardsData, searchValue: searchValueFromLocalStorage });
   }
 
   componentDidUpdate(prevProps: unknown, prevState: IState) {
@@ -49,19 +43,19 @@ class MainPage extends Component<HeaderBoundProps, IState> {
   updateCards(event: React.ChangeEvent) {
     const eventTarget = event.target as HTMLInputElement;
     const inputValue = eventTarget.value;
-    const cardDataMatchedInputValue = setMatchedInputValueCardsData(inputValue);
-    this.setState({ data: cardDataMatchedInputValue, searchValue: inputValue });
+    this.setState({ searchValue: inputValue });
   }
 
   render() {
-    const { data, searchValue } = this.state;
+    const { searchValue } = this.state;
+    const currentCardsData = setMatchedInputValueCardsData(searchValue);
     return (
       <>
         <div className="search-bar-container">
           <SearchBar callback={this.debouncedUpdateCards} inputValue={searchValue} />
         </div>
         <div data-testid="cards-container" className="cards-container">
-          {data.map((cardData) => {
+          {currentCardsData.map((cardData) => {
             return (
               <Card
                 key={cardData.id}
