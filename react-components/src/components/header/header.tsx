@@ -8,30 +8,11 @@ interface IHeaderState {
   page: string;
 }
 
-function setCurrentPageName() {
-  const path = window.location.pathname.split('/');
-  const pagePath = path[path.length - 1];
-  let pageName;
-  if (pagePath === '') {
-    pageName = 'Main';
-  } else if (pagePath === 'about') {
-    pageName = 'About';
-  } else {
-    pageName = 'Not found';
-  }
-  return pageName;
-}
-
 class Header extends Component<unknown, IHeaderState> {
   constructor(props: unknown) {
     super(props);
     this.state = { page: '' };
     this.setPageName = this.setPageName.bind(this);
-  }
-
-  componentDidMount() {
-    const currentpage = setCurrentPageName();
-    this.setState({ page: currentpage });
   }
 
   setPageName(currentPage = '') {
