@@ -1,44 +1,30 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import { Component } from 'react';
-import MainPage from '../../pages/main/main';
+import { useState } from 'react';
+import MainPage from '../../pages/main';
 import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
 import Forms from '../../pages/forms/forms';
 
-type HeaderState = {
-  page: string;
-};
+function Header() {
+  const [page, setPage] = useState('');
 
-class Header extends Component<unknown, HeaderState> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = { page: '' };
-  }
-
-  setPageName = (currentPage = '') => {
-    this.setState({ page: currentPage });
-  };
-
-  render() {
-    const { page } = this.state;
-    return (
-      <>
-        <header className="header">
-          <div className="header-wrapper">
-            <div>Current page: {page}</div>
-            <Link to="/">Main</Link>
-            <Link to="/about">About us</Link>
-            <Link to="/forms">Forms</Link>
-          </div>
-        </header>
-        <Routes>
-          <Route path="/" element={<MainPage setPageName={this.setPageName} />} />
-          <Route path="/about" element={<AboutUs setPageName={this.setPageName} />} />
-          <Route path="/forms" element={<Forms setPageName={this.setPageName} />} />
-          <Route path="/*" element={<PageNotFound setPageName={this.setPageName} />} />
-        </Routes>
-      </>
-    );
-  }
+  return (
+    <>
+      <header className="header">
+        <div className="header-wrapper">
+          <div>Current page: {page}</div>
+          <Link to="/">Main</Link>
+          <Link to="/about">About us</Link>
+          <Link to="/forms">Forms</Link>
+        </div>
+      </header>
+      <Routes>
+        <Route path="/" element={<MainPage setPage={setPage} />} />
+        <Route path="/about" element={<AboutUs setPage={setPage} />} />
+        <Route path="/forms" element={<Forms setPage={setPage} />} />
+        <Route path="/*" element={<PageNotFound setPage={setPage} />} />
+      </Routes>
+    </>
+  );
 }
 export default Header;

@@ -15,7 +15,7 @@ export interface IState {
 }
 
 type PassPageName = (pageName: string) => void;
-export type HeaderBoundProps = { setPageName: PassPageName };
+export type HeaderBoundProps = { setPage: PassPageName };
 
 export interface InputState {
   inputValue: string;

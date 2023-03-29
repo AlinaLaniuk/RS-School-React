@@ -19,8 +19,8 @@ function MainPage(props: HeaderBoundProps) {
   const initialData = setMatchedInputValueCardsData(searchValue);
   const [data, updateData] = useState(initialData);
   useEffect(() => {
-    const { setPageName } = props;
-    setPageName('Main');
+    const { setPage } = props;
+    setPage('Main');
   });
 
   function updateCards(event: React.ChangeEvent) {
