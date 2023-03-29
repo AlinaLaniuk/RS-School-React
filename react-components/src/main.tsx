@@ -9,6 +9,8 @@ import './components/card/card.css';
 import './components/header/header.css';
 import './pages/aboutUs/aboutUs.css';
 import './pages/pageNotFound/pageNotFound.css';
+import './pages/forms/forms.css';
+import './components/form/form.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
