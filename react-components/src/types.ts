@@ -9,11 +9,6 @@ export interface CardProps {
   discount: number;
 }
 
-export interface IState {
-  data: CardProps[];
-  searchValue: string;
-}
-
 type PassPageName = (pageName: string) => void;
 export type HeaderBoundProps = { setPage: PassPageName };
 

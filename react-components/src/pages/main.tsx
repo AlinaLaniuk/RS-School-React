@@ -3,7 +3,7 @@ import SearchBar from '../components/searchBar/searchBar';
 import Card from '../components/card/card';
 import cardsData from '../data';
 import debounce from '../utils';
-import { IState, HeaderBoundProps, CardProps } from '../types';
+import { HeaderBoundProps, CardProps } from '../types';
 
 const setMatchedInputValueCardsData = (inputValue: string) => {
   return cardsData.filter((cardData) => {
@@ -21,6 +21,7 @@ function MainPage(props: HeaderBoundProps) {
   useEffect(() => {
     const { setPage } = props;
     setPage('Main');
+    localStorage.setItem('lastSearchValue', searchValue);
   });
 
   function updateCards(event: React.ChangeEvent) {
