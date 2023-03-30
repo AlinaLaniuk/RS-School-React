@@ -3,7 +3,7 @@ import SearchBar from '../components/searchBar/searchBar';
 import Card from '../components/card/card';
 import cardsData from '../data';
 import debounce from '../utils';
-import { HeaderBoundProps, CardProps } from '../types';
+import { CardProps } from '../types';
 
 const setMatchedInputValueCardsData = (inputValue: string) => {
   return cardsData.filter((cardData) => {
@@ -14,13 +14,11 @@ const setMatchedInputValueCardsData = (inputValue: string) => {
   });
 };
 
-function MainPage(props: HeaderBoundProps) {
+function MainPage() {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
   const initialData = setMatchedInputValueCardsData(searchValue);
   const [data, updateData] = useState(initialData);
   useEffect(() => {
-    const { setPage } = props;
-    setPage('Main');
     localStorage.setItem('lastSearchValue', searchValue);
   });
 

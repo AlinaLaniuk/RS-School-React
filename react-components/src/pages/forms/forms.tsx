@@ -1,24 +1,17 @@
 import { Component } from 'react';
-import { HeaderBoundProps } from '../types';
-import { CardInfo } from '../../components/form/userInfoCard/types';
-import { FormsState } from './types';
+import { CardInfo } from '../../types';
 import Form from '../../components/form/form';
 import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
 
-class Forms extends Component<HeaderBoundProps, FormsState> {
-  constructor(props: HeaderBoundProps) {
+class Forms extends Component<unknown, FormsState> {
+  constructor(props: unknown) {
     super(props);
     this.state = {
       cards: [],
     };
   }
 
-  componentDidMount() {
-    const { setPageName } = this.props;
-    setPageName('Forms');
-  }
-
-  onNewCard = (cardInfo: CardInfo) => {
+  setCardsInfo(cardInfo: CardInfo) {
     const { cards } = this.state;
     this.setState({ cards: [...cards, cardInfo] });
   };

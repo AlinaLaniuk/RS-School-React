@@ -1,28 +1,39 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import MainPage from '../../pages/main';
 import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
 import Forms from '../../pages/forms/forms';
 
+export interface PageNamesType {
+  [key: string]: string;
+}
+
+const pageNames: PageNamesType = {
+  '/': 'Main',
+  '/about': 'About',
+  '/forms': 'Forms',
+};
+
+const pageNotFoundName = 'Page not found';
+
 function Header() {
-  const [page, setPage] = useState('');
+  const location = useLocation();
 
   return (
     <>
       <header className="header">
         <div className="header-wrapper">
-          <div>Current page: {page}</div>
+          <div>Current page: {pageNames[location.pathname] || pageNotFoundName}</div>
           <Link to="/">Main</Link>
           <Link to="/about">About us</Link>
           <Link to="/forms">Forms</Link>
         </div>
       </header>
       <Routes>
-        <Route path="/" element={<MainPage setPage={setPage} />} />
-        <Route path="/about" element={<AboutUs setPage={setPage} />} />
-        <Route path="/forms" element={<Forms setPage={setPage} />} />
-        <Route path="/*" element={<PageNotFound setPage={setPage} />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/forms" element={<Forms />} />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>
   );
