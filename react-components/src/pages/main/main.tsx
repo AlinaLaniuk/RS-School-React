@@ -20,7 +20,6 @@ class MainPage extends Component<HeaderBoundProps, IState> {
   constructor(props: HeaderBoundProps) {
     super(props);
     this.state = { searchValue: localStorage.getItem('lastSearchValue') || '' };
-    this.updateCards = this.updateCards.bind(this);
     this.debouncedUpdateCards = debounce(this.updateCards, 1000);
   }
 
@@ -41,11 +40,11 @@ class MainPage extends Component<HeaderBoundProps, IState> {
     localStorage.setItem('lastSearchValue', searchValue);
   }
 
-  updateCards(event: React.ChangeEvent) {
+  updateCards = (event: React.ChangeEvent) => {
     const eventTarget = event.target as HTMLInputElement;
     const inputValue = eventTarget.value;
     this.setState({ searchValue: inputValue });
-  }
+  };
 
   render() {
     const { searchValue } = this.state;

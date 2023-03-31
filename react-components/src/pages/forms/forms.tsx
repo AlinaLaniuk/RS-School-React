@@ -11,7 +11,6 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
     this.state = {
       cards: [],
     };
-    this.setCardsInfo = this.setCardsInfo.bind(this);
   }
 
   componentDidMount() {
@@ -19,12 +18,12 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
     setPageName('Forms');
   }
 
-  setCardsInfo(cardInfo: CardInfo) {
+  setCardsInfo = (cardInfo: CardInfo) => {
     const { cards } = this.state;
     const cardsInfo = [...cards];
     cardsInfo.push(cardInfo);
     this.setState({ cards: cardsInfo });
-  }
+  };
 
   render() {
     const { cards } = this.state;

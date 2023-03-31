@@ -13,12 +13,11 @@ class Header extends Component<unknown, HeaderState> {
   constructor(props: unknown) {
     super(props);
     this.state = { page: '' };
-    this.setPageName = this.setPageName.bind(this);
   }
 
-  setPageName(currentPage = '') {
+  setPageName = (currentPage = '') => {
     this.setState({ page: currentPage });
-  }
+  };
 
   render() {
     const { page } = this.state;
