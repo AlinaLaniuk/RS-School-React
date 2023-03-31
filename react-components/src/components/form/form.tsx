@@ -162,9 +162,8 @@ class Form extends Component<FormProps, FormState> {
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, submitMessage } = this.state;
     const { userName, birthdayDate, catImage, gender, dessert, additives } = errors;
-    const { submitMessage } = this.state;
     return (
       <form data-testid="form-container" ref={this.inputsRefs.form} className="form">
         <label className="text-input" htmlFor="text-input">

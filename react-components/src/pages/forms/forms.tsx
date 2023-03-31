@@ -20,9 +20,7 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
 
   setCardsInfo = (cardInfo: CardInfo) => {
     const { cards } = this.state;
-    const cardsInfo = [...cards];
-    cardsInfo.push(cardInfo);
-    this.setState({ cards: cardsInfo });
+    this.setState({ cards: [...cards, cardInfo] });
   };
 
   render() {
@@ -32,17 +30,7 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
         <Form setCardsInfo={this.setCardsInfo} />
         <div className="user-info-cards-container">
           {cards.map((cardInfo) => {
-            return (
-              <UserInfoCard
-                key={cardInfo.userName}
-                userName={cardInfo.userName}
-                birthdayDate={cardInfo.birthdayDate}
-                gender={cardInfo.gender}
-                favoriteDessert={cardInfo.favoriteDessert}
-                favoriteAdditives={cardInfo.favoriteAdditives}
-                catImage={cardInfo.catImage}
-              />
-            );
+            return <UserInfoCard key={cardInfo.userName} {...cardInfo} />;
           })}
         </div>
       </div>
