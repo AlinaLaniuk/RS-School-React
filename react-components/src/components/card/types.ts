@@ -56,10 +56,6 @@ export type CardInfo = {
   catImage: File;
 };
 
-export type GenderType = {
-  [key: string]: string;
-};
-
 export type FormProps = {
   setCardsInfo: (cardInfo: CardInfo) => void;
 };
