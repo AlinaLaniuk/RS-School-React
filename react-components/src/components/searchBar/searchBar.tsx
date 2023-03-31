@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface ICallback {
+type Callback = {
   callback: (event: React.ChangeEvent) => void;
   inputValue: string;
-}
+};
 
-function SearchBar({ callback, inputValue }: ICallback) {
+function SearchBar({ callback, inputValue }: Callback) {
   return (
     <div className="input-wrapper">
       <img src="./search-bar.png" alt="search-bar-icon" />

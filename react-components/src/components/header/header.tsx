@@ -5,11 +5,11 @@ import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
 import Forms from '../../pages/forms/forms';
 
-interface IHeaderState {
+type HeaderState = {
   page: string;
-}
+};
 
-class Header extends Component<unknown, IHeaderState> {
+class Header extends Component<unknown, HeaderState> {
   constructor(props: unknown) {
     super(props);
     this.state = { page: '' };

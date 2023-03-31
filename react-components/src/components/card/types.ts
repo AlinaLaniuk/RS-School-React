@@ -1,4 +1,4 @@
-export interface CardProps {
+export type CardProps = {
   id?: string;
   header?: string;
   src?: string;
@@ -7,20 +7,20 @@ export interface CardProps {
   price: number;
   popular?: boolean;
   discount: number;
-}
+};
 
-export interface IState {
+export type IState = {
   searchValue: string;
-}
+};
 
 type PassPageName = (pageName: string) => void;
 export type HeaderBoundProps = { setPageName: PassPageName };
 
-export interface InputState {
+export type InputState = {
   inputValue: string;
-}
+};
 
-export interface CheckboxInputState {
+export type CheckboxInputState = {
   value: {
     chocolate: boolean;
     caramel: boolean;
@@ -28,14 +28,14 @@ export interface CheckboxInputState {
     berries: boolean;
     vanilla: boolean;
   };
-}
+};
 
-export interface RadioInputState {
+export type RadioInputState = {
   male: boolean;
   female: boolean;
-}
+};
 
-export interface FormState {
+export type FormState = {
   errors: {
     userName: string;
     birthdayDate: string;
@@ -45,21 +45,21 @@ export interface FormState {
     additives: string;
   };
   submitMessage: string;
-}
+};
 
-export interface CardInfo {
+export type CardInfo = {
   userName: string;
   birthdayDate: string;
   gender: string;
   favoriteDessert: string;
   favoriteAdditives: string[];
   catImage: File;
-}
+};
 
-export interface GenderType {
+export type GenderType = {
   [key: string]: string;
-}
+};
 
-export interface FormProps {
+export type FormProps = {
   setCardsInfo: (cardInfo: CardInfo) => void;
-}
+};

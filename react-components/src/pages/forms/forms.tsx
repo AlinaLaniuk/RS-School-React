@@ -3,9 +3,9 @@ import { HeaderBoundProps, CardInfo } from '../../types';
 import Form from '../../components/form/form';
 import UserInfoCard from '../../components/form/userInfoCard';
 
-interface FormsState {
+type FormsState = {
   cards: CardInfo[];
-}
+};
 
 class Forms extends Component<HeaderBoundProps, FormsState> {
   constructor(props: HeaderBoundProps) {
