@@ -18,7 +18,7 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
     setPageName('Forms');
   }
 
-  setCardsInfo = (cardInfo: CardInfo) => {
+  onNewCard = (cardInfo: CardInfo) => {
     const { cards } = this.state;
     this.setState({ cards: [...cards, cardInfo] });
   };
@@ -27,7 +27,7 @@ class Forms extends Component<HeaderBoundProps, FormsState> {
     const { cards } = this.state;
     return (
       <div className="form-container">
-        <Form setCardsInfo={this.setCardsInfo} />
+        <Form onNewCard={this.onNewCard} />
         <div className="user-info-cards-container">
           {cards.map((cardInfo) => {
             return <UserInfoCard key={cardInfo.userName} {...cardInfo} />;

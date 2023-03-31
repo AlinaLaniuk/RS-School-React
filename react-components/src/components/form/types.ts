@@ -13,5 +13,5 @@ export type FormState = {
 };
 
 export type FormProps = {
-  setCardsInfo: (cardInfo: CardInfo) => void;
+  onNewCard: (cardInfo: CardInfo) => void;
 };

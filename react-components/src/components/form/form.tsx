@@ -102,8 +102,8 @@ class Form extends Component<FormProps, FormState> {
   submitForm = () => {
     if (this.validateInputsValues()) {
       const cardInfo = this.collectStateInfo();
-      const { setCardsInfo } = this.props;
-      setCardsInfo(cardInfo);
+      const { onNewCard } = this.props;
+      onNewCard(cardInfo);
       (this.inputsRefs.form.current as HTMLFormElement).reset();
       this.showSubmitMessage();
     }
