@@ -1,11 +1,9 @@
 import { Component } from 'react';
-import { HeaderBoundProps, CardInfo } from '../../types';
+import { HeaderBoundProps } from '../types';
+import { CardInfo } from '../../components/form/userInfoCard/types';
+import { FormsState } from './types';
 import Form from '../../components/form/form';
-import UserInfoCard from '../../components/form/userInfoCard';
-
-type FormsState = {
-  cards: CardInfo[];
-};
+import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
 
 class Forms extends Component<HeaderBoundProps, FormsState> {
   constructor(props: HeaderBoundProps) {

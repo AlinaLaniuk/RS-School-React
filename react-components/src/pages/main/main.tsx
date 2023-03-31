@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import Card from '../../components/card/card';
 import debounce from '../../utils';
-import { IState } from '../../components/card/types';
+import { IState } from './types';
 import { HeaderBoundProps } from '../types';
 import cardsData from '../../data';
 

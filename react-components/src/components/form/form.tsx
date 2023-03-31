@@ -5,8 +5,8 @@ import {
   validateFile,
   validateIsSomeOptionsWasChosen,
   validateSelectInput,
-} from './validation';
-import { FormState, FormProps } from '../../types';
+} from './validation/validation';
+import { FormState, FormProps } from './types';
 
 const errorsTexts = {
   userName:
