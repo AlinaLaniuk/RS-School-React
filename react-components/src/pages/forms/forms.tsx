@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import { CardInfo } from '../../types';
 import Form from '../../components/form/form';
 import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';

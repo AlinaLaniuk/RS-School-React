@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { validateTextInput, validateDate, validateFile } from './validation';
-import { FormState, FormProps, CardInfo } from '../../types';
+import { CardInfo } from '../../types';
 
 const errorsTexts = {
   userName:
@@ -36,7 +36,6 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       additives: data.additives,
       file: URL.createObjectURL(data.file[0]),
     };
-    console.log(cardData);
     onNewCard(cardData);
   };
 
