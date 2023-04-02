@@ -1,13 +1,6 @@
-import React, { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  validateTextInput,
-  validateDate,
-  validateFile,
-  validateIsSomeOptionsWasChosen,
-  validateSelectInput,
-} from './validation/validation';
-import { FormState, FormProps } from './types';
+import { validateTextInput, validateDate, validateFile } from './validation';
+import { FormState, FormProps } from '../../types';
 
 const errorsTexts = {
   userName:
@@ -19,154 +12,30 @@ const errorsTexts = {
   catImage: 'Incorrect file. It must be jpg or png file',
 };
 
-const selectDefaultValue = 'chooseDessert';
+type FormValues = {
+  name: string;
+  birthdayDate: string;
+  gender: string;
+  dessert: string;
+  additives: string[];
+  fileUploader: FileList;
+};
 
 function Form() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
-
-  // inputsRefs: {
-  //   form: React.RefObject<HTMLFormElement>;
-  //   nameInput: React.RefObject<HTMLInputElement>;
-  //   birthDateInput: React.RefObject<HTMLInputElement>;
-  //   dessertSelector: React.RefObject<HTMLSelectElement>;
-  //   maleInput: React.RefObject<HTMLInputElement>;
-  //   femaleInput: React.RefObject<HTMLInputElement>;
-  //   fileUploader: React.RefObject<HTMLInputElement>;
-  //   chocolateInput: React.RefObject<HTMLInputElement>;
-  //   caramelInput: React.RefObject<HTMLInputElement>;
-  //   nutsInput: React.RefObject<HTMLInputElement>;
-  //   vanillaInput: React.RefObject<HTMLInputElement>;
-  //   berriesInput: React.RefObject<HTMLInputElement>;
-  // };
-
-  // constructor(props: FormProps) {
-  //   super(props);
-  //   this.state = {
-  //     errors: {
-  //       userName: '',
-  //       birthdayDate: '',
-  //       catImage: '',
-  //       gender: '',
-  //       dessert: '',
-  //       additives: '',
-  //     },
-  //     submitMessage: '',
-  //   };
-  //   this.inputsRefs = {
-  //     form: React.createRef(),
-  //     nameInput: React.createRef(),
-  //     birthDateInput: React.createRef(),
-  //     chocolateInput: React.createRef(),
-  //     caramelInput: React.createRef(),
-  //     nutsInput: React.createRef(),
-  //     berriesInput: React.createRef(),
-  //     vanillaInput: React.createRef(),
-  //     dessertSelector: React.createRef(),
-  //     maleInput: React.createRef(),
-  //     femaleInput: React.createRef(),
-  //     fileUploader: React.createRef(),
-  //   };
-  // }
-
-  // collectStateInfo = () => {
-  //   const favoriteAdditivesArr = [
-  //     this.inputsRefs.chocolateInput.current?.checked
-  //       ? (this.inputsRefs.chocolateInput.current?.id as string)
-  //       : '',
-  //     this.inputsRefs.caramelInput.current?.checked
-  //       ? (this.inputsRefs.caramelInput.current?.id as string)
-  //       : '',
-  //     this.inputsRefs.nutsInput.current?.checked
-  //       ? (this.inputsRefs.nutsInput.current?.id as string)
-  //       : '',
-  //     this.inputsRefs.berriesInput.current?.checked
-  //       ? (this.inputsRefs.berriesInput.current?.id as string)
-  //       : '',
-  //     this.inputsRefs.vanillaInput.current?.checked
-  //       ? (this.inputsRefs.vanillaInput.current?.id as string)
-  //       : '',
-  //   ];
-  //   const favoriteAdditivesValues = favoriteAdditivesArr.filter((additive) => {
-  //     return additive;
-  //   });
-  //   const cardInfo = {
-  //     userName: this.inputsRefs.nameInput.current?.value as string,
-  //     birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
-  //     gender: this.inputsRefs.maleInput.current?.checked
-  //       ? (this.inputsRefs.maleInput.current?.value as string)
-  //       : (this.inputsRefs.femaleInput.current?.value as string),
-  //     favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
-  //     favoriteAdditives: favoriteAdditivesValues,
-  //     catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-  //   };
-  //   return cardInfo;
-  // };
-
-  // submitForm = () => {
-  //   if (this.validateInputsValues()) {
-  //     const cardInfo = this.collectStateInfo();
-  //     const { setCardsInfo } = this.props;
-  //     setCardsInfo(cardInfo);
-  //     (this.inputsRefs.form.current as HTMLFormElement).reset();
-  //     this.showSubmitMessage();
-  //   }
-  // };
+  } = useForm<FormValues>();
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+  };
 
   // showSubmitMessage() {
   //   this.setState({ submitMessage: 'Submit successfully' });
   //   setTimeout(() => {
   //     this.setState({ submitMessage: '' });
   //   }, 2000);
-  // }
-
-  // validateInputsValues() {
-  //   const isTextInputValueCorrect = validateTextInput(
-  //     this.inputsRefs.nameInput.current?.value as string,
-  //     5,
-  //     2
-  //   );
-  //   const isBirthdayDateInputValueCorrect = validateDate(
-  //     this.inputsRefs.birthDateInput.current?.value as string
-  //   );
-  //   const isFileInputValueCorrect = validateFile(
-  //     (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-  //     ['image/jpeg', 'image/png']
-  //   );
-  //   const isUserChooseGender = validateIsSomeOptionsWasChosen(
-  //     this.inputsRefs.maleInput.current?.checked as boolean,
-  //     this.inputsRefs.femaleInput.current?.checked as boolean
-  //   );
-  //   const isUserChooseDessert = validateSelectInput(
-  //     this.inputsRefs.dessertSelector.current?.value as string,
-  //     selectDefaultValue
-  //   );
-  //   const isUserChooseAdditives = validateIsSomeOptionsWasChosen(
-  //     this.inputsRefs.chocolateInput.current?.checked as boolean,
-  //     this.inputsRefs.caramelInput.current?.checked as boolean,
-  //     this.inputsRefs.nutsInput.current?.checked as boolean,
-  //     this.inputsRefs.berriesInput.current?.checked as boolean,
-  //     this.inputsRefs.vanillaInput.current?.checked as boolean
-  //   );
-  //   const newErrorsState = {
-  //     userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
-  //     birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
-  //     catImage: isFileInputValueCorrect ? '' : errorsTexts.catImage,
-  //     gender: isUserChooseGender ? '' : errorsTexts.gender,
-  //     dessert: isUserChooseDessert ? '' : errorsTexts.dessert,
-  //     additives: isUserChooseAdditives ? '' : errorsTexts.additives,
-  //   };
-  //   this.setState({ errors: newErrorsState });
-  //   return (
-  //     isTextInputValueCorrect &&
-  //     isBirthdayDateInputValueCorrect &&
-  //     isFileInputValueCorrect &&
-  //     isUserChooseGender
-  //   );
   // }
 
   return (
@@ -176,21 +45,15 @@ function Form() {
         <div className="input-wrapper form-text-input">
           <input
             {...register('name', {
-              required: 'This is required',
-              minLength: {
-                value: 5,
-                message: 'Min length is 5 characters',
-              },
-              pattern: {
-                value: /^[А-ЯЁA-Z][а-яёa-z]+$/,
-                message: 'Each word must be started with uppercased letter',
+              validate: (value: string) => {
+                return validateTextInput(value, 5, 2) || errorsTexts.userName;
               },
             })}
             id="text-input"
             type="text"
           />
         </div>
-        <div className="separator error">{errors.name?.message}</div>
+        {errors.name && <div className="separator error">{errors.name?.message as string}</div>}
       </label>
 
       <label htmlFor="date-input">
@@ -200,14 +63,16 @@ function Form() {
             {...register('birthdayDate', {
               required: 'This is required',
               validate: (value: string) => {
-                return validateDate(value) || 'Incorrect date';
+                return validateDate(value) || errorsTexts.birthdayDate;
               },
             })}
             id="date-input"
             type="date"
           />
         </div>
-        <div className="separator error">{errors.birthdayDate?.message}</div>
+        {errors.birthdayDate && (
+          <div className="separator error">{errors.birthdayDate?.message as string}</div>
+        )}
       </label>
 
       <div className="gender-selector-container">
@@ -215,7 +80,7 @@ function Form() {
         <label className="gender-label" htmlFor="male">
           Male
           <input
-            {...register('gender', { required: 'This is required' })}
+            {...register('gender', { required: errorsTexts.gender })}
             id="male"
             type="radio"
             className="radio-input"
@@ -227,7 +92,7 @@ function Form() {
         <label className="gender-label" htmlFor="female">
           Female
           <input
-            {...register('gender', { required: 'This is required' })}
+            {...register('gender', { required: errorsTexts.gender })}
             id="female"
             type="radio"
             className="radio-input"
@@ -236,14 +101,14 @@ function Form() {
           />
           <span />
         </label>
-        <div className="separator error">{errors.gender?.message}</div>
+        {errors.gender && <div className="separator error">{errors.gender?.message as string}</div>}
       </div>
 
       <label htmlFor="select">
         Select your favorite dessert:
         <div className="input-wrapper select-input-container">
           <select
-            {...register('dessert', { required: 'This is required' })}
+            {...register('dessert', { required: errorsTexts.dessert })}
             className="select"
             id="select"
             defaultValue=""
@@ -258,7 +123,9 @@ function Form() {
             <option value="ice-cream">Ice-cream</option>
           </select>
         </div>
-        <div className="separator error">{errors.dessert?.message}</div>
+        {errors.dessert && (
+          <div className="separator error">{errors.dessert?.message as string}</div>
+        )}
       </label>
 
       <fieldset className="checkbox">
@@ -267,9 +134,10 @@ function Form() {
           <label htmlFor="chocolate">
             Chocolate
             <input
-              {...register('additives', { required: 'This is required' })}
+              {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
-              id="chocolate"
+              value="chocolate"
+              name="additives"
             />
           </label>
         </div>
@@ -277,9 +145,10 @@ function Form() {
           <label htmlFor="caramel">
             Caramel
             <input
-              {...register('additives', { required: 'This is required' })}
+              {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
-              id="caramel"
+              value="caramel"
+              name="additives"
             />
           </label>
         </div>
@@ -287,9 +156,10 @@ function Form() {
           <label htmlFor="nuts">
             Nuts
             <input
-              {...register('additives', { required: 'This is required' })}
+              {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
-              id="nuts"
+              value="nuts"
+              name="additives"
             />
           </label>
         </div>
@@ -297,9 +167,10 @@ function Form() {
           <label htmlFor="berries">
             Berries
             <input
-              {...register('additives', { required: 'This is required' })}
+              {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
-              id="berries"
+              value="berries"
+              name="additives"
             />
           </label>
         </div>
@@ -307,28 +178,36 @@ function Form() {
           <label htmlFor="vanilla">
             Vanilla
             <input
-              {...register('additives', { required: 'This is required' })}
+              {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
-              id="vanilla"
+              value="vanilla"
+              name="additives"
             />
           </label>
         </div>
       </fieldset>
-      <div className="separator error">{errors.additives?.message}</div>
+      {errors.additives && (
+        <div className="separator error">{errors.additives?.message as string}</div>
+      )}
 
-      {/* <label className="file-uploader-label" htmlFor="file-uploader-input">
+      <label className="file-uploader-label" htmlFor="file-uploader-input">
         Add picture with cute cat:
         <input
-          {...register('fileUploader')}
+          {...register('fileUploader', {
+            required: 'This is required',
+            validate: (value: FileList) => {
+              return validateFile(value[0], ['image/jpeg', 'image/png']) || errorsTexts.catImage;
+            },
+          })}
           className="file-uploader-input"
           id="file-uploader-input"
           type="file"
         />
-        <div className="separator error">{catImage}</div>
-      </label> */}
-      <input className="submit-button" type="submit" />
-
-      {/* <div className="submit-message">{submitMessage}</div> */}
+        {errors.fileUploader && (
+          <div className="separator error">{errors.fileUploader?.message as string}</div>
+        )}
+      </label>
+      <input value="Submit" className="submit-button" type="submit" />
     </form>
   );
 }
