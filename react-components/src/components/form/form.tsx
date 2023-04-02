@@ -68,7 +68,11 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
             type="text"
           />
         </div>
-        {errors.name && <div className="separator error">{errors.name?.message as string}</div>}
+        {errors.name && (
+          <div data-testid="error" className="separator error">
+            {errors.name?.message as string}
+          </div>
+        )}
       </label>
 
       <label htmlFor="date-input">
@@ -86,7 +90,9 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           />
         </div>
         {errors.birthdayDate && (
-          <div className="separator error">{errors.birthdayDate?.message as string}</div>
+          <div data-testid="error" className="separator error">
+            {errors.birthdayDate?.message as string}
+          </div>
         )}
       </label>
 
@@ -116,7 +122,11 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           />
           <span />
         </label>
-        {errors.gender && <div className="separator error">{errors.gender?.message as string}</div>}
+        {errors.gender && (
+          <div data-testid="error" className="separator error">
+            {errors.gender?.message as string}
+          </div>
+        )}
       </div>
 
       <label htmlFor="select">
@@ -139,7 +149,9 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           </select>
         </div>
         {errors.dessert && (
-          <div className="separator error">{errors.dessert?.message as string}</div>
+          <div data-testid="error" className="separator error">
+            {errors.dessert?.message as string}
+          </div>
         )}
       </label>
 
@@ -152,6 +164,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
               {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
               value="chocolate"
+              id="chocolate"
               name="additives"
             />
           </label>
@@ -163,6 +176,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
               {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
               value="caramel"
+              id="caramel"
               name="additives"
             />
           </label>
@@ -174,6 +188,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
               {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
               value="nuts"
+              id="nuts"
               name="additives"
             />
           </label>
@@ -185,6 +200,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
               {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
               value="berries"
+              id="berries"
               name="additives"
             />
           </label>
@@ -196,13 +212,16 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
               {...register('additives', { required: errorsTexts.additives })}
               type="checkbox"
               value="vanilla"
+              id="vanilla"
               name="additives"
             />
           </label>
         </div>
       </fieldset>
       {errors.additives && (
-        <div className="separator error">{errors.additives?.message as string}</div>
+        <div data-testid="error" className="separator error">
+          {errors.additives?.message as string}
+        </div>
       )}
 
       <label className="file-uploader-label" htmlFor="file-uploader-input">
@@ -218,7 +237,11 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           id="file-uploader-input"
           type="file"
         />
-        {errors.file && <div className="separator error">{errors.file?.message as string}</div>}
+        {errors.file && (
+          <div data-testid="error" className="separator error">
+            {errors.file?.message as string}
+          </div>
+        )}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
       <div className="submit-message">{submitMessage}</div>
