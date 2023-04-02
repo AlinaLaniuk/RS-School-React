@@ -29,7 +29,7 @@ function MainPage() {
     updateData(setMatchedInputValueCardsData(inputValue));
   }
 
-  const debouncedUpdateCards = debounce(updateCards, 1000);
+  const debouncedUpdateCards = debounce(updateCards, 0);
 
   return (
     <>
