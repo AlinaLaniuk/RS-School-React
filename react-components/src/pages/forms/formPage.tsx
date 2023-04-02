@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CardInfo } from '../../types';
+import { CardInfo } from '../../commonTypes';
 import Form from '../../components/form/form';
 import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
 
