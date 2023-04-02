@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation';
 import { CardInfo } from '../../types';
 
@@ -22,11 +23,15 @@ type FormValues = {
 };
 
 function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
+  const [submitMessage, updateSubmitMessage] = useState('');
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
+
   const onSubmit = (data: FormValues) => {
     const cardData = {
       name: data.name,
@@ -37,14 +42,12 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       file: URL.createObjectURL(data.file[0]),
     };
     onNewCard(cardData);
+    reset();
+    updateSubmitMessage('Submit successfully');
+    setTimeout(() => {
+      updateSubmitMessage('');
+    }, 3000);
   };
-
-  // showSubmitMessage() {
-  //   this.setState({ submitMessage: 'Submit successfully' });
-  //   setTimeout(() => {
-  //     this.setState({ submitMessage: '' });
-  //   }, 2000);
-  // }
 
   return (
     <form data-testid="form-container" onSubmit={handleSubmit(onSubmit)} className="form">
@@ -214,6 +217,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         {errors.file && <div className="separator error">{errors.file?.message as string}</div>}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
+      <div className="submit-message">{submitMessage}</div>
     </form>
   );
 }
