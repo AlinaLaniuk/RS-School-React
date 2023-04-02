@@ -3,10 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import PageNotFound from './pageNotFound';
 
 test('render PageNotFound', () => {
-  const setPageName = () => undefined;
   render(
     <BrowserRouter>
-      <PageNotFound setPageName={setPageName} />
+      <PageNotFound />
     </BrowserRouter>
   );
   const pageNotFoundElement = screen.getByText(/Page Not Found/i);
