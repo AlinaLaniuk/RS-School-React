@@ -17,7 +17,7 @@ function FormPage() {
         {cards.map((cardInfo: CardInfo) => {
           return (
             <UserInfoCard
-              key={cardInfo.name}
+              key={`${cardInfo.name}${cardInfo.birthdayDate}`}
               name={cardInfo.name}
               birthdayDate={cardInfo.birthdayDate}
               gender={cardInfo.gender}
