@@ -2,7 +2,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import MainPage from '../../pages/main';
 import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
-import FormPage from '../../pages/forms/forms';
+import FormPage from '../../pages/forms/formPage';
 
 export interface PageNamesType {
   [key: string]: string;

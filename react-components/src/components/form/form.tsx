@@ -30,7 +30,11 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    shouldFocusError: false,
+  });
 
   const onSubmit = (data: FormValues) => {
     const cardData = {

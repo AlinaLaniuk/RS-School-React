@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Forms from './forms';
+import Forms from './formPage';
 
 const setPageName = () => undefined;
 
