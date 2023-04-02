@@ -1,34 +1,35 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { CardInfo } from '../../types';
 import Form from '../../components/form/form';
 import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
 
-class Forms extends Component<unknown, FormsState> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = {
-      cards: [],
-    };
-  }
+function FormPage() {
+  const [cards, updateCards] = useState<CardInfo[]>([]);
 
-  setCardsInfo(cardInfo: CardInfo) {
-    const { cards } = this.state;
-    this.setState({ cards: [...cards, cardInfo] });
+  const collectCardInfo = (cardsInfo: CardInfo) => {
+    updateCards([...cards, cardsInfo]);
   };
 
-  render() {
-    const { cards } = this.state;
-    return (
-      <div className="form-container">
-        <Form onNewCard={this.onNewCard} />
-        <div className="user-info-cards-container">
-          {cards.map((cardInfo) => {
-            return <UserInfoCard key={cardInfo.userName} {...cardInfo} />;
-          })}
-        </div>
+  return (
+    <div className="form-container">
+      <Form onNewCard={collectCardInfo} />
+      <div className="user-info-cards-container">
+        {cards.map((cardInfo: CardInfo) => {
+          return (
+            <UserInfoCard
+              key={cardInfo.name}
+              name={cardInfo.name}
+              birthdayDate={cardInfo.birthdayDate}
+              gender={cardInfo.gender}
+              dessert={cardInfo.dessert}
+              additives={cardInfo.additives}
+              file={cardInfo.file}
+            />
+          );
+        })}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default Forms;
+export default FormPage;

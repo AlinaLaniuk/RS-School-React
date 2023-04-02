@@ -2,7 +2,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import MainPage from '../../pages/main';
 import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
-import Forms from '../../pages/forms/forms';
+import FormPage from '../../pages/forms/forms';
 
 export interface PageNamesType {
   [key: string]: string;
@@ -32,7 +32,7 @@ function Header() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/forms" element={<Forms />} />
+        <Route path="/forms" element={<FormPage />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>

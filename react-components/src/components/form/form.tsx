@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { validateTextInput, validateDate, validateFile } from './validation';
-import { FormState, FormProps } from '../../types';
+import { FormState, FormProps, CardInfo } from '../../types';
 
 const errorsTexts = {
   userName:
@@ -18,17 +18,26 @@ type FormValues = {
   gender: string;
   dessert: string;
   additives: string[];
-  fileUploader: FileList;
+  file: FileList;
 };
 
-function Form() {
+function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    const cardData = {
+      name: data.name,
+      birthdayDate: data.birthdayDate,
+      gender: data.gender,
+      dessert: data.dessert,
+      additives: data.additives,
+      file: URL.createObjectURL(data.file[0]),
+    };
+    console.log(cardData);
+    onNewCard(cardData);
   };
 
   // showSubmitMessage() {
@@ -193,7 +202,7 @@ function Form() {
       <label className="file-uploader-label" htmlFor="file-uploader-input">
         Add picture with cute cat:
         <input
-          {...register('fileUploader', {
+          {...register('file', {
             required: 'This is required',
             validate: (value: FileList) => {
               return validateFile(value[0], ['image/jpeg', 'image/png']) || errorsTexts.catImage;
@@ -203,9 +212,7 @@ function Form() {
           id="file-uploader-input"
           type="file"
         />
-        {errors.fileUploader && (
-          <div className="separator error">{errors.fileUploader?.message as string}</div>
-        )}
+        {errors.file && <div className="separator error">{errors.file?.message as string}</div>}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
     </form>
