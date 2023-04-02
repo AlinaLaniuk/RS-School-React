@@ -4,9 +4,9 @@ import AboutUs from '../../pages/aboutUs/aboutUs';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound';
 import FormPage from '../../pages/forms/formPage';
 
-export interface PageNamesType {
+export type PageNamesType = {
   [key: string]: string;
-}
+};
 
 const pageNames: PageNamesType = {
   '/': 'Main',

@@ -1,4 +1,4 @@
-export interface CardProps {
+export type CardProps = {
   id?: string;
   header?: string;
   src?: string;
@@ -7,13 +7,13 @@ export interface CardProps {
   price: number;
   popular?: boolean;
   discount: number;
-}
+};
 
-export interface CardInfo {
+export type CardInfo = {
   name: string;
   birthdayDate: string;
   gender: string;
   dessert: string;
   additives: string[];
   file: string;
-}
+};
