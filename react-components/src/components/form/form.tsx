@@ -20,6 +20,9 @@ const errorsTexts = {
 
 const selectDefaultValue = 'chooseDessert';
 
+const genderValues = ['male', 'female'];
+const additivesIds = ['chocolate', 'caramel', 'nuts', 'vanilla', 'berries'];
+
 class Form extends Component<FormProps, FormState> {
   inputsRefs = {
     form: React.createRef<HTMLFormElement>(),
@@ -53,7 +56,7 @@ class Form extends Component<FormProps, FormState> {
 
   collectInputsInfo = () => {
     function collectAdditives(input: HTMLInputElement) {
-      return input.checked ? input.id : '';
+      return input.checked ? input.value : '';
     }
 
     const favoriteAdditivesValues = [
@@ -100,21 +103,20 @@ class Form extends Component<FormProps, FormState> {
     const isTextInputValueCorrect = validateTextInput(inputsValue.userName, 5, 2);
     const isBirthdayDateInputValueCorrect = validateDate(inputsValue.birthdayDate);
     const isFileInputValueCorrect = validateFile(inputsValue.catImage, ['image/jpeg', 'image/png']);
-    const isUserChooseGender = validateIsSomeOptionsWasChosen(
-      this.inputsRefs.maleInput.current?.checked as boolean,
-      this.inputsRefs.femaleInput.current?.checked as boolean
-    );
+    const genderSet = [this.inputsRefs.maleInput.current!, this.inputsRefs.femaleInput.current!];
+    const isUserChooseGender = validateIsSomeOptionsWasChosen(genderSet, genderValues);
     const isUserChooseDessert = validateSelectInput(
       inputsValue.favoriteDessert,
       selectDefaultValue
     );
-    const isUserChooseAdditives = validateIsSomeOptionsWasChosen(
-      this.inputsRefs.chocolateInput.current?.checked as boolean,
-      this.inputsRefs.caramelInput.current?.checked as boolean,
-      this.inputsRefs.nutsInput.current?.checked as boolean,
-      this.inputsRefs.berriesInput.current?.checked as boolean,
-      this.inputsRefs.vanillaInput.current?.checked as boolean
-    );
+    const additivesSet = [
+      this.inputsRefs.chocolateInput.current!,
+      this.inputsRefs.caramelInput.current!,
+      this.inputsRefs.nutsInput.current!,
+      this.inputsRefs.berriesInput.current!,
+      this.inputsRefs.vanillaInput.current!,
+    ];
+    const isUserChooseAdditives = validateIsSomeOptionsWasChosen(additivesSet, additivesIds);
     const newErrorsState = {
       userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
       birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
@@ -202,31 +204,51 @@ class Form extends Component<FormProps, FormState> {
           <div>
             <label htmlFor="chocolate">
               Chocolate
-              <input ref={this.inputsRefs.chocolateInput} type="checkbox" id="chocolate" />
+              <input
+                ref={this.inputsRefs.chocolateInput}
+                type="checkbox"
+                id="chocolate"
+                value="chocolate"
+              />
             </label>
           </div>
           <div>
             <label htmlFor="caramel">
               Caramel
-              <input ref={this.inputsRefs.caramelInput} type="checkbox" id="caramel" />
+              <input
+                ref={this.inputsRefs.caramelInput}
+                type="checkbox"
+                id="caramel"
+                value="caramel"
+              />
             </label>
           </div>
           <div>
             <label htmlFor="nuts">
               Nuts
-              <input ref={this.inputsRefs.nutsInput} type="checkbox" id="nuts" />
+              <input ref={this.inputsRefs.nutsInput} type="checkbox" id="nuts" value="nuts" />
             </label>
           </div>
           <div>
             <label htmlFor="berries">
               Berries
-              <input ref={this.inputsRefs.berriesInput} type="checkbox" id="berries" />
+              <input
+                ref={this.inputsRefs.berriesInput}
+                type="checkbox"
+                id="berries"
+                value="berries"
+              />
             </label>
           </div>
           <div>
             <label htmlFor="vanilla">
               Vanilla
-              <input ref={this.inputsRefs.vanillaInput} type="checkbox" id="vanilla" />
+              <input
+                ref={this.inputsRefs.vanillaInput}
+                type="checkbox"
+                id="vanilla"
+                value="vanilla"
+              />
             </label>
           </div>
         </fieldset>

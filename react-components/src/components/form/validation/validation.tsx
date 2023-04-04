@@ -29,11 +29,29 @@ export function validateFile(file: File, availableTypes: string[]) {
   return fileType.length === 1;
 }
 
-export function validateIsSomeOptionsWasChosen(...inputsValue: boolean[]) {
-  const truthyInputsValue = inputsValue.filter((inputValue) => {
-    return inputValue;
+export function validateIsSomeOptionsWasChosen(
+  inputs: HTMLInputElement[],
+  valuesForCheck: string[]
+) {
+  const truthyInputsValue = new Set(
+    inputs
+      .filter((input) => {
+        return input.checked;
+      })
+      .map((input) => {
+        return input.value;
+      })
+  );
+  if (!truthyInputsValue.size) {
+    return false;
+  }
+  const isAllValueValid = valuesForCheck.some((value) => {
+    return !truthyInputsValue.has(value);
   });
-  return !!truthyInputsValue.length;
+  if (!isAllValueValid) {
+    return false;
+  }
+  return true;
 }
 
 export function validateSelectInput(value: string, defaultValue: string) {
