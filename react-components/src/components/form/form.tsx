@@ -51,25 +51,18 @@ class Form extends Component<FormProps, FormState> {
     };
   }
 
-  collectStateInfo = () => {
-    const favoriteAdditivesArr = [
-      this.inputsRefs.chocolateInput.current?.checked
-        ? (this.inputsRefs.chocolateInput.current?.id as string)
-        : '',
-      this.inputsRefs.caramelInput.current?.checked
-        ? (this.inputsRefs.caramelInput.current?.id as string)
-        : '',
-      this.inputsRefs.nutsInput.current?.checked
-        ? (this.inputsRefs.nutsInput.current?.id as string)
-        : '',
-      this.inputsRefs.berriesInput.current?.checked
-        ? (this.inputsRefs.berriesInput.current?.id as string)
-        : '',
-      this.inputsRefs.vanillaInput.current?.checked
-        ? (this.inputsRefs.vanillaInput.current?.id as string)
-        : '',
-    ];
-    const favoriteAdditivesValues = favoriteAdditivesArr.filter((additive) => {
+  collectInputsInfo = () => {
+    function collectAdditives(input: HTMLInputElement) {
+      return input.checked ? input.id : '';
+    }
+
+    const favoriteAdditivesValues = [
+      collectAdditives(this.inputsRefs.chocolateInput.current!),
+      collectAdditives(this.inputsRefs.caramelInput.current!),
+      collectAdditives(this.inputsRefs.nutsInput.current!),
+      collectAdditives(this.inputsRefs.berriesInput.current!),
+      collectAdditives(this.inputsRefs.vanillaInput.current!),
+    ].filter((additive) => {
       return additive;
     });
     const cardInfo = {
@@ -87,7 +80,7 @@ class Form extends Component<FormProps, FormState> {
 
   submitForm = () => {
     if (this.validateInputsValues()) {
-      const cardInfo = this.collectStateInfo();
+      const cardInfo = this.collectInputsInfo();
       const { onNewCard } = this.props;
       onNewCard(cardInfo);
       (this.inputsRefs.form.current as HTMLFormElement).reset();
@@ -103,24 +96,16 @@ class Form extends Component<FormProps, FormState> {
   }
 
   validateInputsValues() {
-    const isTextInputValueCorrect = validateTextInput(
-      this.inputsRefs.nameInput.current?.value as string,
-      5,
-      2
-    );
-    const isBirthdayDateInputValueCorrect = validateDate(
-      this.inputsRefs.birthDateInput.current?.value as string
-    );
-    const isFileInputValueCorrect = validateFile(
-      (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-      ['image/jpeg', 'image/png']
-    );
+    const inputsValue = this.collectInputsInfo();
+    const isTextInputValueCorrect = validateTextInput(inputsValue.userName, 5, 2);
+    const isBirthdayDateInputValueCorrect = validateDate(inputsValue.birthdayDate);
+    const isFileInputValueCorrect = validateFile(inputsValue.catImage, ['image/jpeg', 'image/png']);
     const isUserChooseGender = validateIsSomeOptionsWasChosen(
       this.inputsRefs.maleInput.current?.checked as boolean,
       this.inputsRefs.femaleInput.current?.checked as boolean
     );
     const isUserChooseDessert = validateSelectInput(
-      this.inputsRefs.dessertSelector.current?.value as string,
+      inputsValue.favoriteDessert,
       selectDefaultValue
     );
     const isUserChooseAdditives = validateIsSomeOptionsWasChosen(
