@@ -21,19 +21,19 @@ const errorsTexts = {
 const selectDefaultValue = 'chooseDessert';
 
 class Form extends Component<FormProps, FormState> {
-  inputsRefs: {
-    form: React.RefObject<HTMLFormElement>;
-    nameInput: React.RefObject<HTMLInputElement>;
-    birthDateInput: React.RefObject<HTMLInputElement>;
-    dessertSelector: React.RefObject<HTMLSelectElement>;
-    maleInput: React.RefObject<HTMLInputElement>;
-    femaleInput: React.RefObject<HTMLInputElement>;
-    fileUploader: React.RefObject<HTMLInputElement>;
-    chocolateInput: React.RefObject<HTMLInputElement>;
-    caramelInput: React.RefObject<HTMLInputElement>;
-    nutsInput: React.RefObject<HTMLInputElement>;
-    vanillaInput: React.RefObject<HTMLInputElement>;
-    berriesInput: React.RefObject<HTMLInputElement>;
+  inputsRefs = {
+    form: React.createRef<HTMLFormElement>(),
+    nameInput: React.createRef<HTMLInputElement>(),
+    birthDateInput: React.createRef<HTMLInputElement>(),
+    dessertSelector: React.createRef<HTMLSelectElement>(),
+    maleInput: React.createRef<HTMLInputElement>(),
+    femaleInput: React.createRef<HTMLInputElement>(),
+    fileUploader: React.createRef<HTMLInputElement>(),
+    chocolateInput: React.createRef<HTMLInputElement>(),
+    caramelInput: React.createRef<HTMLInputElement>(),
+    nutsInput: React.createRef<HTMLInputElement>(),
+    vanillaInput: React.createRef<HTMLInputElement>(),
+    berriesInput: React.createRef<HTMLInputElement>(),
   };
 
   constructor(props: FormProps) {
@@ -48,20 +48,6 @@ class Form extends Component<FormProps, FormState> {
         additives: '',
       },
       submitMessage: '',
-    };
-    this.inputsRefs = {
-      form: React.createRef(),
-      nameInput: React.createRef(),
-      birthDateInput: React.createRef(),
-      chocolateInput: React.createRef(),
-      caramelInput: React.createRef(),
-      nutsInput: React.createRef(),
-      berriesInput: React.createRef(),
-      vanillaInput: React.createRef(),
-      dessertSelector: React.createRef(),
-      maleInput: React.createRef(),
-      femaleInput: React.createRef(),
-      fileUploader: React.createRef(),
     };
   }
 
