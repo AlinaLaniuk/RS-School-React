@@ -2,7 +2,7 @@ import { useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import Card from '../../components/card/card';
 import cardsData from '../../data';
-import { CardProps } from '../../commonTypes';
+import { CardProps } from '../../components/card/types';
 
 const setMatchedInputValueCardsData = (inputValue: string) => {
   return cardsData.filter((cardData) => {

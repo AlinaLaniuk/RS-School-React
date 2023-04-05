@@ -1,8 +1,8 @@
 export type CardInfo = {
-  userName: string;
+  name: string;
   birthdayDate: string;
   gender: string;
-  favoriteDessert: string;
-  favoriteAdditives: string[];
-  catImage: File;
+  dessert: string;
+  additives: string[];
+  file: string;
 };

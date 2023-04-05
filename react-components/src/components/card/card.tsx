@@ -1,4 +1,4 @@
-import { CardProps } from '../../commonTypes';
+import { CardProps } from './types';
 import BuyBlock from './buyBlock';
 
 const bestSellerImageSrc = '/best-seller.png';

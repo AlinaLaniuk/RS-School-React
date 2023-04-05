@@ -1,4 +1,4 @@
-import { CardInfo } from '../../../commonTypes';
+import { CardInfo } from './types';
 import './userInfoCard.css';
 
 function UserInfoCard({ name, birthdayDate, gender, dessert, additives, file }: CardInfo) {

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
-import { CardInfo } from '../../commonTypes';
+import { CardInfo } from './userInfoCard/types';
 
 const errorsTexts = {
   userName:
