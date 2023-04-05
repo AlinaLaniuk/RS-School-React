@@ -1,8 +1,8 @@
-import { CardProps } from './types';
+import { BuyBlockProps } from './types';
 
 const saleImageSrc = '/sale.png';
 
-function BuyBlock({ price, discount }: CardProps) {
+function BuyBlock({ price, discount }: BuyBlockProps) {
   let priceClassNames;
   let saleImage;
   let priceWithDiscount;
