@@ -16,9 +16,10 @@ function SearchBar({ getSearchValue }: Callback) {
     const eventTarget = event.target as HTMLInputElement;
     const inputValue = eventTarget.value;
     updateSearchValue((prevInputValue: string) => {
-      return prevInputValue === inputValue ? prevInputValue : inputValue;
+      const result = prevInputValue === inputValue ? prevInputValue : inputValue;
+      getSearchValue(result);
+      return result;
     });
-    getSearchValue(searchValue);
   };
 
   const debouncedOnNewSearchValue = debounce(onNewSearchValue, 0);
