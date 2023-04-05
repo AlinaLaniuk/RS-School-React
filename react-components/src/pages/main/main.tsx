@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import Card from '../../components/card/card';
 import cardsData from '../../data';
-import debounce from '../../utils';
 import { CardProps } from '../../commonTypes';
 
 const setMatchedInputValueCardsData = (inputValue: string) => {
@@ -15,26 +14,16 @@ const setMatchedInputValueCardsData = (inputValue: string) => {
 };
 
 function MainPage() {
-  const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
-  const initialData = setMatchedInputValueCardsData(searchValue);
+  const initialData = setMatchedInputValueCardsData(localStorage.getItem('lastSearchValue') || '');
   const [data, updateData] = useState(initialData);
-  useEffect(() => {
-    localStorage.setItem('lastSearchValue', searchValue);
-  });
-
-  function updateCards(event: React.ChangeEvent) {
-    const eventTarget = event.target as HTMLInputElement;
-    const inputValue = eventTarget.value;
-    updateSearchValue(inputValue);
-    updateData(setMatchedInputValueCardsData(inputValue));
-  }
-
-  const debouncedUpdateCards = debounce(updateCards, 0);
+  const getSearchValue = (currentSearchValue: string) => {
+    updateData(setMatchedInputValueCardsData(currentSearchValue));
+  };
 
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
+        <SearchBar getSearchValue={getSearchValue} />
       </div>
       <div data-testid="cards-container" className="cards-container">
         {data.map((cardData: CardProps) => {
