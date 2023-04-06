@@ -1,22 +1,26 @@
 import { CardProps } from './types';
-import BuyBlock from './buyBlock';
 
-const bestSellerImageSrc = '/best-seller.png';
-
-function Card({ header, src, description, rating, price, popular, discount }: CardProps) {
+function Card({
+  name,
+  budgetInMillions,
+  boxOfficeRevenueInMillions,
+  rottenTomatoesScore,
+  runtimeInMinutes,
+  academyAwardWins,
+  academyAwardNominations,
+}: CardProps) {
   return (
     <div className="card-container">
-      {popular && <img className="bestseller" src={bestSellerImageSrc} alt="best-seller" />}
-      <div className="card-img-container">
-        <img src={src} alt={header} />
-      </div>
       <div className="card-info-container">
         <div data-testid="card-header" className="card-header">
-          {header}
+          {name}
         </div>
-        <div className="description">{description}</div>
-        <div className="product-range">Rating: {rating}</div>
-        <BuyBlock price={price} discount={discount} />
+        <div className="budget">Budget: {budgetInMillions} millions</div>
+        <div className="renevue">Box office revenue: {boxOfficeRevenueInMillions} millions</div>
+        <div className="renevue">Rotten tomatoes score: {rottenTomatoesScore}</div>
+        <div className="renevue">Runtime: {runtimeInMinutes}</div>
+        <div className="renevue">Academy Award wins: {academyAwardWins}</div>
+        <div className="renevue">Academy Award nominations: {academyAwardNominations}</div>
       </div>
     </div>
   );

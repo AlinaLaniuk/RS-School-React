@@ -1,34 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import Card from '../../components/card/card';
-import cardsData from '../../data';
 import { CardProps } from '../../components/card/types';
-
-const setMatchedInputValueCardsData = (inputValue: string) => {
-  return cardsData.filter((cardData) => {
-    return (
-      cardData.header.toLowerCase().includes(inputValue.toLowerCase()) ||
-      cardData.description.toLowerCase().includes(inputValue.toLowerCase())
-    );
-  });
-};
+import { getMovies } from './services';
+import debounce from '../../utils';
 
 function MainPage() {
-  const initialData = setMatchedInputValueCardsData(localStorage.getItem('lastSearchValue') || '');
-  const [data, updateData] = useState(initialData);
-  const getSearchValue = (currentSearchValue: string) => {
-    updateData(setMatchedInputValueCardsData(currentSearchValue));
+  const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
+  const [cardsData, updateData] = useState<CardProps[]>();
+  useEffect(() => {
+    localStorage.setItem('lastSearchValue', searchValue);
+    getMovies().then((data) => {
+      updateData(data.docs);
+      console.log(data.docs);
+    });
+    console.log(cardsData);
+  }, []);
+
+  const setSearchValue = async (currentSearchValue: string) => {
+    console.log('hi');
   };
+
+  function updateCards(event: React.ChangeEvent) {
+    const eventTarget = event.target as HTMLInputElement;
+    const inputValue = eventTarget.value;
+    updateSearchValue(inputValue);
+    setSearchValue(inputValue);
+  }
+
+  const debouncedUpdateCards = debounce(updateCards, 0);
 
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar getSearchValue={getSearchValue} />
+        <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
       </div>
       <div data-testid="cards-container" className="cards-container">
-        {data.map((cardData: CardProps) => {
-          return <Card key={cardData.id} {...cardData} />;
-        })}
+        {cardsData &&
+          cardsData.map((cardData: CardProps) => {
+            return <Card key={cardData.id} {...cardData} />;
+          })}
       </div>
     </>
   );
