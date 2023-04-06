@@ -69,7 +69,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.name && (
           <div data-testid="error" className="separator error">
-            {errors.name?.message}
+            {errors.name.message}
           </div>
         )}
       </label>
@@ -88,7 +88,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.birthdayDate && (
           <div data-testid="error" className="separator error">
-            {errors.birthdayDate?.message}
+            {errors.birthdayDate.message}
           </div>
         )}
       </label>
@@ -121,7 +121,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </label>
         {errors.gender && (
           <div data-testid="error" className="separator error">
-            {errors.gender?.message}
+            {errors.gender.message}
           </div>
         )}
       </div>
@@ -147,7 +147,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.dessert && (
           <div data-testid="error" className="separator error">
-            {errors.dessert?.message}
+            {errors.dessert.message}
           </div>
         )}
       </label>
@@ -217,7 +217,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       </fieldset>
       {errors.additives && (
         <div data-testid="error" className="separator error">
-          {errors.additives?.message}
+          {errors.additives.message}
         </div>
       )}
 
@@ -234,7 +234,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         />
         {errors.file && (
           <div data-testid="error" className="separator error">
-            {errors.file?.message}
+            {errors.file.message}
           </div>
         )}
       </label>
