@@ -1,20 +1,20 @@
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import Card from '../../components/card/card';
 import { CardProps } from '../../components/card/types';
-import { getMovies } from './services';
+import { getCharacters } from './services';
 import debounce from '../../utils';
+import { AllCharactersResponse } from './types';
 
 function MainPage() {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
   const [cardsData, updateData] = useState<CardProps[]>();
   useEffect(() => {
     localStorage.setItem('lastSearchValue', searchValue);
-    getMovies().then((data) => {
-      updateData(data.docs);
-      console.log(data.docs);
+    getCharacters().then((data: AllCharactersResponse) => {
+      updateData(data.results);
     });
-    console.log(cardsData);
   }, []);
 
   const setSearchValue = async (currentSearchValue: string) => {
