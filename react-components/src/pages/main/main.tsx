@@ -11,24 +11,25 @@ function MainPage() {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
   const [cardsData, updateData] = useState<CardProps[]>();
   useEffect(() => {
-    localStorage.setItem('lastSearchValue', searchValue);
-    getCharacters().then((data: AllCharactersResponse) => {
+    getCharacters(searchValue).then((data: AllCharactersResponse) => {
       updateData(data.results);
     });
   }, []);
 
-  const setSearchValue = async (currentSearchValue: string) => {
-    console.log('hi');
-  };
+  useEffect(() => {
+    localStorage.setItem('lastSearchValue', searchValue);
+    getCharacters(searchValue).then((data: AllCharactersResponse) => {
+      updateData(data.results);
+    });
+  }, [searchValue]);
 
   function updateCards(event: React.ChangeEvent) {
     const eventTarget = event.target as HTMLInputElement;
     const inputValue = eventTarget.value;
     updateSearchValue(inputValue);
-    setSearchValue(inputValue);
   }
 
-  const debouncedUpdateCards = debounce(updateCards, 0);
+  const debouncedUpdateCards = debounce(updateCards, 1000);
 
   return (
     <>
