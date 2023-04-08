@@ -3,7 +3,7 @@ import { ShortCardProps } from './types';
 function ShortCard({ name, image }: ShortCardProps) {
   return (
     <div className="short-card-container">
-      <div className="card-img-container">
+      <div className="short-card-img-container">
         <img src={image} alt={name} />
       </div>
       <div className="card-info-container">

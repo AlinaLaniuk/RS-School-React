@@ -12,6 +12,7 @@ import './pages/pageNotFound/pageNotFound.css';
 import './pages/forms/formPage.css';
 import './components/form/form.css';
 import './components/modal/modal.css';
+import './components/shortCard/shortCard.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
