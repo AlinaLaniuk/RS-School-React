@@ -1,4 +1,4 @@
-export type CardProps = {
+export type FullCardProps = {
   id: number;
   created: string;
   episode?: string[];
