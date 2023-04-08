@@ -29,23 +29,31 @@ function MainPage() {
   const [cardsData, updateData] = useState<ShortCardProps[]>();
   const [modalActive, setModalActive] = useState(false);
   const [modalData, updateModalData] = useState<FullCardProps>(defaultModalData);
-  useEffect(() => {
+  const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
+
+  function updateCharactersData() {
     getCharacters(searchValue).then((data: AllCharactersResponse) => {
-      const charactersData = data.results.map((characterData: FullCardProps) => {
-        return { id: characterData.id, name: characterData.name, image: characterData.image };
-      });
-      updateData(charactersData);
+      console.log(data);
+      if (data) {
+        const charactersData = data.results.map((characterData: FullCardProps) => {
+          return { id: characterData.id, name: characterData.name, image: characterData.image };
+        });
+        updateData(charactersData);
+        updateNothingToShowMessage('');
+      } else {
+        updateData([]);
+        updateNothingToShowMessage('Oooops! There is nothing to show.');
+      }
     });
+  }
+
+  useEffect(() => {
+    updateCharactersData();
   }, []);
 
   useEffect(() => {
     localStorage.setItem('lastSearchValue', searchValue);
-    getCharacters(searchValue).then((data: AllCharactersResponse) => {
-      const charactersData = data.results.map((characterData: FullCardProps) => {
-        return { id: characterData.id, name: characterData.name, image: characterData.image };
-      });
-      updateData(charactersData);
-    });
+    updateCharactersData();
   }, [searchValue]);
 
   function updateCards(event: React.ChangeEvent) {
@@ -68,6 +76,7 @@ function MainPage() {
       <div className="search-bar-container">
         <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
       </div>
+      <div className="nothing-to-show">{nothingToShowMessage}</div>
       <div data-testid="cards-container" className="cards-container">
         {cardsData &&
           cardsData.map((cardData: ShortCardProps) => {
