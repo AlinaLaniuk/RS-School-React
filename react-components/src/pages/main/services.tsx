@@ -6,4 +6,8 @@ export function getCharacters(searchValue: string) {
   });
 }
 
-export default getCharacters;
+export function getCharacter(id: number) {
+  return fetch(`${baseURL}/character/${id}`).then((response) => {
+    return response.json();
+  });
+}

@@ -1,6 +1,15 @@
-import { CardProps } from './types';
+import { FullCardProps } from './types';
 
-function Card({ name, created, gender, image, location, species, status, type }: CardProps) {
+function FullCard({
+  name,
+  created,
+  gender,
+  image,
+  location,
+  species,
+  status,
+  type,
+}: FullCardProps) {
   return (
     <div className="card-container">
       <div className="card-img-container">
@@ -21,4 +30,4 @@ function Card({ name, created, gender, image, location, species, status, type }:
   );
 }
 
-export default Card;
+export default FullCard;
