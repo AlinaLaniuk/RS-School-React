@@ -1,5 +1,5 @@
 import React from 'react';
-import { FullCardProps } from '../card/types';
+import { FullCardProps } from './types';
 
 type ModalProps = {
   active: boolean;
@@ -8,17 +8,11 @@ type ModalProps = {
 };
 
 function Modal({ active, setActive, cardData }: ModalProps) {
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Esc') {
-      setActive(false);
-    }
-  };
-
   const { image, name, created, gender, location, species, status, type } = cardData;
   return (
     <button
       data-testid="modal-container"
-      className={active ? 'modal-container active' : 'modal-container'}
+      className={active ? 'modal-container modal-active' : 'modal-container'}
       onClick={() => {
         setActive(false);
       }}
@@ -36,12 +30,12 @@ function Modal({ active, setActive, cardData }: ModalProps) {
           <div data-testid="card-header" className="card-header">
             {name}
           </div>
-          <div className="budget">Created: {created}</div>
-          <div className="renevue">Gender: {gender}</div>
-          <div className="renevue">Location: {location.name}</div>
-          <div className="renevue">Species: {species}</div>
-          <div className="renevue">Status: {status}</div>
-          {type && <div className="renevue">Type: {type}</div>}
+          <div className="card-text">Created: {created}</div>
+          <div className="card-text">Gender: {gender}</div>
+          <div className="card-text">Location: {location.name}</div>
+          <div className="card-text">Species: {species}</div>
+          <div className="card-text">Status: {status}</div>
+          {type && <div className="card-text">Type: {type}</div>}
         </div>
       </div>
     </button>

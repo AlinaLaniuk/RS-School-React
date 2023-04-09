@@ -1,0 +1,12 @@
+.message {
+  font-size: 2rem;
+  color: cadetblue;
+  margin-top: 20%;
+  position: absolute;
+  text-align: center;
+}
+
+.loading-screen {
+  background-color: white;
+  opacity: 0.3;
+}
