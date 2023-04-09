@@ -73,7 +73,6 @@ function MainPage() {
 
   const onUpdateModal = (event: React.MouseEvent, id: number) => {
     isLoading(true);
-    updateData([]);
     fetch(`${baseURL}/character/${id}`)
       .then((response) => {
         return response.json();
