@@ -23,7 +23,7 @@ const defaultModalData = {
 
 function MainPage() {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
-  const [cardsData, updateData] = useState<ShortCardProps[]>();
+  const [cardsData, updateCardsData] = useState<ShortCardProps[]>();
   const [modalActive, isModalActive] = useState(false);
   const [modalData, updateModalData] = useState<FullCardProps>(defaultModalData);
   const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
@@ -31,27 +31,22 @@ function MainPage() {
 
   function updateCharactersData() {
     isLoading(true);
-    updateData([]);
+    updateCardsData([]);
 
     getCharacters(searchValue).then((data: AllCharactersResponse) => {
-      console.log(data);
       if (data) {
         const charactersData = data.results.map((characterData: FullCardProps) => {
           return { id: characterData.id, name: characterData.name, image: characterData.image };
         });
-        updateData(charactersData);
+        updateCardsData(charactersData);
         updateNothingToShowMessage('');
       } else {
-        updateData([]);
+        updateCardsData([]);
         updateNothingToShowMessage('Oooops! There is nothing to show.');
       }
       isLoading(false);
     });
   }
-
-  useEffect(() => {
-    updateCharactersData();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('lastSearchValue', searchValue);
