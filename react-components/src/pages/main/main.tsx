@@ -65,11 +65,9 @@ function MainPage() {
     updateCharactersData();
   }, [searchValue]);
 
-  function updateCards(event: React.ChangeEvent) {
-    const eventTarget = event.target as HTMLInputElement;
-    const inputValue = eventTarget.value;
-    updateSearchValue(inputValue);
-  }
+  const updateCards = (newInputValue: string) => {
+    updateSearchValue(newInputValue);
+  };
 
   const onUpdateModal = (event: React.MouseEvent, id: number) => {
     isLoading(true);
@@ -92,7 +90,7 @@ function MainPage() {
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
+        <SearchBar callback={updateCards} inputValue={searchValue} />
       </div>
       <div className="message">{nothingToShowMessage}</div>
       {loading && (

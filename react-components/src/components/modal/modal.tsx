@@ -23,6 +23,15 @@ function Modal({ active, setActive, cardData }: ModalProps) {
         onClick={(event) => event.stopPropagation()}
         aria-hidden="true"
       >
+        <div
+          className="close-button"
+          onClick={() => {
+            setActive(false);
+          }}
+          aria-hidden="true"
+        >
+          <img src="../../../public/closeButton-01.png" alt="close-button" />
+        </div>
         <div className="card-img-container">
           <img src={image} alt={name} />
         </div>
