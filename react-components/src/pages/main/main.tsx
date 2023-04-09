@@ -30,10 +30,10 @@ function MainPage() {
   const [modalActive, setModalActive] = useState(false);
   const [modalData, updateModalData] = useState<FullCardProps>(defaultModalData);
   const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
+  const [loading, updateLoading] = useState(false);
 
   function updateCharactersData() {
-    getCharacters(searchValue).then((data: AllCharactersResponse) => {
-      console.log(data);
+    getCharacters(searchValue, updateLoading).then((data: AllCharactersResponse) => {
       if (data) {
         const charactersData = data.results.map((characterData: FullCardProps) => {
           return { id: characterData.id, name: characterData.name, image: characterData.image };
@@ -44,6 +44,7 @@ function MainPage() {
         updateData([]);
         updateNothingToShowMessage('Oooops! There is nothing to show.');
       }
+      updateLoading(false);
     });
   }
 
@@ -63,9 +64,10 @@ function MainPage() {
   }
 
   const onUpdateModal = (event: React.MouseEvent, id: number) => {
-    getCharacter(id).then((data: FullCardProps) => {
+    getCharacter(id, updateLoading).then((data: FullCardProps) => {
       updateModalData(data);
       setModalActive(true);
+      updateLoading(false);
     });
   };
 
@@ -77,6 +79,7 @@ function MainPage() {
         <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
       </div>
       <div className="nothing-to-show">{nothingToShowMessage}</div>
+      {loading && <div>Loading</div>}
       <div data-testid="cards-container" className="cards-container">
         {cardsData &&
           cardsData.map((cardData: ShortCardProps) => {
