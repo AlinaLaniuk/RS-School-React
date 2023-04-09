@@ -49,7 +49,7 @@ const handlers = [
           name: 'Citadel of Ricks',
           url: 'https://rickandmortyapi.com/api/location/3',
         },
-        name: 'Rick',
+        name: 'Rick Test',
         origin: {
           name: 'Earth (C-137)',
           url: 'https://rickandmortyapi.com/api/location/1',

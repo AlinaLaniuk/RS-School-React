@@ -21,7 +21,8 @@ test('open modal window', async () => {
   await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
   const card = screen.getByText('Rick');
   card.click();
-  await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText('Rick Test')).toBeInTheDocument());
+  expect(screen.getByText('Created: 2017-11-04T18:48:46.250Z')).toBeInTheDocument();
   expect(screen.getByText('Gender: Male')).toBeInTheDocument();
   expect(screen.getByText('Species: Human')).toBeInTheDocument();
   expect(screen.getByText('Status: Alive')).toBeInTheDocument();
