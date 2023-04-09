@@ -5,8 +5,7 @@ import { ShortCardProps } from '../../components/shortCard/types';
 import { AllCharactersResponse } from './types';
 import ShortCard from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
-
-const baseURL = 'https://rickandmortyapi.com/api';
+import { getCharacters, getCharacter } from './services';
 
 const defaultModalData = {
   id: 1,
@@ -33,26 +32,21 @@ function MainPage() {
   function updateCharactersData() {
     isLoading(true);
     updateData([]);
-    fetch(`${baseURL}/character/?name=${searchValue}`)
-      .then((response) => {
-        return response.ok ? response.json() : undefined;
-      })
-      .catch((error) => {
-        throw new Error('The Promise is rejected!', error);
-      })
-      .then((data: AllCharactersResponse) => {
-        if (data) {
-          const charactersData = data.results.map((characterData: FullCardProps) => {
-            return { id: characterData.id, name: characterData.name, image: characterData.image };
-          });
-          updateData(charactersData);
-          updateNothingToShowMessage('');
-        } else {
-          updateData([]);
-          updateNothingToShowMessage('Oooops! There is nothing to show.');
-        }
-        isLoading(false);
-      });
+
+    getCharacters(searchValue).then((data: AllCharactersResponse) => {
+      console.log(data);
+      if (data) {
+        const charactersData = data.results.map((characterData: FullCardProps) => {
+          return { id: characterData.id, name: characterData.name, image: characterData.image };
+        });
+        updateData(charactersData);
+        updateNothingToShowMessage('');
+      } else {
+        updateData([]);
+        updateNothingToShowMessage('Oooops! There is nothing to show.');
+      }
+      isLoading(false);
+    });
   }
 
   useEffect(() => {
@@ -66,18 +60,12 @@ function MainPage() {
 
   const onUpdateModal = (id: number) => {
     isLoading(true);
-    fetch(`${baseURL}/character/${id}`)
-      .then((response) => {
-        return response.json();
-      })
-      .catch((error) => {
-        throw new Error('The Promise is rejected!', error);
-      })
-      .then((data: FullCardProps) => {
-        updateModalData(data);
-        isModalActive(true);
-        isLoading(false);
-      });
+
+    getCharacter(id).then((data: FullCardProps) => {
+      updateModalData(data);
+      isModalActive(true);
+      isLoading(false);
+    });
   };
 
   return (

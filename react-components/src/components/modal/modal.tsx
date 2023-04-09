@@ -30,7 +30,7 @@ function Modal({ active, setActive, cardData }: ModalProps) {
           }}
           aria-hidden="true"
         >
-          <img src="../../../public/closeButton-01.png" alt="close-button" />
+          <img src="closeButton-01.png" alt="close-button" />
         </div>
         <div className="card-img-container">
           <img src={image} alt={name} />
