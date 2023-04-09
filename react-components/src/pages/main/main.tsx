@@ -1,14 +1,13 @@
-/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
-import Card from '../../components/card/fullCard';
-import { FullCardProps } from '../../components/card/types';
+import { FullCardProps } from '../../components/modal/types';
 import { ShortCardProps } from '../../components/shortCard/types';
-import { getCharacters, getCharacter } from './services';
 import debounce from '../../utils';
 import { AllCharactersResponse } from './types';
 import ShortCard from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
+
+const baseURL = 'https://rickandmortyapi.com/api';
 
 const defaultModalData = {
   id: 1,
@@ -27,25 +26,34 @@ const defaultModalData = {
 function MainPage() {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
   const [cardsData, updateData] = useState<ShortCardProps[]>();
-  const [modalActive, setModalActive] = useState(false);
+  const [modalActive, isModalActive] = useState(false);
   const [modalData, updateModalData] = useState<FullCardProps>(defaultModalData);
   const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
-  const [loading, updateLoading] = useState(false);
+  const [loading, isLoading] = useState(false);
 
   function updateCharactersData() {
-    getCharacters(searchValue, updateLoading).then((data: AllCharactersResponse) => {
-      if (data) {
-        const charactersData = data.results.map((characterData: FullCardProps) => {
-          return { id: characterData.id, name: characterData.name, image: characterData.image };
-        });
-        updateData(charactersData);
-        updateNothingToShowMessage('');
-      } else {
-        updateData([]);
-        updateNothingToShowMessage('Oooops! There is nothing to show.');
-      }
-      updateLoading(false);
-    });
+    isLoading(true);
+    updateData([]);
+    fetch(`${baseURL}/character/?name=${searchValue}`)
+      .then((response) => {
+        return response.ok ? response.json() : undefined;
+      })
+      .catch((error) => {
+        throw new Error('The Promise is rejected!', error);
+      })
+      .then((data: AllCharactersResponse) => {
+        if (data) {
+          const charactersData = data.results.map((characterData: FullCardProps) => {
+            return { id: characterData.id, name: characterData.name, image: characterData.image };
+          });
+          updateData(charactersData);
+          updateNothingToShowMessage('');
+        } else {
+          updateData([]);
+          updateNothingToShowMessage('Oooops! There is nothing to show.');
+        }
+        isLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -64,11 +72,20 @@ function MainPage() {
   }
 
   const onUpdateModal = (event: React.MouseEvent, id: number) => {
-    getCharacter(id, updateLoading).then((data: FullCardProps) => {
-      updateModalData(data);
-      setModalActive(true);
-      updateLoading(false);
-    });
+    isLoading(true);
+    updateData([]);
+    fetch(`${baseURL}/character/${id}`)
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        throw new Error('The Promise is rejected!', error);
+      })
+      .then((data: FullCardProps) => {
+        updateModalData(data);
+        isModalActive(true);
+        isLoading(false);
+      });
   };
 
   const debouncedUpdateCards = debounce(updateCards, 1000);
@@ -78,8 +95,12 @@ function MainPage() {
       <div className="search-bar-container">
         <SearchBar callback={debouncedUpdateCards} inputValue={searchValue} />
       </div>
-      <div className="nothing-to-show">{nothingToShowMessage}</div>
-      {loading && <div>Loading</div>}
+      <div className="message">{nothingToShowMessage}</div>
+      {loading && (
+        <div className="loading-screen">
+          <div className="message">Loading...</div>
+        </div>
+      )}
       <div data-testid="cards-container" className="cards-container">
         {cardsData &&
           cardsData.map((cardData: ShortCardProps) => {
@@ -96,7 +117,7 @@ function MainPage() {
             );
           })}
       </div>
-      <Modal active={modalActive} setActive={setModalActive} cardData={modalData} />
+      <Modal active={modalActive} setActive={isModalActive} cardData={modalData} />
     </>
   );
 }

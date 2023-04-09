@@ -1,4 +1,4 @@
-import { CardProps } from '../../components/card/types';
+import { FullCardProps } from '../../components/modal/types';
 
 export type AllCharactersResponse = {
   info: {
@@ -7,5 +7,5 @@ export type AllCharactersResponse = {
     pages: number;
     prev: string | null;
   };
-  results: CardProps[];
+  results: FullCardProps[];
 };

@@ -9,6 +9,66 @@
   transform: scale(0);
 }
 
-.active {
+.modal-active {
   transform: scale(1);
+}
+
+.card-container {
+  width: 60%;
+  height: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.cards-container {
+  width: 90%;
+  height: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  background-color: antiquewhite;
+  border-radius: 20px;
+}
+
+.card-img-container {
+  height: 90%;
+  margin-left: 10px;
+}
+
+.card-img-container>img {
+  height: 100%;
+}
+
+.card-info-container {
+  width: 60%;
+  height: 90%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header {
+  width: 80%;
+  font-size: 2rem;
+  background-color: rgb(129, 213, 188);
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+}
+
+.card-text {
+  color: cadetblue;
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.9em;
+  font-weight: 800;
 }
