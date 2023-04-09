@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import { FullCardProps } from '../../components/modal/types';
 import { ShortCardProps } from '../../components/shortCard/types';
-import debounce from '../../utils';
 import { AllCharactersResponse } from './types';
 import ShortCard from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
@@ -65,11 +64,7 @@ function MainPage() {
     updateCharactersData();
   }, [searchValue]);
 
-  const updateCards = (newInputValue: string) => {
-    updateSearchValue(newInputValue);
-  };
-
-  const onUpdateModal = (event: React.MouseEvent, id: number) => {
+  const onUpdateModal = (id: number) => {
     isLoading(true);
     fetch(`${baseURL}/character/${id}`)
       .then((response) => {
@@ -85,12 +80,10 @@ function MainPage() {
       });
   };
 
-  const debouncedUpdateCards = debounce(updateCards, 1000);
-
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar callback={updateCards} inputValue={searchValue} />
+        <SearchBar callback={updateSearchValue} inputValue={searchValue} />
       </div>
       <div className="message">{nothingToShowMessage}</div>
       {loading && (
@@ -103,8 +96,8 @@ function MainPage() {
           cardsData.map((cardData: ShortCardProps) => {
             return (
               <div
-                onClick={(event: React.MouseEvent) => {
-                  onUpdateModal(event, cardData.id);
+                onClick={() => {
+                  onUpdateModal(cardData.id);
                 }}
                 key={cardData.id}
                 aria-hidden="true"
