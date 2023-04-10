@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import { FullCardProps } from '../../components/modal/types';
 import { ShortCardProps } from '../../components/shortCard/types';
@@ -29,7 +29,7 @@ function MainPage() {
   const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
   const [loading, isLoading] = useState(false);
 
-  function updateCharactersData() {
+  const updateCharactersData = useCallback(() => {
     isLoading(true);
     updateCardsData([]);
 
@@ -46,12 +46,12 @@ function MainPage() {
       }
       isLoading(false);
     });
-  }
+  }, [searchValue]);
 
   useEffect(() => {
     localStorage.setItem('lastSearchValue', searchValue);
     updateCharactersData();
-  }, [searchValue]);
+  }, [searchValue, updateCharactersData]);
 
   const onUpdateModal = (id: number) => {
     isLoading(true);
