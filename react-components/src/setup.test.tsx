@@ -1,9 +1,14 @@
 import '@testing-library/jest-dom';
-import matchers from '@testing-library/jest-dom/matchers';
 import { expect } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import 'whatwg-fetch';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import server from './mocks/server';
 import App from './App';
+
+beforeAll(() => server.listen());
+afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
 
 test('renders react app', () => {
   render(
@@ -13,9 +18,4 @@ test('renders react app', () => {
   );
   const appElement = screen.getByText(/About us/i);
   expect(appElement).toBeInTheDocument();
-});
-
-expect.extend(matchers);
-afterEach(() => {
-  cleanup();
 });

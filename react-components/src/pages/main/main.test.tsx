@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import MainPage from './main';
 
-test('render searchBar and cards', () => {
+test('render searchBar and cards', async () => {
   render(<MainPage />);
-  const searchBar = screen.getByRole('textbox');
-  const cardsContainer = screen.getByTestId('cards-container');
+  await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
+  expect(screen.getByText('Rick')).toBeInTheDocument();
+  const searchBar = screen.getByPlaceholderText('Type to search...');
   expect(searchBar).toBeInTheDocument();
-  expect(cardsContainer).toBeInTheDocument();
 });
 
 test('load the last search value from local storage during mounting stage if it exists', () => {
@@ -14,4 +14,17 @@ test('load the last search value from local storage during mounting stage if it 
   render(<MainPage />);
   const searchInput = screen.getByRole('textbox') as HTMLInputElement;
   expect(searchInput.value).toBe('test');
+});
+
+test('open modal window', async () => {
+  render(<MainPage />);
+  await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
+  const card = screen.getByText('Rick');
+  card.click();
+  await waitFor(() => expect(screen.getByText('Rick Test')).toBeInTheDocument());
+  expect(screen.getByText('Created: 2017-11-04T18:48:46.250Z')).toBeInTheDocument();
+  expect(screen.getByText('Gender: Male')).toBeInTheDocument();
+  expect(screen.getByText('Species: Human')).toBeInTheDocument();
+  expect(screen.getByText('Status: Alive')).toBeInTheDocument();
+  expect(screen.getByText('Location: Citadel of Ricks')).toBeInTheDocument();
 });

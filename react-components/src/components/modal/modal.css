@@ -1,5 +1,20 @@
+.modal-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0);
+}
+
+.modal-active {
+  transform: scale(1);
+}
+
 .card-container {
-  width: 90%;
+  width: 60%;
   height: 300px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -13,6 +28,7 @@
 
 .cards-container {
   width: 90%;
+  height: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
   display: grid;
@@ -44,66 +60,24 @@
 .card-header {
   width: 80%;
   font-size: 2rem;
-  background-color: rgb(255, 0, 93);
+  background-color: rgb(129, 213, 188);
   border-radius: 20px;
   text-align: center;
   color: white;
 }
 
-.description {
+.card-text {
+  color: cadetblue;
   font-family: 'Kanit', sans-serif;
   font-size: 0.9em;
-}
-
-.product-range {
   font-weight: 800;
 }
 
-.buy-block {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-}
-
-.buy-button {
-  width: 40%;
-  height: 30px;
+.close-button {
   border: none;
-  border-radius: 20px;
-  background-color: rgb(201, 154, 244);
-}
-
-.buy-button:hover {
-  background-color: rgb(209, 98, 163);
-  transform: scale(1.1);
-}
-
-.card-price-container {
-  font-size: 1.2em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.price-with-discount {
-  color: crimson;
-}
-
-.bestseller {
-  width: 20%;
-  top: 17px;
-  left: -27px;
+  background-color: white;
   position: absolute;
-}
-
-.discount {
-  width: 10%;
-  top: -140%;
-  left: 0px;
-  position: absolute;
-}
-
-.cross-out {
-  text-decoration: line-through;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }

@@ -1,38 +1,31 @@
-import { useEffect, useState } from 'react';
-import debounce from '../../utils';
+import { useState } from 'react';
 
 type Callback = {
-  getSearchValue: (searchValue: string) => void;
+  callback: (newInputValue: string) => void;
+  inputValue: string;
 };
 
-function SearchBar({ getSearchValue }: Callback) {
-  const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
-
-  useEffect(() => {
-    localStorage.setItem('lastSearchValue', searchValue);
-  });
-
-  const onNewSearchValue = (event: React.ChangeEvent) => {
-    const eventTarget = event.target as HTMLInputElement;
-    const inputValue = eventTarget.value;
-    updateSearchValue((prevInputValue: string) => {
-      return prevInputValue === inputValue ? prevInputValue : inputValue;
-    });
-    getSearchValue(searchValue);
-  };
-
-  const debouncedOnNewSearchValue = debounce(onNewSearchValue, 0);
+function SearchBar({ callback, inputValue }: Callback) {
+  const [searchValue, updateSearchValue] = useState(inputValue);
 
   return (
-    <div className="input-wrapper">
+    <form
+      className="input-wrapper"
+      onSubmit={(event) => {
+        event.preventDefault();
+        callback(searchValue);
+      }}
+    >
       <img src="./search-bar.png" alt="search-bar-icon" />
       <input
-        onChange={debouncedOnNewSearchValue}
+        onChange={(event) => {
+          updateSearchValue(event.target.value);
+        }}
         placeholder="Type to search..."
         type="text"
         defaultValue={searchValue}
       />
-    </div>
+    </form>
   );
 }
 
