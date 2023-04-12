@@ -10,7 +10,7 @@ function SearchBar({ getSearchValue }: Callback) {
 
   useEffect(() => {
     localStorage.setItem('lastSearchValue', searchValue);
-  });
+  }, [searchValue]);
 
   const onNewSearchValue = (event: React.ChangeEvent) => {
     const eventTarget = event.target as HTMLInputElement;
