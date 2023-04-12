@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import debounce from '../../utils';
 
 type Callback = {
-  getSearchValue: (searchValue: string) => void;
+  setNewSearchValue: (searchValue: string) => void;
 };
 
-function SearchBar({ getSearchValue }: Callback) {
+function SearchBar({ setNewSearchValue }: Callback) {
   const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function SearchBar({ getSearchValue }: Callback) {
     updateSearchValue((prevInputValue: string) => {
       return prevInputValue === inputValue ? prevInputValue : inputValue;
     });
-    getSearchValue(searchValue);
+    setNewSearchValue(searchValue);
   };
 
   const debouncedOnNewSearchValue = debounce(onNewSearchValue, 0);

@@ -16,14 +16,14 @@ const setMatchedInputValueCardsData = (inputValue: string) => {
 function MainPage() {
   const initialData = setMatchedInputValueCardsData(localStorage.getItem('lastSearchValue') || '');
   const [data, updateData] = useState(initialData);
-  const getSearchValue = (currentSearchValue: string) => {
+  const setNewSearchValue = (currentSearchValue: string) => {
     updateData(setMatchedInputValueCardsData(currentSearchValue));
   };
 
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar getSearchValue={getSearchValue} />
+        <SearchBar setNewSearchValue={setNewSearchValue} />
       </div>
       <div data-testid="cards-container" className="cards-container">
         {data.map((cardData: CardProps) => {
