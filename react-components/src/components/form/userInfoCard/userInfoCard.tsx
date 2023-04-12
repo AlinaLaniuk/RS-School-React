@@ -1,18 +1,11 @@
-import { CardInfo } from '../../types';
+import { CardInfo } from './types';
 import './userInfoCard.css';
 
-function UserInfoCard({
-  userName,
-  birthdayDate,
-  gender,
-  favoriteDessert,
-  favoriteAdditives,
-  catImage,
-}: CardInfo) {
+function UserInfoCard({ name, birthdayDate, gender, dessert, additives, file }: CardInfo) {
   return (
     <div className="user-card-container">
       <div className="text-info-container">
-        <div className="user-name">{userName}</div>
+        <div className="user-name">{name}</div>
         <div className="user-info-header">
           User birthday:
           <span className="user-info-text"> {birthdayDate}</span>
@@ -23,12 +16,12 @@ function UserInfoCard({
         </div>
         <div className="user-info-header">
           User favorite desserts:
-          <span className="user-info-text"> {favoriteDessert}</span>
+          <span className="user-info-text"> {dessert}</span>
         </div>
         <div className="user-info-header">
           User favorite additives:
           <div className="user-info-text">
-            {favoriteAdditives.map((additive) => {
+            {additives.map((additive) => {
               return (
                 <span key={additive} className="test">
                   {additive}{' '}
@@ -40,7 +33,7 @@ function UserInfoCard({
       </div>
       <div className="img-border">
         <div className="cat-img-container">
-          <img src={URL.createObjectURL(catImage)} alt="cat" />
+          <img src={file} alt="cat" />
         </div>
       </div>
     </div>

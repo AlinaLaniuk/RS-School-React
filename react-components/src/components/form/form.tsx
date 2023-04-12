@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
-import {
-  validateTextInput,
-  validateDate,
-  validateFile,
-  validateIsSomeOptionsWasChosen,
-  validateSelectInput,
-} from './validation';
-import { FormState, FormProps } from '../../types';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { validateTextInput, validateDate, validateFile } from './validation/validation';
+import { CardInfo } from './userInfoCard/types';
 
 const errorsTexts = {
   userName:
@@ -18,267 +13,235 @@ const errorsTexts = {
   catImage: 'Incorrect file. It must be jpg or png file',
 };
 
-const selectDefaultValue = 'chooseDessert';
+type FormValues = {
+  name: string;
+  birthdayDate: string;
+  gender: string;
+  dessert: string;
+  additives: string[];
+  file: FileList;
+};
 
-class Form extends Component<FormProps, FormState> {
-  inputsRefs: {
-    form: React.RefObject<HTMLFormElement>;
-    nameInput: React.RefObject<HTMLInputElement>;
-    birthDateInput: React.RefObject<HTMLInputElement>;
-    dessertSelector: React.RefObject<HTMLSelectElement>;
-    maleInput: React.RefObject<HTMLInputElement>;
-    femaleInput: React.RefObject<HTMLInputElement>;
-    fileUploader: React.RefObject<HTMLInputElement>;
-    chocolateInput: React.RefObject<HTMLInputElement>;
-    caramelInput: React.RefObject<HTMLInputElement>;
-    nutsInput: React.RefObject<HTMLInputElement>;
-    vanillaInput: React.RefObject<HTMLInputElement>;
-    berriesInput: React.RefObject<HTMLInputElement>;
-  };
+function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
+  const [submitMessage, updateSubmitMessage] = useState('');
 
-  constructor(props: FormProps) {
-    super(props);
-    this.state = {
-      errors: {
-        userName: '',
-        birthdayDate: '',
-        catImage: '',
-        gender: '',
-        dessert: '',
-        additives: '',
-      },
-      submitMessage: '',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    shouldFocusError: false,
+  });
+
+  const onSubmit = (data: FormValues) => {
+    const cardData = {
+      name: data.name,
+      birthdayDate: data.birthdayDate,
+      gender: data.gender,
+      dessert: data.dessert,
+      additives: data.additives,
+      file: URL.createObjectURL(data.file[0]),
     };
-    this.inputsRefs = {
-      form: React.createRef(),
-      nameInput: React.createRef(),
-      birthDateInput: React.createRef(),
-      chocolateInput: React.createRef(),
-      caramelInput: React.createRef(),
-      nutsInput: React.createRef(),
-      berriesInput: React.createRef(),
-      vanillaInput: React.createRef(),
-      dessertSelector: React.createRef(),
-      maleInput: React.createRef(),
-      femaleInput: React.createRef(),
-      fileUploader: React.createRef(),
-    };
-  }
-
-  collectStateInfo = () => {
-    const favoriteAdditivesArr = [
-      this.inputsRefs.chocolateInput.current?.checked
-        ? (this.inputsRefs.chocolateInput.current?.id as string)
-        : '',
-      this.inputsRefs.caramelInput.current?.checked
-        ? (this.inputsRefs.caramelInput.current?.id as string)
-        : '',
-      this.inputsRefs.nutsInput.current?.checked
-        ? (this.inputsRefs.nutsInput.current?.id as string)
-        : '',
-      this.inputsRefs.berriesInput.current?.checked
-        ? (this.inputsRefs.berriesInput.current?.id as string)
-        : '',
-      this.inputsRefs.vanillaInput.current?.checked
-        ? (this.inputsRefs.vanillaInput.current?.id as string)
-        : '',
-    ];
-    const favoriteAdditivesValues = favoriteAdditivesArr.filter((additive) => {
-      return additive;
-    });
-    const cardInfo = {
-      userName: this.inputsRefs.nameInput.current?.value as string,
-      birthdayDate: this.inputsRefs.birthDateInput.current?.value as string,
-      gender: this.inputsRefs.maleInput.current?.checked
-        ? (this.inputsRefs.maleInput.current?.value as string)
-        : (this.inputsRefs.femaleInput.current?.value as string),
-      favoriteDessert: this.inputsRefs.dessertSelector.current?.value as string,
-      favoriteAdditives: favoriteAdditivesValues,
-      catImage: (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-    };
-    return cardInfo;
-  };
-
-  submitForm = () => {
-    if (this.validateInputsValues()) {
-      const cardInfo = this.collectStateInfo();
-      const { setCardsInfo } = this.props;
-      setCardsInfo(cardInfo);
-      (this.inputsRefs.form.current as HTMLFormElement).reset();
-      this.showSubmitMessage();
-    }
-  };
-
-  showSubmitMessage() {
-    this.setState({ submitMessage: 'Submit successfully' });
+    onNewCard(cardData);
+    reset();
+    updateSubmitMessage('Submit successfully');
     setTimeout(() => {
-      this.setState({ submitMessage: '' });
-    }, 2000);
-  }
+      updateSubmitMessage('');
+    }, 3000);
+  };
 
-  validateInputsValues() {
-    const isTextInputValueCorrect = validateTextInput(
-      this.inputsRefs.nameInput.current?.value as string,
-      5,
-      2
-    );
-    const isBirthdayDateInputValueCorrect = validateDate(
-      this.inputsRefs.birthDateInput.current?.value as string
-    );
-    const isFileInputValueCorrect = validateFile(
-      (this.inputsRefs.fileUploader.current?.files as FileList)[0] as File,
-      ['image/jpeg', 'image/png']
-    );
-    const isUserChooseGender = validateIsSomeOptionsWasChosen(
-      this.inputsRefs.maleInput.current?.checked as boolean,
-      this.inputsRefs.femaleInput.current?.checked as boolean
-    );
-    const isUserChooseDessert = validateSelectInput(
-      this.inputsRefs.dessertSelector.current?.value as string,
-      selectDefaultValue
-    );
-    const isUserChooseAdditives = validateIsSomeOptionsWasChosen(
-      this.inputsRefs.chocolateInput.current?.checked as boolean,
-      this.inputsRefs.caramelInput.current?.checked as boolean,
-      this.inputsRefs.nutsInput.current?.checked as boolean,
-      this.inputsRefs.berriesInput.current?.checked as boolean,
-      this.inputsRefs.vanillaInput.current?.checked as boolean
-    );
-    const newErrorsState = {
-      userName: isTextInputValueCorrect ? '' : errorsTexts.userName,
-      birthdayDate: isBirthdayDateInputValueCorrect ? '' : errorsTexts.birthdayDate,
-      catImage: isFileInputValueCorrect ? '' : errorsTexts.catImage,
-      gender: isUserChooseGender ? '' : errorsTexts.gender,
-      dessert: isUserChooseDessert ? '' : errorsTexts.dessert,
-      additives: isUserChooseAdditives ? '' : errorsTexts.additives,
-    };
-    this.setState({ errors: newErrorsState });
-    return (
-      isTextInputValueCorrect &&
-      isBirthdayDateInputValueCorrect &&
-      isFileInputValueCorrect &&
-      isUserChooseGender
-    );
-  }
-
-  render() {
-    const { errors } = this.state;
-    const { userName, birthdayDate, catImage, gender, dessert, additives } = errors;
-    const { submitMessage } = this.state;
-    return (
-      <form data-testid="form-container" ref={this.inputsRefs.form} className="form">
-        <label className="text-input" htmlFor="text-input">
-          Your name:
-          <div className="input-wrapper form-text-input">
-            <input ref={this.inputsRefs.nameInput} id="text-input" type="text" />
-          </div>
-          <div className="separator error">{userName}</div>
-        </label>
-
-        <label htmlFor="date-input">
-          Your birthday:
-          <div className="input-wrapper date-input-wrapper">
-            <input ref={this.inputsRefs.birthDateInput} id="date-input" type="date" />
-          </div>
-          <div className="separator error">{birthdayDate}</div>
-        </label>
-
-        <div className="gender-selector-container">
-          Your gender:
-          <label className="gender-label" htmlFor="male">
-            Male
-            <input
-              ref={this.inputsRefs.maleInput}
-              id="male"
-              type="radio"
-              className="radio-input"
-              value="male"
-              name="gender"
-            />
-            <span />
-          </label>
-          <label className="gender-label" htmlFor="female">
-            Female
-            <input
-              ref={this.inputsRefs.femaleInput}
-              id="female"
-              type="radio"
-              className="radio-input"
-              value="female"
-              name="gender"
-            />
-            <span />
-          </label>
-          <div className="separator error">{gender}</div>
-        </div>
-
-        <label htmlFor="select">
-          Select your favorite dessert:
-          <div className="input-wrapper select-input-container">
-            <select ref={this.inputsRefs.dessertSelector} className="select" id="select">
-              <option value={selectDefaultValue}>Choose dessert</option>
-              <option value="cake">Cake</option>
-              <option value="candies">Candies</option>
-              <option value="donuts">Donuts</option>
-              <option value="cookies">Cookies</option>
-              <option value="ice-cream">Ice-cream</option>
-            </select>
-          </div>
-          <div className="separator error">{dessert}</div>
-        </label>
-
-        <fieldset className="checkbox">
-          <legend>Your favorite additive: </legend>
-          <div>
-            <label htmlFor="chocolate">
-              Chocolate
-              <input ref={this.inputsRefs.chocolateInput} type="checkbox" id="chocolate" />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="caramel">
-              Caramel
-              <input ref={this.inputsRefs.caramelInput} type="checkbox" id="caramel" />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="nuts">
-              Nuts
-              <input ref={this.inputsRefs.nutsInput} type="checkbox" id="nuts" />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="berries">
-              Berries
-              <input ref={this.inputsRefs.berriesInput} type="checkbox" id="berries" />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="vanilla">
-              Vanilla
-              <input ref={this.inputsRefs.vanillaInput} type="checkbox" id="vanilla" />
-            </label>
-          </div>
-        </fieldset>
-        <div className="separator error">{additives}</div>
-
-        <label className="file-uploader-label" htmlFor="file-uploader-input">
-          Add picture with cute cat:
+  return (
+    <form data-testid="form-container" onSubmit={handleSubmit(onSubmit)} className="form">
+      <label className="text-input" htmlFor="text-input">
+        Your name:
+        <div className="input-wrapper form-text-input">
           <input
-            ref={this.inputsRefs.fileUploader}
-            className="file-uploader-input"
-            id="file-uploader-input"
-            type="file"
+            {...register('name', {
+              required: errorsTexts.userName,
+              validate: (value: string) => validateTextInput(value, 5, 2) || errors.name?.message,
+            })}
+            id="text-input"
+            type="text"
           />
-          <div className="separator error">{catImage}</div>
+        </div>
+        {errors.name && (
+          <div data-testid="error" className="separator error">
+            {errors.name?.message}
+          </div>
+        )}
+      </label>
+
+      <label htmlFor="date-input">
+        Your birthday:
+        <div className="input-wrapper date-input-wrapper">
+          <input
+            {...register('birthdayDate', {
+              required: 'This is required',
+              validate: (value: string) => validateDate(value),
+            })}
+            id="date-input"
+            type="date"
+          />
+        </div>
+        {errors.birthdayDate && (
+          <div data-testid="error" className="separator error">
+            {errors.birthdayDate?.message}
+          </div>
+        )}
+      </label>
+
+      <div className="gender-selector-container">
+        Your gender:
+        <label className="gender-label" htmlFor="male">
+          Male
+          <input
+            {...register('gender', { required: errorsTexts.gender })}
+            id="male"
+            type="radio"
+            className="radio-input"
+            value="male"
+            name="gender"
+          />
+          <span />
         </label>
-        <button className="submit-button" onClick={this.submitForm} type="button">
-          Submit
-        </button>
-        <div className="submit-message">{submitMessage}</div>
-      </form>
-    );
-  }
+        <label className="gender-label" htmlFor="female">
+          Female
+          <input
+            {...register('gender', { required: errorsTexts.gender })}
+            id="female"
+            type="radio"
+            className="radio-input"
+            value="female"
+            name="gender"
+          />
+          <span />
+        </label>
+        {errors.gender && (
+          <div data-testid="error" className="separator error">
+            {errors.gender?.message}
+          </div>
+        )}
+      </div>
+
+      <label htmlFor="select">
+        Select your favorite dessert:
+        <div className="input-wrapper select-input-container">
+          <select
+            {...register('dessert', { required: errorsTexts.dessert })}
+            className="select"
+            id="select"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Choose dessert
+            </option>
+            <option value="cake">Cake</option>
+            <option value="candies">Candies</option>
+            <option value="donuts">Donuts</option>
+            <option value="cookies">Cookies</option>
+            <option value="ice-cream">Ice-cream</option>
+          </select>
+        </div>
+        {errors.dessert && (
+          <div data-testid="error" className="separator error">
+            {errors.dessert?.message}
+          </div>
+        )}
+      </label>
+
+      <fieldset className="checkbox">
+        <legend>Your favorite additive: </legend>
+        <div>
+          <label htmlFor="chocolate">
+            Chocolate
+            <input
+              {...register('additives', { required: errorsTexts.additives })}
+              type="checkbox"
+              value="chocolate"
+              id="chocolate"
+              name="additives"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="caramel">
+            Caramel
+            <input
+              {...register('additives', { required: errorsTexts.additives })}
+              type="checkbox"
+              value="caramel"
+              id="caramel"
+              name="additives"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="nuts">
+            Nuts
+            <input
+              {...register('additives', { required: errorsTexts.additives })}
+              type="checkbox"
+              value="nuts"
+              id="nuts"
+              name="additives"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="berries">
+            Berries
+            <input
+              {...register('additives', { required: errorsTexts.additives })}
+              type="checkbox"
+              value="berries"
+              id="berries"
+              name="additives"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="vanilla">
+            Vanilla
+            <input
+              {...register('additives', { required: errorsTexts.additives })}
+              type="checkbox"
+              value="vanilla"
+              id="vanilla"
+              name="additives"
+            />
+          </label>
+        </div>
+      </fieldset>
+      {errors.additives && (
+        <div data-testid="error" className="separator error">
+          {errors.additives?.message}
+        </div>
+      )}
+
+      <label className="file-uploader-label" htmlFor="file-uploader-input">
+        Add picture with cute cat:
+        <input
+          {...register('file', {
+            required: 'This is required',
+            validate: (value: FileList) => validateFile(value[0], ['image/jpeg', 'image/png']),
+          })}
+          className="file-uploader-input"
+          id="file-uploader-input"
+          type="file"
+        />
+        {errors.file && (
+          <div data-testid="error" className="separator error">
+            {errors.file?.message}
+          </div>
+        )}
+      </label>
+      <input value="Submit" className="submit-button" type="submit" />
+      <div className="submit-message">{submitMessage}</div>
+    </form>
+  );
 }
 
 export default Form;

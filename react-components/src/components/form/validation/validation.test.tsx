@@ -1,9 +1,4 @@
-import {
-  validateTextInput,
-  validateDate,
-  validateFile,
-  validateIsSomeOptionsWasChosen,
-} from './validation';
+import { validateTextInput, validateDate, validateFile } from './validation';
 
 test('validate text', () => {
   const text = 'test test';
@@ -19,8 +14,4 @@ test('validate date', () => {
 test('validate file', () => {
   const testFile = new File(['(⌐□_□)'], 'test.png', { type: 'image/png' });
   expect(validateFile(testFile, ['image/png'])).toEqual(true);
-});
-
-test('validate radio inputs', () => {
-  expect(validateIsSomeOptionsWasChosen(false, false)).toEqual(false);
 });

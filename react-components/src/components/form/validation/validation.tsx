@@ -28,14 +28,3 @@ export function validateFile(file: File, availableTypes: string[]) {
   });
   return fileType.length === 1;
 }
-
-export function validateIsSomeOptionsWasChosen(...inputsValue: boolean[]) {
-  const truthyInputsValue = inputsValue.filter((inputValue) => {
-    return inputValue;
-  });
-  return !!truthyInputsValue.length;
-}
-
-export function validateSelectInput(value: string, defaultValue: string) {
-  return value !== defaultValue;
-}

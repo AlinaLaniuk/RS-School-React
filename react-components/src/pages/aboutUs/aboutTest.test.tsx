@@ -3,10 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import AboutUs from './aboutUs';
 
 test('render AboutUsPage', () => {
-  const setPageName = () => undefined;
   render(
     <BrowserRouter>
-      <AboutUs setPageName={setPageName} />
+      <AboutUs />
     </BrowserRouter>
   );
   const aboutUsElement = screen.getByText(/Some text about us./i);
