@@ -61,9 +61,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           <input
             {...register('name', {
               required: errorsTexts.userName,
-              validate: (value: string) => {
-                return validateTextInput(value, 5, 2) || errors.name?.message;
-              },
+              validate: (value: string) => validateTextInput(value, 5, 2) || errors.name?.message,
             })}
             id="text-input"
             type="text"
@@ -82,9 +80,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
           <input
             {...register('birthdayDate', {
               required: 'This is required',
-              validate: (value: string) => {
-                return validateDate(value);
-              },
+              validate: (value: string) => validateDate(value),
             })}
             id="date-input"
             type="date"
@@ -230,9 +226,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         <input
           {...register('file', {
             required: 'This is required',
-            validate: (value: FileList) => {
-              return validateFile(value[0], ['image/jpeg', 'image/png']);
-            },
+            validate: (value: FileList) => validateFile(value[0], ['image/jpeg', 'image/png']),
           })}
           className="file-uploader-input"
           id="file-uploader-input"
