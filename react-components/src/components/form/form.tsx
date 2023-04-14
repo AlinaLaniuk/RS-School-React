@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
-import { CardInfo } from './userInfoCard/types';
+import { updateFormData } from '../../store/collectFormDataSlice';
+import { useAppDispatch } from '../../store/hook';
 
 const errorsTexts = {
   userName:
@@ -13,7 +14,7 @@ const errorsTexts = {
   catImage: 'Incorrect file. It must be jpg or png file',
 };
 
-type FormValues = {
+export type FormValues = {
   name: string;
   birthdayDate: string;
   gender: string;
@@ -22,8 +23,10 @@ type FormValues = {
   file: FileList;
 };
 
-function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
+function Form() {
   const [submitMessage, updateSubmitMessage] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -45,7 +48,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       additives: data.additives,
       file: URL.createObjectURL(data.file[0]),
     };
-    onNewCard(cardData);
+    dispatch(updateFormData(cardData));
     reset();
     updateSubmitMessage('Submit successfully');
     setTimeout(() => {

@@ -1,14 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchValueSlice from './searchValueSlice';
-
-// type Action = {
-//   type: string;
-//   payload: string;
-// };
+import collectFormDataSlice from './collectFormDataSlice';
 
 const store = configureStore({
   reducer: {
     searchValueReducer: searchValueSlice,
+    collectFormDataReducer: collectFormDataSlice,
   },
 });
 

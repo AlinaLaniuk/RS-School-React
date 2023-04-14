@@ -13,8 +13,6 @@ const searchValueSlice = createSlice({
   initialState,
   reducers: {
     updateSearchValue(state, action: PayloadAction<string>) {
-      console.log(state);
-      console.log(action);
       state.searchValue = action.payload;
     },
   },
