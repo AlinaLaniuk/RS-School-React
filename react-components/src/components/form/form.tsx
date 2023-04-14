@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
-import { updateFormData } from '../../store/collectFormDataSlice';
+import { updateCardsData } from '../../store/collectCardsDataSlice';
 import { useAppDispatch } from '../../store/hook';
 
 const errorsTexts = {
@@ -48,7 +48,7 @@ function Form() {
       additives: data.additives,
       file: URL.createObjectURL(data.file[0]),
     };
-    dispatch(updateFormData(cardData));
+    dispatch(updateCardsData(cardData));
     reset();
     updateSubmitMessage('Submit successfully');
     setTimeout(() => {

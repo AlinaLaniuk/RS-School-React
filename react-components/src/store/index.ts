@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchValueSlice from './searchValueSlice';
-import collectFormDataSlice from './collectFormDataSlice';
+import collectFormDataSlice from './collectCardsDataSlice';
 
 const store = configureStore({
   reducer: {

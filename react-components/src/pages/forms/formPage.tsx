@@ -4,13 +4,13 @@ import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
 import { useAppSelector } from '../../store/hook';
 
 function FormPage() {
-  const updateFormData = useAppSelector((state) => state.collectFormDataReducer);
+  const cardsData = useAppSelector((state) => state.collectFormDataReducer);
 
   return (
     <div className="form-container">
       <Form />
       <div className="user-info-cards-container">
-        {updateFormData.map((cardInfo: CardInfo) => {
+        {cardsData.map((cardInfo: CardInfo) => {
           return (
             <UserInfoCard
               key={`${cardInfo.name}${cardInfo.birthdayDate}`}

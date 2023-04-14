@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { updateSearchValue } from '../../store/searchValueSlice';
 
 type InputValue = {
@@ -7,6 +7,8 @@ type InputValue = {
 };
 
 function SearchBar() {
+  const initialInputValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+
   const { register, handleSubmit } = useForm<InputValue>({
     mode: 'onSubmit',
   });
@@ -19,7 +21,12 @@ function SearchBar() {
   return (
     <form className="input-wrapper" onSubmit={handleSubmit(onSubmitInputValue)}>
       <img src="./search-bar.png" alt="search-bar-icon" />
-      <input {...register('inputValue')} placeholder="Type to search..." type="text" />
+      <input
+        {...register('inputValue')}
+        placeholder="Type to search..."
+        type="text"
+        defaultValue={initialInputValue}
+      />
     </form>
   );
 }

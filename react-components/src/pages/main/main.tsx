@@ -66,7 +66,7 @@ function MainPage() {
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar callback={updateSearchValue} inputValue={searchValue} />
+        <SearchBar />
       </div>
       <div className="message">{nothingToShowMessage}</div>
       {loading && (
