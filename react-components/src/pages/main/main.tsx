@@ -1,82 +1,48 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import { FullCardProps } from '../../components/modal/types';
 import { ShortCardProps } from '../../components/shortCard/types';
-import { AllCharactersResponse } from './types';
 import ShortCard from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
-import { getCharacters, getCharacter } from './services';
-
-const defaultModalData = {
-  id: 1,
-  created: '',
-  gender: '',
-  image: '',
-  location: {
-    name: '',
-  },
-  name: '',
-  species: '',
-  status: '',
-  type: '',
-};
+import { useGetCharactersQuery } from '../../store/api';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateCharactersData } from '../../store/collectCharactersDataSlice';
+import { updateCurrentCardId } from '../../store/updateCurrentCardIdSlice';
 
 function MainPage() {
-  const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
-  const [cardsData, updateCardsData] = useState<ShortCardProps[]>();
-  const [modalActive, isModalActive] = useState(false);
-  const [modalData, updateModalData] = useState<FullCardProps>(defaultModalData);
-  const [nothingToShowMessage, updateNothingToShowMessage] = useState('');
-  const [loading, isLoading] = useState(false);
-
-  const updateCharactersData = useCallback(() => {
-    isLoading(true);
-    updateCardsData([]);
-
-    getCharacters(searchValue).then((data: AllCharactersResponse) => {
-      if (data) {
-        const charactersData = data.results.map((characterData: FullCardProps) => {
-          return { id: characterData.id, name: characterData.name, image: characterData.image };
-        });
-        updateCardsData(charactersData);
-        updateNothingToShowMessage('');
-      } else {
-        updateCardsData([]);
-        updateNothingToShowMessage('Oooops! There is nothing to show.');
-      }
-      isLoading(false);
-    });
-  }, [searchValue]);
+  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const { data: characters, isFetching, isSuccess, isError } = useGetCharactersQuery(searchValue);
+  const dispatch = useAppDispatch();
+  const shortCardsData = useAppSelector((state) => state.updateCharactersDataReducer);
 
   useEffect(() => {
-    localStorage.setItem('lastSearchValue', searchValue);
-    updateCharactersData();
-  }, [searchValue, updateCharactersData]);
+    let newShortCardsData;
+    if (isSuccess) {
+      newShortCardsData = characters.results.map((fullCardData: FullCardProps) => {
+        return { id: fullCardData.id, name: fullCardData.name, image: fullCardData.image };
+      });
+    }
+    dispatch(updateCharactersData(newShortCardsData as ShortCardProps[]));
+  }, [characters, dispatch, isSuccess, searchValue]);
 
   const onUpdateModal = (id: number) => {
-    isLoading(true);
-
-    getCharacter(id).then((data: FullCardProps) => {
-      updateModalData(data);
-      isModalActive(true);
-      isLoading(false);
-    });
+    dispatch(updateCurrentCardId({ id, isActive: true }));
   };
 
-  return (
-    <>
-      <div className="search-bar-container">
-        <SearchBar />
+  let cardContainerContent;
+  if (isError) {
+    cardContainerContent = <div className="message">Nothing to show</div>;
+  } else if (isFetching) {
+    cardContainerContent = (
+      <div className="loading-screen">
+        <div className="message">Loading...</div>
       </div>
-      <div className="message">{nothingToShowMessage}</div>
-      {loading && (
-        <div className="loading-screen">
-          <div className="message">Loading...</div>
-        </div>
-      )}
+    );
+  } else {
+    cardContainerContent = (
       <div data-testid="cards-container" className="cards-container">
-        {cardsData &&
-          cardsData.map((cardData: ShortCardProps) => {
+        {shortCardsData &&
+          shortCardsData.map((cardData: ShortCardProps) => {
             return (
               <div
                 onClick={() => {
@@ -90,7 +56,16 @@ function MainPage() {
             );
           })}
       </div>
-      <Modal active={modalActive} setActive={isModalActive} cardData={modalData} />
+    );
+  }
+
+  return (
+    <>
+      <div className="search-bar-container">
+        <SearchBar />
+      </div>
+      {cardContainerContent}
+      <Modal />
     </>
   );
 }

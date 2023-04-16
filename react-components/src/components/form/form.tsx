@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
-import { updateCardsData } from '../../store/collectCardsDataSlice';
+import { updateCardsData } from '../../store/collectFormDataSlice';
 import { useAppDispatch } from '../../store/hook';
 
 const errorsTexts = {

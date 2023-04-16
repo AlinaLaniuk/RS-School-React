@@ -11,7 +11,7 @@ type CardsData = {
 
 const initialState: CardsData[] = [];
 
-const collectCardsDataSlice = createSlice({
+const collectFormDataSlice = createSlice({
   name: 'cardsData',
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ const collectCardsDataSlice = createSlice({
   },
 });
 
-export const { updateCardsData } = collectCardsDataSlice.actions;
+export const { updateCardsData } = collectFormDataSlice.actions;
 
-export default collectCardsDataSlice.reducer;
+export default collectFormDataSlice.reducer;

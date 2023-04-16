@@ -1,12 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchValueSlice from './searchValueSlice';
-import collectFormDataSlice from './collectCardsDataSlice';
+import collectFormDataSlice from './collectFormDataSlice';
+import collectCharactersDataSlice from './collectCharactersDataSlice';
+import collectModalDataSlice from './collectModalDataSlice';
+import updateCurrentCardIdSlice from './updateCurrentCardIdSlice';
+import { charactersApi } from './api';
 
 const store = configureStore({
   reducer: {
     searchValueReducer: searchValueSlice,
     collectFormDataReducer: collectFormDataSlice,
+    updateCharactersDataReducer: collectCharactersDataSlice,
+    collectModalDataSliceReducer: collectModalDataSlice,
+    updateCurrentCardIdSliceReducer: updateCurrentCardIdSlice,
+    [charactersApi.reducerPath]: charactersApi.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(charactersApi.middleware),
 });
 
 export default store;

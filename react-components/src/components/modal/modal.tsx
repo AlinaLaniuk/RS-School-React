@@ -1,53 +1,56 @@
 import React from 'react';
-import { FullCardProps } from './types';
+import { useGetCharacterQuery } from '../../store/api';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateCurrentCardId } from '../../store/updateCurrentCardIdSlice';
 
-type ModalProps = {
-  active: boolean;
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
-  cardData: FullCardProps;
-};
-
-function Modal({ active, setActive, cardData }: ModalProps) {
-  const { image, name, created, gender, location, species, status, type } = cardData;
+function Modal() {
+  const dispatch = useAppDispatch();
+  const currentCardId = useAppSelector((state) => state.updateCurrentCardIdSliceReducer.id);
+  const isModalActive = useAppSelector((state) => state.updateCurrentCardIdSliceReducer.isActive);
+  const { data, isFetching } = useGetCharacterQuery(currentCardId);
   return (
-    <button
+    <div
       data-testid="modal-container"
-      className={active ? 'modal-container modal-active' : 'modal-container'}
+      className={isModalActive ? 'modal-container modal-active' : 'modal-container'}
       onClick={() => {
-        setActive(false);
+        dispatch(updateCurrentCardId({ id: currentCardId, isActive: false }));
       }}
-      type="button"
+      aria-hidden="true"
     >
-      <div
-        className="card-container"
-        onClick={(event) => event.stopPropagation()}
-        aria-hidden="true"
-      >
+      {isFetching ? (
+        <div>Loading...</div>
+      ) : (
         <div
-          className="close-button"
-          onClick={() => {
-            setActive(false);
-          }}
+          className="card-container"
+          onClick={(event) => event.stopPropagation()}
           aria-hidden="true"
         >
-          <img src="closeButton-01.png" alt="close-button" />
-        </div>
-        <div className="card-img-container">
-          <img src={image} alt={name} />
-        </div>
-        <div className="card-info-container">
-          <div data-testid="card-header" className="card-header">
-            {name}
+          <div
+            className="close-button"
+            onClick={() => {
+              dispatch(updateCurrentCardId({ id: currentCardId, isActive: false }));
+            }}
+            aria-hidden="true"
+          >
+            <img src="closeButton-01.png" alt="close-button" />
           </div>
-          <div className="card-text">Created: {created}</div>
-          <div className="card-text">Gender: {gender}</div>
-          <div className="card-text">Location: {location.name}</div>
-          <div className="card-text">Species: {species}</div>
-          <div className="card-text">Status: {status}</div>
-          {type && <div className="card-text">Type: {type}</div>}
+          <div className="card-img-container">
+            <img src={data?.image} alt={data?.name} />
+          </div>
+          <div className="card-info-container">
+            <div data-testid="card-header" className="card-header">
+              {data?.name}
+            </div>
+            <div className="card-text">Created: {data?.created}</div>
+            <div className="card-text">Gender: {data?.gender}</div>
+            <div className="card-text">Location: {data?.location.name}</div>
+            <div className="card-text">Species: {data?.species}</div>
+            <div className="card-text">Status: {data?.status}</div>
+            {data?.type && <div className="card-text">Type: {data?.type}</div>}
+          </div>
         </div>
-      </div>
-    </button>
+      )}
+    </div>
   );
 }
 
