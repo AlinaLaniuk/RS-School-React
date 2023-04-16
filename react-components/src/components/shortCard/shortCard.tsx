@@ -1,6 +1,10 @@
-import { ShortCardProps } from './types';
+export type ShortCardProps = {
+  name: string;
+  id: number;
+  image: string;
+};
 
-function ShortCard({ name, image }: ShortCardProps) {
+export function ShortCard({ name, image }: ShortCardProps) {
   return (
     <div className="short-card-container">
       <div className="short-card-img-container">
@@ -14,5 +18,3 @@ function ShortCard({ name, image }: ShortCardProps) {
     </div>
   );
 }
-
-export default ShortCard;

@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
-import { FullCardProps } from '../../components/modal/types';
-import { ShortCardProps } from '../../components/shortCard/types';
-import ShortCard from '../../components/shortCard/shortCard';
+import { FullCardProps } from '../../store/collectModalDataSlice';
+import { ShortCardProps, ShortCard } from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
 import { useGetCharactersQuery } from '../../store/api';
 import { useAppDispatch, useAppSelector } from '../../store/hook';

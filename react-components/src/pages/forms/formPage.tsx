@@ -1,6 +1,5 @@
-import { CardInfo } from '../../components/form/userInfoCard/types';
 import Form from '../../components/form/form';
-import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
+import { UserInfoCard, CardInfo } from '../../components/form/userInfoCard/userInfoCard';
 import { useAppSelector } from '../../store/hook';
 
 function FormPage() {

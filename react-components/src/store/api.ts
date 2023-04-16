@@ -1,6 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AllCharactersResponse } from '../pages/main/types';
-import { FullCardProps } from '../components/modal/types';
+import { FullCardProps } from './collectModalDataSlice';
+
+export type AllCharactersResponse = {
+  info: {
+    count: number;
+    next: string | null;
+    pages: number;
+    prev: string | null;
+  };
+  results: FullCardProps[];
+};
 
 export const charactersApi = createApi({
   reducerPath: 'allCharacters',

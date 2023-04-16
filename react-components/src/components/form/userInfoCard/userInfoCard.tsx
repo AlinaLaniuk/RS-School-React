@@ -1,7 +1,15 @@
-import { CardInfo } from './types';
 import './userInfoCard.css';
 
-function UserInfoCard({ name, birthdayDate, gender, dessert, additives, file }: CardInfo) {
+export type CardInfo = {
+  name: string;
+  birthdayDate: string;
+  gender: string;
+  dessert: string;
+  additives: string[];
+  file: string;
+};
+
+export function UserInfoCard({ name, birthdayDate, gender, dessert, additives, file }: CardInfo) {
   return (
     <div className="user-card-container">
       <div className="text-info-container">
@@ -39,5 +47,3 @@ function UserInfoCard({ name, birthdayDate, gender, dessert, additives, file }: 
     </div>
   );
 }
-
-export default UserInfoCard;
