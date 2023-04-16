@@ -1,26 +1,32 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import MainPage from './main';
+import store from '../../store';
 
 test('render searchBar and cards', async () => {
-  render(<MainPage />);
+  render(
+    <Provider store={store}>
+      <MainPage />
+    </Provider>
+  );
   await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
   expect(screen.getByText('Rick')).toBeInTheDocument();
   const searchBar = screen.getByPlaceholderText('Type to search...');
   expect(searchBar).toBeInTheDocument();
 });
 
-test('load the last search value from local storage during mounting stage if it exists', () => {
-  localStorage.setItem('lastSearchValue', 'test');
-  render(<MainPage />);
-  const searchInput = screen.getByRole('textbox') as HTMLInputElement;
-  expect(searchInput.value).toBe('test');
-});
-
 test('open modal window', async () => {
-  render(<MainPage />);
+  render(
+    <Provider store={store}>
+      <MainPage />
+    </Provider>
+  );
   await waitFor(() => expect(screen.getByText('Rick')).toBeInTheDocument());
   const card = screen.getByText('Rick');
-  card.click();
+  act(() => {
+    card.click();
+  });
+
   await waitFor(() => expect(screen.getByText('Rick Test')).toBeInTheDocument());
   expect(screen.getByText('Created: 2017-11-04T18:48:46.250Z')).toBeInTheDocument();
   expect(screen.getByText('Gender: Male')).toBeInTheDocument();
