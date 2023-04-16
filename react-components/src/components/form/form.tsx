@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
 import { updateCardsData } from '../../store/collectFormDataSlice';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateIsSubmitMessage } from '../../store/updateSubmitMessageState';
 
 const errorsTexts = {
   userName:
@@ -24,7 +24,9 @@ export type FormValues = {
 };
 
 function Form() {
-  const [submitMessage, updateSubmitMessage] = useState('');
+  const isSubmitMessage = useAppSelector(
+    (state) => state.updateSubmitMessageStateReducer.isSubmitMessage
+  );
 
   const dispatch = useAppDispatch();
 
@@ -50,9 +52,9 @@ function Form() {
     };
     dispatch(updateCardsData(cardData));
     reset();
-    updateSubmitMessage('Submit successfully');
+    dispatch(updateIsSubmitMessage({ isSubmitMessage: true }));
     setTimeout(() => {
-      updateSubmitMessage('');
+      dispatch(updateIsSubmitMessage({ isSubmitMessage: false }));
     }, 3000);
   };
 
@@ -237,12 +239,12 @@ function Form() {
         />
         {errors.file && (
           <div data-testid="error" className="separator error">
-            {errors.file.message}
+            {errorsTexts.catImage}
           </div>
         )}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
-      <div className="submit-message">{submitMessage}</div>
+      <div className="submit-message">{isSubmitMessage && 'Submit successfully'}</div>
     </form>
   );
 }

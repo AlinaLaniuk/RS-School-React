@@ -4,6 +4,7 @@ import collectFormDataSlice from './collectFormDataSlice';
 import collectCharactersDataSlice from './collectCharactersDataSlice';
 import collectModalDataSlice from './collectModalDataSlice';
 import updateCurrentCardIdSlice from './updateCurrentCardIdSlice';
+import updateSubmitMessageState from './updateSubmitMessageState';
 import { charactersApi } from './api';
 
 const store = configureStore({
@@ -13,6 +14,7 @@ const store = configureStore({
     updateCharactersDataReducer: collectCharactersDataSlice,
     collectModalDataSliceReducer: collectModalDataSlice,
     updateCurrentCardIdSliceReducer: updateCurrentCardIdSlice,
+    updateSubmitMessageStateReducer: updateSubmitMessageState,
     [charactersApi.reducerPath]: charactersApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(charactersApi.middleware),
