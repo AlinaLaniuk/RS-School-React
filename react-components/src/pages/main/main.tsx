@@ -45,7 +45,7 @@ function MainPage() {
             return (
               <div
                 onClick={() => {
-                  onUpdateModal(cardData.id);
+                  onUpdateModal(cardData.id as number);
                 }}
                 key={cardData.id}
                 aria-hidden="true"
