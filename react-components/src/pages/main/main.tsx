@@ -47,7 +47,7 @@ function MainPage() {
                 onClick={() => {
                   onUpdateModal(cardData.id as number);
                 }}
-                key={cardData.id}
+                key={cardData.id as number}
                 aria-hidden="true"
               >
                 <ShortCard {...cardData} />
