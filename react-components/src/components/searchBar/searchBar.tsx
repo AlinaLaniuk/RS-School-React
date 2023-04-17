@@ -1,38 +1,33 @@
-import { useEffect, useState } from 'react';
-import debounce from '../../utils';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateSearchValue } from '../../store/searchValueSlice';
 
-type Callback = {
-  setNewSearchValue: (searchValue: string) => void;
+type InputValue = {
+  inputValue: string;
 };
 
-function SearchBar({ setNewSearchValue }: Callback) {
-  const [searchValue, updateSearchValue] = useState(localStorage.getItem('lastSearchValue') || '');
+function SearchBar() {
+  const initialInputValue = useAppSelector((state) => state.searchValueReducer.searchValue);
 
-  useEffect(() => {
-    localStorage.setItem('lastSearchValue', searchValue);
-  }, [searchValue]);
+  const { register, handleSubmit } = useForm<InputValue>({
+    mode: 'onSubmit',
+  });
+  const dispatch = useAppDispatch();
 
-  const onNewSearchValue = (event: React.ChangeEvent) => {
-    const eventTarget = event.target as HTMLInputElement;
-    const inputValue = eventTarget.value;
-    updateSearchValue((prevInputValue: string) => {
-      return prevInputValue === inputValue ? prevInputValue : inputValue;
-    });
-    setNewSearchValue(searchValue);
+  const onSubmitInputValue = (inputValue: InputValue) => {
+    dispatch(updateSearchValue(inputValue.inputValue));
   };
 
-  const debouncedOnNewSearchValue = debounce(onNewSearchValue, 0);
-
   return (
-    <div className="input-wrapper">
+    <form className="input-wrapper" onSubmit={handleSubmit(onSubmitInputValue)}>
       <img src="./search-bar.png" alt="search-bar-icon" />
       <input
-        onChange={debouncedOnNewSearchValue}
+        {...register('inputValue')}
         placeholder="Type to search..."
         type="text"
-        defaultValue={searchValue}
+        defaultValue={initialInputValue}
       />
-    </div>
+    </form>
   );
 }
 

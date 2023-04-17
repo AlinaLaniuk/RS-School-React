@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { validateTextInput, validateDate, validateFile } from './validation/validation';
-import { CardInfo } from './userInfoCard/types';
+import { updateCardsData } from '../../store/collectFormDataSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateIsSubmitMessage } from '../../store/updateSubmitMessageState';
 
 const errorsTexts = {
   userName:
@@ -13,7 +14,7 @@ const errorsTexts = {
   catImage: 'Incorrect file. It must be jpg or png file',
 };
 
-type FormValues = {
+export type FormValues = {
   name: string;
   birthdayDate: string;
   gender: string;
@@ -22,8 +23,12 @@ type FormValues = {
   file: FileList;
 };
 
-function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
-  const [submitMessage, updateSubmitMessage] = useState('');
+function Form() {
+  const isSubmitMessage = useAppSelector(
+    (state) => state.updateSubmitMessageStateReducer.isSubmitMessage
+  );
+
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -45,11 +50,11 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       additives: data.additives,
       file: URL.createObjectURL(data.file[0]),
     };
-    onNewCard(cardData);
+    dispatch(updateCardsData(cardData));
     reset();
-    updateSubmitMessage('Submit successfully');
+    dispatch(updateIsSubmitMessage({ isSubmitMessage: true }));
     setTimeout(() => {
-      updateSubmitMessage('');
+      dispatch(updateIsSubmitMessage({ isSubmitMessage: false }));
     }, 3000);
   };
 
@@ -69,7 +74,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.name && (
           <div data-testid="error" className="separator error">
-            {errors.name?.message}
+            {errors.name.message}
           </div>
         )}
       </label>
@@ -88,7 +93,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.birthdayDate && (
           <div data-testid="error" className="separator error">
-            {errors.birthdayDate?.message}
+            {errors.birthdayDate.message}
           </div>
         )}
       </label>
@@ -121,7 +126,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </label>
         {errors.gender && (
           <div data-testid="error" className="separator error">
-            {errors.gender?.message}
+            {errors.gender.message}
           </div>
         )}
       </div>
@@ -147,7 +152,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         </div>
         {errors.dessert && (
           <div data-testid="error" className="separator error">
-            {errors.dessert?.message}
+            {errors.dessert.message}
           </div>
         )}
       </label>
@@ -217,7 +222,7 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
       </fieldset>
       {errors.additives && (
         <div data-testid="error" className="separator error">
-          {errors.additives?.message}
+          {errors.additives.message}
         </div>
       )}
 
@@ -234,12 +239,12 @@ function Form({ onNewCard }: { onNewCard: (cardsInfo: CardInfo) => void }) {
         />
         {errors.file && (
           <div data-testid="error" className="separator error">
-            {errors.file?.message}
+            {errorsTexts.catImage}
           </div>
         )}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
-      <div className="submit-message">{submitMessage}</div>
+      <div className="submit-message">{isSubmitMessage && 'Submit successfully'}</div>
     </form>
   );
 }

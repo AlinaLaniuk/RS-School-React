@@ -1,20 +1,15 @@
-import { useState } from 'react';
-import { CardInfo } from '../../components/form/userInfoCard/types';
 import Form from '../../components/form/form';
-import UserInfoCard from '../../components/form/userInfoCard/userInfoCard';
+import { UserInfoCard, CardInfo } from '../../components/form/userInfoCard/userInfoCard';
+import { useAppSelector } from '../../store/hook';
 
 function FormPage() {
-  const [cards, updateCards] = useState<CardInfo[]>([]);
-
-  const collectCardInfo = (cardsInfo: CardInfo) => {
-    updateCards([...cards, cardsInfo]);
-  };
+  const cardsData = useAppSelector((state) => state.collectFormDataReducer);
 
   return (
     <div className="form-container">
-      <Form onNewCard={collectCardInfo} />
+      <Form />
       <div className="user-info-cards-container">
-        {cards.map((cardInfo: CardInfo) => {
+        {cardsData.map((cardInfo: CardInfo) => {
           return (
             <UserInfoCard
               key={`${cardInfo.name}${cardInfo.birthdayDate}`}

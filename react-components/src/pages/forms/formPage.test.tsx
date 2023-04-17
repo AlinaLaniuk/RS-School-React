@@ -1,13 +1,19 @@
 import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
 import FormPage from './formPage';
+import store from '../../store';
 
 test('filling form', async () => {
   vi.stubGlobal('URL', {
     createObjectURL: () => {},
   });
-  render(<FormPage />);
+  render(
+    <Provider store={store}>
+      <FormPage />
+    </Provider>
+  );
 
   const card = screen.queryByText(/User birthday/i);
   expect(card).toBeNull();
@@ -52,7 +58,11 @@ test('filling form', async () => {
 });
 
 test('submit empty form', async () => {
-  render(<FormPage />);
+  render(
+    <Provider store={store}>
+      <FormPage />
+    </Provider>
+  );
   const errorsElements = screen.queryAllByTestId('error');
   const submit = screen.getByText('Submit');
   await userEvent.click(submit);

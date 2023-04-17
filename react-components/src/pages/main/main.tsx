@@ -1,35 +1,76 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
-import Card from '../../components/card/card';
-import cardsData from '../../data';
-import { CardProps } from '../../components/card/types';
+import { FullCardProps } from '../../store/collectModalDataSlice';
+import ShortCard from '../../components/shortCard/shortCard';
+import Modal from '../../components/modal/modal';
+import { useGetCharactersQuery } from '../../store/api';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { updateCharactersData } from '../../store/collectCharactersDataSlice';
+import { updateCurrentCardId } from '../../store/updateCurrentCardIdSlice';
 
-const setMatchedInputValueCardsData = (inputValue: string) => {
-  return cardsData.filter((cardData) => {
-    return (
-      cardData.header.toLowerCase().includes(inputValue.toLowerCase()) ||
-      cardData.description.toLowerCase().includes(inputValue.toLowerCase())
-    );
-  });
+type ShortCardProps = {
+  name: string;
+  id: number;
+  image: string;
 };
 
 function MainPage() {
-  const initialData = setMatchedInputValueCardsData(localStorage.getItem('lastSearchValue') || '');
-  const [data, updateData] = useState(initialData);
-  const setNewSearchValue = (currentSearchValue: string) => {
-    updateData(setMatchedInputValueCardsData(currentSearchValue));
+  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const { data: characters, isFetching, isSuccess, isError } = useGetCharactersQuery(searchValue);
+  const dispatch = useAppDispatch();
+  const shortCardsData = useAppSelector((state) => state.updateCharactersDataReducer);
+
+  useEffect(() => {
+    let newShortCardsData;
+    if (isSuccess) {
+      newShortCardsData = characters.results.map((fullCardData: FullCardProps) => {
+        return { id: fullCardData.id, name: fullCardData.name, image: fullCardData.image };
+      });
+    }
+    dispatch(updateCharactersData(newShortCardsData as ShortCardProps[]));
+  }, [characters, dispatch, isSuccess, searchValue]);
+
+  const onUpdateModal = (id: number) => {
+    dispatch(updateCurrentCardId({ id, isActive: true }));
   };
+
+  let cardContainerContent;
+  if (isError) {
+    cardContainerContent = <div className="message">Nothing to show</div>;
+  } else if (isFetching) {
+    cardContainerContent = (
+      <div className="loading-screen">
+        <div className="message">Loading...</div>
+      </div>
+    );
+  } else {
+    cardContainerContent = (
+      <div data-testid="cards-container" className="cards-container">
+        {shortCardsData &&
+          shortCardsData.map((cardData: ShortCardProps) => {
+            return (
+              <div
+                onClick={() => {
+                  onUpdateModal(cardData.id);
+                }}
+                key={cardData.id}
+                aria-hidden="true"
+              >
+                <ShortCard {...cardData} />
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="search-bar-container">
-        <SearchBar setNewSearchValue={setNewSearchValue} />
+        <SearchBar />
       </div>
-      <div data-testid="cards-container" className="cards-container">
-        {data.map((cardData: CardProps) => {
-          return <Card key={cardData.id} {...cardData} />;
-        })}
-      </div>
+      {cardContainerContent}
+      <Modal />
     </>
   );
 }

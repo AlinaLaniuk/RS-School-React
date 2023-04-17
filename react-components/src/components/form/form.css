@@ -33,7 +33,7 @@ label {
 }
 
 .select {
-  background-color: rgb(255, 0, 93);
+  background-color: rgb(129, 213, 188);
   color: white;
   border: none;
   height: 40px;
@@ -62,7 +62,7 @@ label {
 }
 
 ::file-selector-button {
-  background-color: rgb(179, 109, 246);
+  background-color: rgb(32, 180, 135);
   height: 30px;
   border: none;
   border-radius: 10px;
@@ -115,7 +115,7 @@ label {
 
 
 .gender-selector-container label input:checked~span {
-  background-color: #d574ff;
+  background-color: rgb(26, 255, 0);
 }
 
 
@@ -143,7 +143,7 @@ label {
 .submit-button {
   width: 40%;
   height: 35px;
-  background-color: wheat;
+  background-color: rgb(26, 255, 0);
   border-radius: 20px;
   border: none;
   font-size: 1.2rem;
