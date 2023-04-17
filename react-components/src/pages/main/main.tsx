@@ -1,12 +1,18 @@
 import { useEffect } from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import { FullCardProps } from '../../store/collectModalDataSlice';
-import { ShortCardProps, ShortCard } from '../../components/shortCard/shortCard';
+import ShortCard from '../../components/shortCard/shortCard';
 import Modal from '../../components/modal/modal';
 import { useGetCharactersQuery } from '../../store/api';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { updateCharactersData } from '../../store/collectCharactersDataSlice';
 import { updateCurrentCardId } from '../../store/updateCurrentCardIdSlice';
+
+type ShortCardProps = {
+  name: string;
+  id: number;
+  image: string;
+};
 
 function MainPage() {
   const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
@@ -45,9 +51,9 @@ function MainPage() {
             return (
               <div
                 onClick={() => {
-                  onUpdateModal(cardData.id as number);
+                  onUpdateModal(cardData.id);
                 }}
-                key={cardData.id as number}
+                key={cardData.id}
                 aria-hidden="true"
               >
                 <ShortCard {...cardData} />
