@@ -3,14 +3,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
+// import render from './dist/server/entry-server';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const PORT = 3000;
 
 async function createServer() {
   const app = express();
-  app.use(express.static('dist'));
   const vite = await createViteServer({
     server: { middlewareMode: true },
     appType: 'custom',
@@ -22,10 +21,8 @@ async function createServer() {
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl;
-
     try {
       let template = fs.readFileSync(path.resolve(dirname, 'index.html'), 'utf-8');
-
       // 2. Apply Vite HTML transforms. This injects the Vite HMR client,
       //    and also applies HTML transforms from Vite plugins, e.g. global
       //    preambles from @vitejs/plugin-react
@@ -34,7 +31,7 @@ async function createServer() {
       // 3. Load the server entry. ssrLoadModule automatically transforms
       //    ESM source code to be usable in Node.js! There is no bundling
       //    required, and provides efficient invalidation similar to HMR.
-      const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
+      const { render } = await vite.ssrLoadModule(path.resolve(dirname, 'src/entry-server.tsx'));
 
       // 4. render the app HTML. This assumes entry-server.js's exported
       //     `render` function calls appropriate framework SSR APIs,
