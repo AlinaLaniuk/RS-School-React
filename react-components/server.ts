@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
-// import render from './dist/server/entry-server';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 3000;
@@ -35,7 +34,7 @@ async function createServer() {
         },
       });
     } catch (e) {
-      vite.ssrFixStacktrace(e);
+      vite.ssrFixStacktrace(e as Error);
       next(e);
     }
   });

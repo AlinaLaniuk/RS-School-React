@@ -20,7 +20,10 @@
     "vite.config.ts",
     ".eslintrc.cjs",
     "src",
-    "server.js",
+    "server.ts",
     "src/entry-server.tsx" ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "ts-node": {
+    "esm": true,
+  }
 }
