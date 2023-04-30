@@ -1,3 +1,5 @@
+import '@cypress/code-coverage/support';
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
