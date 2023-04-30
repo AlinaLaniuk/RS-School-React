@@ -2,6 +2,11 @@ describe('Home page', () => {
   beforeEach(() => {
     cy.visit('/');
   });
+
+  afterEach(() => {
+    cy.window().trigger('unload');
+  });
+  
   it('Type text in search-bar', () => {
     cy.get('input[type="text"]').should('have.value', '').type('Rick{enter}');
     cy.get('.short-card-container').should('have.length', 20);

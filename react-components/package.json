@@ -12,7 +12,6 @@
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "dev": "vite-node ./server.ts",
     "cypress": "cypress run",
-    "coverage": "npm run test:cypress && npm run cypress:report",
     "test:cypress": "npx start-server-and-test dev http-get://localhost:3000 cypress",
     "cypress:report": "npx nyc report && npx nyc report --reporter=text-summary"
   },
