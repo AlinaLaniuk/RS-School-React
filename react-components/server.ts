@@ -40,6 +40,7 @@ async function createServer() {
   });
 
   app.listen(PORT);
+  console.log('Server open http://localhost:3000/')
 }
 
 createServer();
