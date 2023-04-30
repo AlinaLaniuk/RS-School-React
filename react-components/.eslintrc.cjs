@@ -10,6 +10,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -17,7 +18,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: 'tsconfig.json',
+    project: ['tsconfig.json', 'cypress/tsconfig.json'],
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
@@ -39,5 +40,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-param-reassign': ['error', { props: false }],
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

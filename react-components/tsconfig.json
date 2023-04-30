@@ -14,12 +14,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   },
   "include": [
     "vite.config.ts",
     ".eslintrc.cjs",
-    "src"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "src",
+    "server.ts",
+    "src/entry-server.tsx" ],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }

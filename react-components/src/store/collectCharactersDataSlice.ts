@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShortCardProps } from '../components/shortCard/shortCard';
+
+export type ShortCardProps = {
+  name: string;
+  id: number;
+  image: string;
+};
 
 const initialState: ShortCardProps[] = [];
 
