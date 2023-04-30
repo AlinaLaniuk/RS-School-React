@@ -7,4 +7,4 @@ describe('About E2E', () => {
     cy.visit('/about');
     cy.contains('Some text about us.');
   });
-})
+});

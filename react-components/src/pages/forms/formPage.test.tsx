@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import FormPage from './formPage';
@@ -55,6 +55,15 @@ test('filling form', async () => {
   expect(femaleInput.checked).toEqual(false);
   expect(dessert.value).toEqual('');
   expect(chocolate.checked).toEqual(false);
+
+  await act(async () => {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000);
+    });
+  });
+
+  const submitMessageContainer = screen.getByTestId('submit-message');
+  expect(submitMessageContainer.textContent).toEqual('');
 });
 
 test('submit empty form', async () => {

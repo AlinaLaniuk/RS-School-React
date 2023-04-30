@@ -23,6 +23,11 @@ export function validateFile(file: File, availableTypes: string[]) {
   if (!file) {
     return false;
   }
+
+  if (availableTypes.length === 0) {
+    return false;
+  }
+
   const fileType = availableTypes.filter((type: string) => {
     return file.type === type;
   });

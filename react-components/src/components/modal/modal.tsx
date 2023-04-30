@@ -27,6 +27,7 @@ function Modal() {
         >
           <div
             className="close-button"
+            data-testid="close-button"
             onClick={() => {
               dispatch(updateCurrentCardId({ id: currentCardId, isActive: false }));
             }}

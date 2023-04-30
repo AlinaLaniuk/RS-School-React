@@ -244,7 +244,9 @@ function Form() {
         )}
       </label>
       <input value="Submit" className="submit-button" type="submit" />
-      <div className="submit-message">{isSubmitMessage && 'Submit successfully'}</div>
+      <div data-testid="submit-message" className="submit-message">
+        {isSubmitMessage && 'Submit successfully'}
+      </div>
     </form>
   );
 }

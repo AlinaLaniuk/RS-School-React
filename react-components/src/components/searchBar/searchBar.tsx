@@ -19,7 +19,11 @@ function SearchBar() {
   };
 
   return (
-    <form className="input-wrapper" onSubmit={handleSubmit(onSubmitInputValue)}>
+    <form
+      className="input-wrapper"
+      data-testid="searchForm"
+      onSubmit={handleSubmit(onSubmitInputValue)}
+    >
       <img src="./search-bar.png" alt="search-bar-icon" />
       <input
         {...register('inputValue')}

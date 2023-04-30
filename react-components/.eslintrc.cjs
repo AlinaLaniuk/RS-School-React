@@ -18,7 +18,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: 'tsconfig.json',
+    project: ['tsconfig.json', 'cypress/tsconfig.json'],
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {

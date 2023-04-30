@@ -6,13 +6,13 @@ describe('Home page', () => {
   afterEach(() => {
     cy.window().trigger('unload');
   });
-  
+
   it('Type text in search-bar', () => {
     cy.get('input[type="text"]').should('have.value', '').type('Rick{enter}');
     cy.get('.short-card-container').should('have.length', 20);
     cy.get('.short-card-container').each((item) => {
       expect(Cypress.$(item).text()).to.contain('Rick');
-    })
+    });
   });
 
   it('Open and close modal', () => {
@@ -21,7 +21,6 @@ describe('Home page', () => {
     cy.get('.close-button').click();
     cy.get('.modal-container').should('not.be.visible');
   });
-
 
   it('Bad request', () => {
     cy.get('input[type="text"]').type('eiuehg;oahg{enter}');
